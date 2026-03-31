@@ -1,0 +1,55 @@
+﻿
+> vertex.app@0.1.0 build
+> next build
+
+Γû▓ Next.js 16.1.6 (Turbopack)
+- Environments: .env
+
+  Creating an optimized production build ...
+Γ£ô Compiled successfully in 6.8s
+  Running TypeScript ...
+node.exe : Failed to compile.
+At line:1 char:1
++ & "C:\Program Files\nodejs/node.exe" 
+"C:\Program Files\nodejs/node_mo ...
++ ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+    + CategoryInfo          : NotSpeci 
+   fied: (Failed to compile.:String)   
+  [], RemoteException
+    + FullyQualifiedErrorId : NativeCo 
+   mmandError
+ 
+
+./app/api/force-sync/route.ts:15:38
+Type error: Argument of type 'any[]' 
+is not assignable to parameter of type 
+'number'.
+
+[0m [90m 13 |[39m   [36mconst[39m 
+{ data[33m:[39m stock } [33m=[39m 
+[36mawait[39m supabase[33m.[39m[36
+mfrom[39m([32m"stocks"[39m)[33m.[3
+9mselect([32m"*"[39m)[33m.[39meq([
+32m"symbol"[39m[33m,[39m 
+symbol)[33m.[39msingle()[33m;[39m
+ [90m 14 |[39m   [36mif[39m 
+(stock) {
+[31m[1m>[22m[39m[90m 15 |[39m    
+ [36mawait[39m fetchAndUpsertFundamen
+tals([stock])[33m;[39m
+ [90m    |[39m                       
+               [31m[1m^[22m[39m
+ [90m 16 |[39m     [36mreturn[39m 
+[33mNextResponse[39m[33m.[39mjson({ 
+success[33m:[39m 
+[36mtrue[39m[33m,[39m stock 
+})[33m;[39m
+ [90m 17 |[39m   }
+ [90m 18 |[39m   [36mreturn[39m [3
+3mNextResponse[39m[33m.[39mjson({ 
+error[33m:[39m [32m"Not found"[39m 
+}[33m,[39m { status[33m:[39m 
+[35m404[39m })[33m;[39m[0m
+Next.js build worker exited with code: 
+1 and signal: null

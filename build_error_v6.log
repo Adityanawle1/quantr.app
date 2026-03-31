@@ -1,0 +1,56 @@
+﻿
+> vertex.app@0.1.0 build
+> next build
+
+Γû▓ Next.js 16.1.6 (Turbopack)
+- Environments: .env
+
+  Creating an optimized production build ...
+Γ£ô Compiled successfully in 7.8s
+  Running TypeScript ...
+node.exe : Failed to compile.
+At line:1 char:1
++ & "C:\Program Files\nodejs/node.exe" 
+"C:\Program Files\nodejs/node_mo ...
++ ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+    + CategoryInfo          : NotSpeci 
+   fied: (Failed to compile.:String)   
+  [], RemoteException
+    + FullyQualifiedErrorId : NativeCo 
+   mmandError
+ 
+
+./components/screener/screener-sidebar.
+tsx:135:15
+Type error: Type 
+'Dispatch<SetStateAction<number[]>>' 
+is not assignable to type '(value: 
+number | readonly number[], 
+eventDetails: 
+SliderRootChangeEventDetails) => void'.
+  Types of parameters 'value' and 
+'value' are incompatible.
+    Type 'number | readonly number[]' 
+is not assignable to type 
+'SetStateAction<number[]>'.
+      Type 'number' is not assignable 
+to type 'SetStateAction<number[]>'.
+
+[0m [90m 133 |[39m             
+[33m<[39m[33mSlider[39m
+ [90m 134 |[39m               
+value[33m=[39m{peSlider}
+[31m[1m>[22m[39m[90m 135 |[39m   
+            
+onValueChange[33m=[39m{setPeSlider}
+ [90m     |[39m               
+[31m[1m^[22m[39m
+ [90m 136 |[39m               
+max[33m=[39m{[35m100[39m}
+ [90m 137 |[39m               
+step[33m=[39m{[35m1[39m}
+ [90m 138 |[39m               classNa
+me[33m=[39m[32m"py-2"[39m[0m
+Next.js build worker exited with code: 
+1 and signal: null

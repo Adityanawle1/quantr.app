@@ -1,0 +1,48 @@
+﻿
+> vertex.app@0.1.0 build
+> next build
+
+Γû▓ Next.js 16.1.6 (Turbopack)
+- Environments: .env
+
+  Creating an optimized production build ...
+Γ£ô Compiled successfully in 7.9s
+  Running TypeScript ...
+node.exe : Failed to compile.
+At line:1 char:1
++ & "C:\Program Files\nodejs/node.exe" 
+"C:\Program Files\nodejs/node_mo ...
++ ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+    + CategoryInfo          : NotSpeci 
+   fied: (Failed to compile.:String)   
+  [], RemoteException
+    + FullyQualifiedErrorId : NativeCo 
+   mmandError
+ 
+
+./lib/yahoo-finance.ts:72:19
+Type error: Property 'quotes' does not 
+exist on type 'never'.
+
+[0m [90m 70 |[39m       
+interval[33m:[39m 
+config[33m.[39minterval[33m,[39m
+ [90m 71 |[39m     })
+[31m[1m>[22m[39m[90m 72 |[39m    
+ [36mreturn[39m result[33m.[39mquot
+es[33m.[39mmap((q[33m:[39m any) 
+[33m=>[39m ({
+ [90m    |[39m                   
+[31m[1m^[22m[39m
+ [90m 73 |[39m       time[33m:[39m 
+[33mMath[39m[33m.[39mfloor([36mnew
+[39m [33mDate[39m(q[33m.[39mdate)
+[33m.[39mgetTime() [33m/[39m 
+[35m1000[39m)[33m,[39m
+ [90m 74 |[39m       open[33m:[39m 
+q[33m.[39mopen[33m,[39m
+ [90m 75 |[39m       high[33m:[39m 
+q[33m.[39mhigh[33m,[39m[0m
+Next.js build worker exited with code: 
+1 and signal: null

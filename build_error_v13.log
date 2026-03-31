@@ -1,0 +1,47 @@
+﻿
+> vertex.app@0.1.0 build
+> next build
+
+Γû▓ Next.js 16.1.6 (Turbopack)
+- Environments: .env
+
+  Creating an optimized production build ...
+Γ£ô Compiled successfully in 7.6s
+  Running TypeScript ...
+node.exe : Failed to compile.
+At line:1 char:1
++ & "C:\Program Files\nodejs/node.exe" 
+"C:\Program Files\nodejs/node_mo ...
++ ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+    + CategoryInfo          : NotSpeci 
+   fied: (Failed to compile.:String)   
+  [], RemoteException
+    + FullyQualifiedErrorId : NativeCo 
+   mmandError
+ 
+
+./test-db.ts:6:5
+Type error: Object literal may only 
+specify known properties, and 
+'datasources' does not exist in type 
+'Subset<PrismaClientOptions, 
+PrismaClientOptions>'.
+
+[0m [90m 4 |[39m   
+console[33m.[39mlog([32m'Testing 
+DATABASE_URL...'[39m)
+ [90m 5 |[39m   [36mconst[39m 
+prisma1 [33m=[39m [36mnew[39m 
+[33mPrismaClient[39m({
+[31m[1m>[22m[39m[90m 6 |[39m     
+datasources[33m:[39m {
+ [90m   |[39m     
+[31m[1m^[22m[39m
+ [90m 7 |[39m       db[33m:[39m {
+ [90m 8 |[39m         url[33m:[39m 
+process[33m.[39menv[33m.[39m[33mDA
+TABASE_URL[39m
+ [90m 9 |[39m       }[0m
+Next.js build worker exited with code: 
+1 and signal: null

@@ -1,0 +1,67 @@
+﻿node.exe : C:\Users\nawal\Downloads\ver
+tex.app\node_modules\@prisma\client\src
+\runtime\getPrismaClient.ts:320
+At line:1 char:1
++ & "C:\Program Files\nodejs/node.exe" 
+"C:\Program Files\nodejs/node_mo ...
++ ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+    + CategoryInfo          : NotSpeci 
+   fied: (C:\Users\nawal\...maClient.  
+  ts:320:String) [], RemoteException
+    + FullyQualifiedErrorId : NativeCo 
+   mmandError
+ 
+        throw new 
+PrismaClientInitializationError(
+              ^
+
+PrismaClientInitializationError: 
+`PrismaClient` needs to be constructed 
+with a non-empty, valid 
+`PrismaClientOptions`:
+
+```
+new PrismaClient({
+  ...
+})
+```
+
+or
+
+```
+constructor() {
+  super({ ... });
+}
+```
+          
+    at new t (C:\Users\nawal\Downloads\
+vertex.app\node_modules\@prisma\client\
+src\runtime\getPrismaClient.ts:320:15)
+    at <anonymous> (C:\Users\nawal\Down
+loads\vertex.app\prisma\seed.ts:3:16)
+    at Object.<anonymous> (C:\Users\naw
+al\Downloads\vertex.app\prisma\seed.ts:
+86:4)
+    at Module._compile (node:internal/m
+odules/cjs/loader:1804:14)
+    at Object.transformer (C:\Users\naw
+al\Downloads\vertex.app\node_modules\ts
+x\dist\register-D46fvsV_.cjs:3:1104)
+    at Module.load (node:internal/modul
+es/cjs/loader:1525:32)
+    at Module._load (node:internal/modu
+les/cjs/loader:1327:12)
+    at TracingChannel.traceSync 
+(node:diagnostics_channel:328:14)
+    at wrapModuleLoad (node:internal/mo
+dules/cjs/loader:245:24)
+    at loadCJSModuleWithModuleLoad (nod
+e:internal/modules/esm/translators:339:
+3) {
+  clientVersion: '7.5.0',
+  errorCode: undefined,
+  retryable: undefined
+}
+
+Node.js v24.13.1

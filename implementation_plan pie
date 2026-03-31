@@ -1,0 +1,34 @@
+# Market Ticker & Shareholding Pattern Plan
+
+## User Review Required
+Please review the placement of these components:
+1. **Market Ticker**: I plan to place this at the very top of your home screen ([app/page.tsx](file:///c:/Users/nawal/Downloads/vertex.app/app/page.tsx)) right above the Hero Section. It will feature a smooth, infinite horizontal scroll using CSS animations, matching your dark theme (`bg-zinc-950`).
+2. **Shareholding Pattern**: I will create a new tab called "Shareholding" on the Stock details page ([app/stocks/[symbol]/page.tsx](file:///c:/Users/nawal/Downloads/vertex.app/app/stocks/%5Bsymbol%5D/page.tsx)). Inside, you'll see a styled Donut/Pie Chart using `recharts` and the Promoter Pledging table beside it.
+
+## Proposed Changes
+
+### Global Ticker
+#### [NEW] `components/market-ticker.tsx`
+- Build a smooth infinite CSS marquee component.
+- Display indices like SENSEX, NIFTY 50, BANKNIFTY, NIFTYIT. 
+- Use colors matching the dark theme (e.g., emerald for positive, rose for negative).
+
+#### [MODIFY] [app/page.tsx](file:///c:/Users/nawal/Downloads/vertex.app/app/page.tsx)
+- Import and place `<MarketTicker />` at the top of the component tree.
+
+---
+
+### Shareholding Pattern
+#### [NEW] `components/stock/shareholding-pattern.tsx`
+- Build a dual-column layout.
+- Left side: A `recharts` `PieChart` visualizer for FII, DII, Public, Promoters, and Others.
+- Right side: A Shadcn UI `Table` displaying Promoter Pledging historical % (using mock historical data similar to the reference image placeholder).
+
+#### [MODIFY] [app/stocks/[symbol]/page.tsx](file:///c:/Users/nawal/Downloads/vertex.app/app/stocks/%5Bsymbol%5D/page.tsx)
+- Add a `<TabsTrigger value="shareholding">Shareholding</TabsTrigger>`.
+- Add `<TabsContent value="shareholding">` rendering the new `<ShareholdingPattern />` component.
+
+## Verification Plan
+### Manual Verification
+1. Navigate to the Home screen and ensure the ticker elegantly scrolls across the top.
+2. Navigate to any stock page (e.g., `/stocks/RELIANCE`), click the "Shareholding" tab, and verify the pie chart and table look polished and match the dark theme.

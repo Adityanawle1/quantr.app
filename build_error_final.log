@@ -1,0 +1,52 @@
+﻿
+> vertex.app@0.1.0 build
+> next build
+
+Γû▓ Next.js 16.1.6 (Turbopack)
+- Environments: .env
+
+  Creating an optimized production build ...
+Γ£ô Compiled successfully in 6.8s
+  Running TypeScript ...
+node.exe : Failed to compile.
+At line:1 char:1
++ & "C:\Program Files\nodejs/node.exe" 
+"C:\Program Files\nodejs/node_mo ...
++ ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+    + CategoryInfo          : NotSpeci 
+   fied: (Failed to compile.:String)   
+  [], RemoteException
+    + FullyQualifiedErrorId : NativeCo 
+   mmandError
+ 
+
+./app/api/portfolio/upload/route.ts:13:
+29
+Type error: Property 'users' does not 
+exist on type 
+'PrismaClient<PrismaClientOptions, 
+never, DefaultArgs>'. Did you mean 
+'user'?
+
+[0m [90m 11 |[39m
+ [90m 12 |[39m     [90m// 1. Get or 
+create a default user since full auth 
+isn't implemented[39m
+[31m[1m>[22m[39m[90m 13 |[39m    
+ [36mlet[39m user [33m=[39m 
+[36mawait[39m prisma[33m.[39musers
+[33m.[39mfindFirst()[33m;[39m
+ [90m    |[39m                       
+      [31m[1m^[22m[39m
+ [90m 14 |[39m     [36mif[39m 
+([33m![39muser) {
+ [90m 15 |[39m       user 
+[33m=[39m [36mawait[39m prisma[33m
+.[39musers[33m.[39mcreate({
+ [90m 16 |[39m         
+data[33m:[39m { email[33m:[39m 
+[32m"default_user@quantr.app"[39m 
+}[33m,[39m[0m
+Next.js build worker exited with code: 
+1 and signal: null

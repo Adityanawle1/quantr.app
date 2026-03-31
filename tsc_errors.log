@@ -1,0 +1,15 @@
+﻿test-db.ts(6,5): error TS2353: Object literal may only specify known properties, and 'datasources' does not exist in type 'Subset<PrismaClientOptions, PrismaClientOptions>'.
+test-db.ts(22,5): error TS2353: Object literal may only specify known properties, and 'datasources' does not exist in type 'Subset<PrismaClientOptions, PrismaClientOptions>'.
+tests/check-db.ts(7,14): error TS2353: Object literal may only specify known properties, and 'sales_growth' does not exist in type 'FinancialsWhereInput'.
+tests/check-db.ts(13,15): error TS2551: Property 'stock' does not exist on type '{ id: string; change: number | null; stockId: string; updatedAt: Date; currentPrice: number; open: number | null; high: number | null; low: number | null; previousClose: number | null; ... 25 more ...; publicHolding: number | null; }'. Did you mean 'stockId'?
+tests/check-db.ts(14,21): error TS2339: Property 'sales_growth' does not exist on type '{ id: string; change: number | null; stockId: string; updatedAt: Date; currentPrice: number; open: number | null; high: number | null; low: number | null; previousClose: number | null; ... 25 more ...; publicHolding: number | null; }'.
+tests/check-db.ts(15,17): error TS2339: Property 'toNumber' does not exist on type 'number'.
+tests/check-db.ts(16,19): error TS2339: Property 'toNumber' does not exist on type 'number'.
+tests/check-db.ts(17,11): error TS2339: Property 'pe_ratio' does not exist on type '{ id: string; change: number | null; stockId: string; updatedAt: Date; currentPrice: number; open: number | null; high: number | null; low: number | null; previousClose: number | null; ... 25 more ...; publicHolding: number | null; }'.
+tmp-verify-yf.ts(4,27): error TS2339: Property 'default' does not exist on type 'YahooFinanceWithModules<{ readonly modules: { readonly quoteCombine: { (this: ModuleThis, query: string, queryOptionsOverrides?: QuoteOptions | undefined, moduleOptions?: ModuleOptionsWithValidateTrue | undefined): Promise<...>; (this: ModuleThis, query: string, queryOptionsOverrides?: QuoteOptions | undefined, modu...'.
+tmp-yf-test.ts(6,44): error TS2339: Property 'regularMarketPrice' does not exist on type 'never'.
+tmp-yf-test.ts(6,75): error TS2339: Property 'regularMarketChange' does not exist on type 'never'.
+tmp-yf-test.ts(6,107): error TS2339: Property 'regularMarketChangePercent' does not exist on type 'never'.
+tmp-yf-test.ts(9,51): error TS2339: Property 'quotes' does not exist on type 'never'.
+tmp-yf-test.ts(10,20): error TS2339: Property 'quotes' does not exist on type 'never'.
+tmp-yf-test.ts(11,46): error TS2339: Property 'quotes' does not exist on type 'never'.

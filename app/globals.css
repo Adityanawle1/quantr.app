@@ -1,0 +1,260 @@
+@import "tailwindcss";
+@import "tw-animate-css";
+@import "shadcn/tailwind.css";
+
+@custom-variant dark (&:is(.dark *));
+
+@theme {
+  --color-border: var(--border);
+  --color-input: var(--input);
+  --color-ring: var(--ring);
+  
+  --color-background: var(--background);
+  --color-foreground: var(--foreground);
+  
+  --color-card: var(--card);
+  --color-card-foreground: var(--card-foreground);
+  
+  --color-popover: var(--popover);
+  --color-popover-foreground: var(--popover-foreground);
+  
+  --color-primary: var(--primary);
+  --color-primary-foreground: var(--primary-foreground);
+  
+  --color-secondary: var(--secondary);
+  --color-secondary-foreground: var(--secondary-foreground);
+  
+  --color-muted: var(--muted);
+  --color-muted-foreground: var(--muted-foreground);
+  
+  --color-accent: var(--accent);
+  --color-accent-foreground: var(--accent-foreground);
+  
+  --color-destructive: var(--destructive);
+  --color-destructive-foreground: var(--destructive-foreground);
+
+  /* Design System */
+  --color-base: var(--background);
+  --color-ink: var(--background);
+  --color-navy: var(--navy);
+  --color-navy-card: var(--navy-card);
+  --color-navy-surf: var(--navy-surf);
+  --color-navy-hov: var(--navy-hov);
+  
+  --color-t1: var(--t1);
+  --color-t2: var(--t2);
+  --color-t3: var(--t3);
+  --color-t4: var(--t4);
+
+  --color-lime: #C2FF60;
+  --color-limedm: rgba(194,255,96,0.09);
+  --color-limebr: rgba(194,255,96,0.22);
+
+  --color-gain: var(--gain, #3FD68C);
+  --color-gaindm: var(--gaindm, rgba(63,214,140,0.10));
+  --color-gainbr: var(--gainbr, rgba(63,214,140,0.22));
+
+  --color-loss: var(--loss, #E8645A);
+  --color-lossdm: var(--lossdm, rgba(232,100,90,0.10));
+  --color-lossbr: var(--lossbr, rgba(232,100,90,0.22));
+
+  --color-amber: #F5A623;
+  --color-ambrdk: rgba(245,158,11,0.09);
+  --color-blue: #5B9CF6;
+  --color-bluedm: rgba(91,156,246,0.10);
+
+  /* Semantic Variables Mapped to Utility Classes */
+  --color-border-subtle: var(--border-subtle);
+  --color-highlight: var(--highlight);
+  --color-highlight-hov: var(--highlight-hov);
+
+  --font-plus-jakarta: var(--font-plus-jakarta);
+  --font-jetbrains-mono: var(--font-jetbrains-mono);
+  --font-inter: var(--font-inter);
+  
+  --font-sans: var(--font-inter), var(--font-plus-jakarta), ui-sans-serif, system-ui;
+  --font-mono: var(--font-jetbrains-mono), ui-monospace, SFMono-Regular;
+  
+  --font-jakarta: var(--font-inter);
+  
+  --radius-sm: calc(var(--radius) * 0.6);
+  --radius-md: calc(var(--radius) * 0.8);
+  --radius-lg: var(--radius);
+}
+
+:root {
+  /* LIGHT MODE VARS */
+  --background: #F8F9FA; /* Cleaner light gray */
+  --foreground: #111827; /* Near black for high contrast */
+  --radius: 0.625rem;
+
+  --navy: #FFFFFF;
+  --navy-card: #FFFFFF; /* Pure white cards */
+  --navy-surf: #F3F4F6;
+  --navy-hov: #E5E7EB;
+
+  --t1: #111827; /* almost black */
+  --t2: #374151; /* gray-700 */
+  --t3: #6B7280; /* gray-500 */
+  --t4: #9CA3AF; /* gray-400 */
+
+  --border-subtle: rgba(0,0,0,0.08);
+  --highlight: rgba(0,0,0,0.03);
+  --highlight-hov: rgba(0,0,0,0.06);
+
+  --card: #FFFFFF;
+  --card-foreground: #111827;
+  --popover: #FFFFFF;
+  --popover-foreground: #111827;
+  --primary: #111827; /* Near black primary button */
+  --primary-foreground: #FFFFFF;
+  --secondary: #F3F4F6;
+  --secondary-foreground: #111827;
+  --muted: #F3F4F6;
+  --muted-foreground: #6B7280;
+  --accent: #F3F4F6;
+  --accent-foreground: #111827;
+  --destructive: #EF4444; /* red-500 */
+  --border: rgba(0,0,0,0.1);
+  --input: rgba(0,0,0,0.1);
+  --ring: #111827;
+
+  /* Gain / Loss explicit light mode values (richer for white backgrounds) */
+  --gain: #059669; /* Emerald 600 */
+  --gaindm: rgba(5, 150, 105, 0.1);
+  --gainbr: rgba(5, 150, 105, 0.22);
+  --loss: #DC2626; /* Red 600 */
+  --lossdm: rgba(220, 38, 38, 0.1);
+  --lossbr: rgba(220, 38, 38, 0.22);
+}
+
+.dark {
+  /* DARK MODE VARS */
+  --background: #0A0D14;
+  --foreground: #E4ECF7;
+  
+  --navy: #0A0D14;
+  --navy-card: #131B28;
+  --navy-surf: #182033;
+  --navy-hov: #1E2B3E;
+
+  --t1: #E4ECF7;
+  --t2: #7A90A8;
+  --t3: #6A85A3;
+  --t4: #1C2E40;
+
+  --border-subtle: rgba(255,255,255,0.05);
+  --highlight: rgba(255,255,255,0.05);
+  --highlight-hov: rgba(255,255,255,0.10);
+
+  --card: #131B28;
+  --card-foreground: #E4ECF7;
+  --popover: #131B28;
+  --popover-foreground: #E4ECF7;
+  --primary: #C2FF60;
+  --primary-foreground: #0A0D14;
+  --secondary: #182033;
+  --secondary-foreground: #E4ECF7;
+  --muted: #1E2B3E;
+  --muted-foreground: #7A90A8;
+  --accent: #182033;
+  --accent-foreground: #C2FF60;
+  --destructive: #E8645A;
+  --border: rgba(255,255,255,0.06);
+  --input: rgba(255,255,255,0.12);
+  --ring: #C2FF60;
+
+  /* Gain / Loss explicit dark mode values */
+  --gain: #3FD68C;
+  --gaindm: rgba(63,214,140,0.10);
+  --gainbr: rgba(63,214,140,0.22);
+  --loss: #E8645A;
+  --lossdm: rgba(232,100,90,0.10);
+  --lossbr: rgba(232,100,90,0.22);
+}
+
+@layer base {
+  * {
+    @apply border-border outline-ring/50;
+  }
+  body {
+    @apply bg-background text-foreground;
+  }
+  html {
+    @apply font-sans;
+  }
+}
+
+@layer utilities {
+  .glass {
+    @apply bg-navy-card/50 backdrop-blur-xl border border-border-subtle shadow-xl;
+  }
+  
+  .bento-card {
+    @apply bg-navy-card border border-border-subtle rounded-[14px] p-6 shadow-sm transition-all duration-300 hover:border-black/5 dark:hover:border-white/10 relative overflow-hidden;
+  }
+  
+  .glow-grid {
+    background-size: 40px 40px;
+    background-image: linear-gradient(to right, rgba(255, 255, 255, 0.03) 1px, transparent 1px),
+      linear-gradient(to bottom, rgba(255, 255, 255, 0.03) 1px, transparent 1px);
+    mask-image: linear-gradient(to bottom, transparent, black, transparent);
+  }
+
+  .no-scrollbar::-webkit-scrollbar {
+    display: none;
+  }
+  .mask-marquee {
+    mask-image: linear-gradient(to right, transparent, black 15%, black 85%, transparent);
+  }
+}
+
+/* Marquee / Ticker */
+@keyframes marquee {
+  0% { transform: translateX(0%); }
+  100% { transform: translateX(-33.333%); }
+}
+
+.animate-marquee {
+  animation: marquee 30s linear infinite;
+}
+
+.ticker-scroll:hover .animate-marquee {
+  animation-play-state: paused;
+}
+
+body::before {
+  content: '';
+  position: fixed; inset: 0;
+  background-image: radial-gradient(rgba(255,255,255,0.03) 1px, transparent 1px);
+  background-size: 28px 28px;
+  pointer-events: none;
+  z-index: 0;
+}
+
+@keyframes tickmove { 
+  0% { transform: translateX(0) } 
+  100% { transform: translateX(-50%) } 
+}
+
+@keyframes plsanim { 
+  0%, 100% {
+    opacity: 1;
+    box-shadow: 0 0 0 0 rgba(63,214,140,0.4);
+  } 
+  50% {
+    opacity: 0.5;
+    box-shadow: 0 0 0 6px rgba(63,214,140,0);
+  } 
+}
+
+@keyframes fu {
+  from {
+    opacity: 0;
+    transform: translateY(12px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}

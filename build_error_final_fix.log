@@ -1,0 +1,58 @@
+﻿
+> vertex.app@0.1.0 build
+> next build
+
+Γû▓ Next.js 16.1.6 (Turbopack)
+- Environments: .env
+
+  Creating an optimized production build ...
+Γ£ô Compiled successfully in 6.8s
+  Running TypeScript ...
+node.exe : Failed to compile.
+At line:1 char:1
++ & "C:\Program Files\nodejs/node.exe" 
+"C:\Program Files\nodejs/node_mo ...
++ ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+    + CategoryInfo          : NotSpeci 
+   fied: (Failed to compile.:String)   
+  [], RemoteException
+    + FullyQualifiedErrorId : NativeCo 
+   mmandError
+ 
+
+./components/dashboard/v2/market-chart.
+tsx:52:18
+Type error: 
+'activeIndex.changePercent' is 
+possibly 'undefined'.
+
+[0m [90m 50 |[39m     [90m// In 
+v5.1, we use addSeries(AreaSeries, 
+options)[39m
+ [90m 51 |[39m     [36mconst[39m 
+series [33m=[39m chart[33m.[39maddS
+eries([33mAreaSeries[39m[33m,[39m {
+[31m[1m>[22m[39m[90m 52 |[39m    
+   lineColor[33m:[39m activeIndex[33
+m?[39m[33m.[39mchangePercent 
+[33m>=[39m [35m0[39m [33m?[39m 
+[32m"#3DD68C"[39m [33m:[39m 
+[32m"#E8627A"[39m[33m,[39m
+ [90m    |[39m                  
+[31m[1m^[22m[39m
+ [90m 53 |[39m       
+topColor[33m:[39m activeIndex[33m?[
+39m[33m.[39mchangePercent 
+[33m>=[39m [35m0[39m [33m?[39m 
+[32m"rgba(61, 214, 140, 0.2)"[39m 
+[33m:[39m [32m"rgba(232, 98, 122, 
+0.2)"[39m[33m,[39m
+ [90m 54 |[39m       
+bottomColor[33m:[39m [32m"rgba(61, 
+214, 140, 0)"[39m[33m,[39m
+ [90m 55 |[39m       
+lineWidth[33m:[39m 
+[35m2[39m[33m,[39m[0m
+Next.js build worker exited with code: 
+1 and signal: null

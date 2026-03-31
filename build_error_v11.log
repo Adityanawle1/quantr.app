@@ -1,0 +1,80 @@
+﻿
+> vertex.app@0.1.0 build
+> next build
+
+Γû▓ Next.js 16.1.6 (Turbopack)
+- Environments: .env
+
+  Creating an optimized production build ...
+Γ£ô Compiled successfully in 8.1s
+  Running TypeScript ...
+node.exe : Failed to compile.
+At line:1 char:1
++ & "C:\Program Files\nodejs/node.exe" 
+"C:\Program Files\nodejs/node_mo ...
++ ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+    + CategoryInfo          : NotSpeci 
+   fied: (Failed to compile.:String)   
+  [], RemoteException
+    + FullyQualifiedErrorId : NativeCo 
+   mmandError
+ 
+
+./prisma/seed.ts:11:30
+Type error: Argument of type 'Pool' is 
+not assignable to parameter of type 
+'Pool | PoolConfig'.
+  Type 'import("C:/Users/nawal/Download
+s/vertex.app/node_modules/@types/pg/ind
+ex").Pool' is not assignable to type 'i
+mport("C:/Users/nawal/Downloads/vertex.
+app/node_modules/@prisma/adapter-pg/nod
+e_modules/@types/pg/index").Pool'.
+    The types of 'options.Client' are 
+incompatible between these types.
+      Type '(new () => import("C:/Users
+/nawal/Downloads/vertex.app/node_module
+s/@types/pg/index").ClientBase) | 
+undefined' is not assignable to type 
+'(new () => import("C:/Users/nawal/Down
+loads/vertex.app/node_modules/@prisma/a
+dapter-pg/node_modules/@types/pg/index"
+).ClientBase) | undefined'.
+        Type 'new () => import("C:/User
+s/nawal/Downloads/vertex.app/node_modul
+es/@types/pg/index").ClientBase' is 
+not assignable to type 'new () => impor
+t("C:/Users/nawal/Downloads/vertex.app/
+node_modules/@prisma/adapter-pg/node_mo
+dules/@types/pg/index").ClientBase'.
+          Construct signature return 
+types 'ClientBase' and 'ClientBase' 
+are incompatible.
+            The types returned by 
+'connect()' are incompatible between 
+these types.
+              Type 
+'Promise<ClientBase>' is not 
+assignable to type 'Promise<void>'.
+                Type 'ClientBase' is 
+not assignable to type 'void'.
+
+[0m [90m  9 |[39m   
+connectionString[33m:[39m process[33
+m.[39menv[33m.[39m[33mDIRECT_URL[3
+9m 
+ [90m 10 |[39m })
+[31m[1m>[22m[39m[90m 11 |[39m 
+[36mconst[39m adapter [33m=[39m 
+[36mnew[39m [33mPrismaPg[39m(pool)
+ [90m    |[39m                       
+       [31m[1m^[22m[39m
+ [90m 12 |[39m [36mconst[39m 
+prisma [33m=[39m [36mnew[39m 
+[33mPrismaClient[39m({ adapter })
+ [90m 13 |[39m
+ [90m 14 |[39m [36mconst[39m 
+[33mNIFTY50[39m [33m=[39m [[0m
+Next.js build worker exited with code: 
+1 and signal: null

@@ -1,0 +1,49 @@
+﻿
+> vertex.app@0.1.0 build
+> next build
+
+Γû▓ Next.js 16.1.6 (Turbopack)
+- Environments: .env
+
+  Creating an optimized production build ...
+Γ£ô Compiled successfully in 6.6s
+  Running TypeScript ...
+node.exe : Failed to compile.
+At line:1 char:1
++ & "C:\Program Files\nodejs/node.exe" 
+"C:\Program Files\nodejs/node_mo ...
++ ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+    + CategoryInfo          : NotSpeci 
+   fied: (Failed to compile.:String)   
+  [], RemoteException
+    + FullyQualifiedErrorId : NativeCo 
+   mmandError
+ 
+
+./app/api/sync/route.ts:89:46
+Type error: Property 'stocks' does not 
+exist on type 
+'PrismaClient<PrismaClientOptions, 
+never, DefaultArgs>'. Did you mean 
+'stock'?
+
+[0m [90m 87 |[39m
+ [90m 88 |[39m             [90m// 
+Create or update the bare-bones stock 
+record[39m
+[31m[1m>[22m[39m[90m 89 |[39m    
+         [36mconst[39m stockRecord 
+[33m=[39m [36mawait[39m prisma[33m
+.[39mstocks[33m.[39mupsert({
+ [90m    |[39m                       
+                       
+[31m[1m^[22m[39m
+ [90m 90 |[39m                 
+where[33m:[39m { symbol }[33m,[39m
+ [90m 91 |[39m                 
+update[33m:[39m {
+ [90m 92 |[39m                     
+name[33m,[39m[0m
+Next.js build worker exited with code: 
+1 and signal: null

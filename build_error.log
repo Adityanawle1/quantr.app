@@ -1,0 +1,107 @@
+﻿
+> vertex.app@0.1.0 build
+> next build
+
+Γû▓ Next.js 16.1.6 (Turbopack)
+- Environments: .env
+
+  Creating an optimized production build ...
+node.exe : Error: Cannot apply unknown 
+utility class `border-border`
+At line:1 char:1
++ & "C:\Program Files\nodejs/node.exe" 
+"C:\Program Files\nodejs/node_mo ...
++ ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+    + CategoryInfo          : NotSpeci 
+   fied: (Error: Cannot a...`border-b  
+  order`:String) [], RemoteException
+    + FullyQualifiedErrorId : NativeCo 
+   mmandError
+ 
+    [2m[at onInvalidCandidate (C:\User
+s\nawal\Downloads\vertex.app\node_modul
+es\tailwindcss\dist\lib.js:21:1511)][0
+m
+    [2m[at Ee (C:\Users\nawal\Download
+s\vertex.app\node_modules\tailwindcss\d
+ist\lib.js:16:37066)][0m
+    [2m[at C:\Users\nawal\Downloads\ve
+rtex.app\node_modules\tailwindcss\dist\
+lib.js:21:355][0m
+    [2m[at Pr (C:\Users\nawal\Download
+s\vertex.app\node_modules\tailwindcss\d
+ist\lib.js:3:1733)][0m
+    [2m[at _ (C:\Users\nawal\Downloads
+\vertex.app\node_modules\tailwindcss\di
+st\lib.js:3:1377)][0m
+    [2m[at Te (C:\Users\nawal\Download
+s\vertex.app\node_modules\tailwindcss\d
+ist\lib.js:21:172)][0m
+    [2m[at pn (C:\Users\nawal\Download
+s\vertex.app\node_modules\tailwindcss\d
+ist\lib.js:38:294)][0m
+    [2m[at async dn (C:\Users\nawal\Do
+wnloads\vertex.app\node_modules\tailwin
+dcss\dist\lib.js:38:631)][0m
+    [2m[at async Xr (C:\Users\nawal\Do
+wnloads\vertex.app\node_modules\@tailwi
+ndcss\node\dist\index.js:10:3417)][0m
+    [2m[at async N (C:\Users\nawal\Dow
+nloads\vertex.app\node_modules\@tailwin
+dcss\postcss\dist\index.js:10:3979)][0
+m
+
+> Build error occurred
+Error: Turbopack build failed with 1 
+errors:
+./app/globals.css
+Error evaluating Node.js code
+CssSyntaxError: tailwindcss: C:\Users\n
+awal\Downloads\vertex.app\app\globals.c
+ss:1:1: Cannot apply unknown utility 
+class `border-border`
+    at Input.error (node_modules/postcs
+s/lib/input.js:135:16) [C:\Users\nawal\
+Downloads\vertex.app\.next\build\chunks
+\node_modules_fe693df6._.js:4651:22]
+    at Root.error (node_modules/postcss
+/lib/node.js:146:32) [C:\Users\nawal\Do
+wnloads\vertex.app\.next\build\chunks\n
+ode_modules_fe693df6._.js:928:38]
+    [at Object.Once (C:\Users\nawal\Dow
+nloads\vertex.app\node_modules\@tailwin
+dcss\postcss\dist\index.js:10:6913)]
+    at async LazyResult.runAsync (node_
+modules/postcss/lib/lazy-result.js:293:
+11) [C:\Users\nawal\Downloads\vertex.ap
+p\.next\build\chunks\node_modules_fe693
+df6._.js:6214:21]
+    at async transform (turbopack:///[t
+urbopack-node]/transforms/postcss.ts:70
+:34) [C:\Users\nawal\Downloads\vertex.a
+pp\.next\build\chunks\[root-of-the-serv
+er]__51225daf._.js:146:36]
+    at async run (turbopack:///[turbopa
+ck-node]/ipc/evaluate.ts:92:23) [C:\Use
+rs\nawal\Downloads\vertex.app\.next\bui
+ld\chunks\[root-of-the-server]__974941e
+d._.js:443:31]
+
+Import trace:
+  Client Component Browser:
+    ./app/globals.css [Client 
+Component Browser]
+    ./app/layout.tsx [Server Component]
+
+
+    at async transform (turbopack:///[t
+urbopack-node]/transforms/postcss.ts:70
+:34) [C:\Users\nawal\Downloads\vertex.a
+pp\.next\build\chunks\[root-of-the-serv
+er]__51225daf._.js:146:36])
+    at async run (turbopack:///[turbopa
+ck-node]/ipc/evaluate.ts:92:23) [C:\Use
+rs\nawal\Downloads\vertex.app\.next\bui
+ld\chunks\[root-of-the-server]__974941e
+d._.js:443:31])

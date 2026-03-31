@@ -1,0 +1,142 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+}
+
+model User {
+  id            String    @id @default(cuid())
+  email         String    @unique
+  name          String?
+  plan          Plan      @default(FREE)
+  portfolio     Portfolio[]
+  alerts        Alert[]
+  presets       Preset[]
+  createdAt     DateTime  @default(now())
+}
+
+enum Plan {
+  FREE
+  PRO
+  ELITE
+}
+
+model Stock {
+  id            String      @id @default(cuid())
+  symbol        String      @unique  // "RELIANCE"
+  nsSymbol      String      @unique  // "RELIANCE.NS" for Yahoo Finance
+  name          String
+  sector        String
+  industry      String?
+  marketCapType String      // "large" | "mid" | "small" | "micro"
+  exchange      String      @default("NSE")
+  isin          String?     @unique
+  financials    Financials?
+  portfolio     Portfolio[]
+  lastSynced    DateTime?
+  createdAt     DateTime    @default(now())
+}
+
+model Financials {
+  id              String   @id @default(cuid())
+  stockId         String   @unique
+  stock           Stock    @relation(fields: [stockId], references: [id])
+
+  // Price data
+  currentPrice    Float
+  open            Float?
+  high            Float?
+  low             Float?
+  previousClose   Float?
+  change          Float?
+  changePercent   Float?
+  volume          BigInt?
+  avgVolume       BigInt?
+
+  // 52-week
+  weekHigh52      Float?
+  weekLow52       Float?
+
+  // Valuation
+  pe              Float?
+  pb              Float?
+  ps              Float?
+  evEbitda        Float?
+  dividendYield   Float?
+  eps             Float?
+  bookValue       Float?
+  marketCap       BigInt?
+
+  // Quality
+  roe             Float?
+  roce            Float?
+  roa             Float?
+  debtEquity      Float?
+  currentRatio    Float?
+  interestCoverage Float?
+
+  // Growth
+  revenueGrowthYoy  Float?
+  profitGrowthYoy   Float?
+  revCagr3y         Float?
+
+  // Shareholding (%)
+  promoterHolding Float?
+  fiiHolding      Float?
+  diiHolding      Float?
+  publicHolding   Float?
+
+  updatedAt       DateTime @updatedAt
+}
+
+model Portfolio {
+  id          String   @id @default(cuid())
+  userId      String
+  user        User     @relation(fields: [userId], references: [id])
+  stockId     String
+  stock       Stock    @relation(fields: [stockId], references: [id])
+  quantity    Float
+  buyPrice    Float
+  buyDate     DateTime?
+  exchange    String   @default("NSE")
+  notes       String?
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
+
+  @@index([userId])
+}
+
+model Alert {
+  id          String      @id @default(cuid())
+  userId      String
+  user        User        @relation(fields: [userId], references: [id])
+  symbol      String
+  type        AlertType
+  condition   String      // "price_above", "price_below", "change_percent_above"
+  targetValue Float
+  message     String?
+  triggered   Boolean     @default(false)
+  triggeredAt DateTime?
+  active      Boolean     @default(true)
+  createdAt   DateTime    @default(now())
+}
+
+enum AlertType {
+  PRICE
+  PERCENT_CHANGE
+  VOLUME
+  WEEK_HIGH_52
+  WEEK_LOW_52
+  EARNINGS
+}
+
+model Preset {
+  id      String @id @default(cuid())
+  userId  String
+  user    User   @relation(fields: [userId], references: [id])
+  name    String
+  filters Json   // Store filter object as JSON
+  createdAt DateTime @default(now())
+}

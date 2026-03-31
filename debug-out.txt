@@ -1,0 +1,18 @@
+prisma:error 
+Invalid `prisma.user.upsert()` invocation in
+C:\Users\nawal\Downloads\vertex.app\test.ts:5:23
+
+  2 
+  3 async function test() {
+  4   try {
+→ 5     await prisma.user.upsert(
+
+prisma:error 
+Invalid `prisma.stock.findFirst()` invocation in
+C:\Users\nawal\Downloads\vertex.app\test.ts:21:38
+
+  18 }
+  19 
+  20 try {
+→ 21   const stock = await prisma.stock.findFirst(
+
