@@ -1,38 +1,52 @@
 # QUANTR
 ### Invest with Precision
 
-Quantr is India's precision-built financial research platform for serious equity investors. It combines a Bloomberg-grade stock screener, deep company fundamentals, AI-powered portfolio analysis, and a personal portfolio tracker in a clean, fast, mobile-first interface built specifically for the Indian market (NSE/BSE).
+Quantr is a quantitative financial research and portfolio intelligence platform built for the modern Indian equity investor. It gives every serious investor access to the same quality of financial data and analysis that institutional desks have had for decades — presented in a clean, fast, and distraction-free interface.
+
+Built specifically for the Indian market. NSE and BSE listed equities. No ads. No noise.
 
 ---
 
-## Overview
+## The Problem
 
-The Indian retail investor market is growing at an unprecedented pace. Yet the tools available remain either too simplistic or too cluttered. Quantr fills that gap. It is built for the investor who researches before buying, runs screeners, reads financial statements, and wants one platform that does it all, without the noise.
+The Indian retail investor market crossed 13 crore demat accounts in 2024, yet the research tools available are either too shallow for serious investors or too cluttered with ads and irrelevant content. No platform combines a powerful stock screener, deep company fundamentals, and a personal portfolio tracker in one clean product built for the modern investor.
+
+Quantr is that platform.
 
 ---
 
 ## Features
 
 ### Stock Screener
-Filter the entire NSE/BSE universe across 20+ fundamental and price metrics including valuation, profitability, leverage, growth, dividends, and quality indicators. Save and share screener presets via unique URL. Results render as a sortable, paginated table with configurable columns.
+Filter the entire NSE/BSE universe across 20+ fundamental and price metrics. Valuation, profitability, leverage, growth, dividend, and quality filters — all combinable. Results render as a sortable, paginated table with configurable columns. Screener presets can be saved and shared via a unique URL.
 
 ### Company Intelligence
-Every listed company has a dedicated page with six focused tabs — Overview, Financials (5Y annual + 8Q quarterly), Ratios with 5-year sparklines, Peer Comparison, Shareholding pattern, and an interactive Price Chart with OHLCV data and moving averages.
+Every listed company has a dedicated research page covering six areas — a key stats overview, five-year financial statements (income, balance sheet, cash flow), ratio history with trend sparklines, auto-generated peer comparison, shareholding pattern breakdown by quarter, and an interactive OHLCV price chart with moving averages.
 
 ### Portfolio Tracker
-Add transactions with symbol, quantity, buy price, and date. Quantr calculates weighted average cost basis, unrealised P&L, XIRR returns, and day change impact across all holdings. Visualised through allocation charts by stock, sector, and market cap band.
+Tracks a personal investment portfolio with full transaction history. Calculates weighted average cost basis, unrealised P&L, XIRR returns, and day change impact. Portfolio analytics include allocation breakdown by stock, sector, and market cap band — with a sector concentration risk indicator.
 
 ### Portfolio GPT
-An AI-powered portfolio analyst built into Quantr. Ask questions about your portfolio in plain English — sector concentration, risk exposure, return attribution, and benchmark comparisons. Powered by the Anthropic Claude API.
+An AI-powered analyst built into the portfolio layer. Answers plain-English questions about your holdings — sector exposure, risk concentration, return attribution, and benchmark comparisons. Powered by the Anthropic Claude API.
 
-### Market Intelligence Dashboard
-Live Nifty 50, Sensex, Bank Nifty, and Nifty IT tiles with intraday sparklines. Sector heatmap colour-coded by percentage change. Top gainers and losers, 52-week high/low breakers, and most viewed companies on Quantr — all in one view.
+### Market Dashboard
+A live market overview showing Nifty 50, Sensex, Bank Nifty, and Nifty IT with intraday sparklines. Includes a sector heatmap colour-coded by percentage change, top session gainers and losers, 52-week high and low breakers, and the most viewed stocks on Quantr.
 
 ### Watchlist
-Track stocks across devices and sessions with live price, day change, and 52-week range bar per stock. One-click navigation to the full company page.
+Persistent stock watchlist across devices and sessions. Shows live price, day change percentage, and 52-week range position per stock.
 
 ### Global Search
-Instant autocomplete after two characters. Search by symbol, company name, or sector. Fully keyboard navigable with a full-screen overlay on mobile.
+Instant autocomplete across all NSE/BSE listed companies. Searchable by symbol, company name, or sector. Fully keyboard navigable.
+
+---
+
+## How It Is Built
+
+Quantr is a server-side rendered web application built on Next.js 14 using the App Router. All pages that need to rank on search engines, particularly the company intelligence pages, are fully server-side rendered with dynamic meta tags and structured data for SEO.
+
+Financial data comes from external APIs (Yahoo Finance, Polygon.io, Alpha Vantage) and is ingested into a PostgreSQL database on a scheduled cron job. Live prices refresh every three minutes during market hours. Fundamental data updates daily. All frontend data is served through internal Next.js API routes : the client never talks directly to the database.
+
+The screener runs parameterised SQL queries against the database, making it fast and scalable across the full NSE/BSE universe. User data ; portfolios, watchlists, and screener presets is stored persistently in PostgreSQL and tied to authenticated sessions.
 
 ---
 
@@ -59,76 +73,46 @@ Instant autocomplete after two characters. Search by symbol, company name, or se
 
 ---
 
-## Database
+## Data Architecture
+```
+External APIs (Yahoo Finance, Polygon, Alpha Vantage)
+                        ↓
+              Cron job every 3 minutes
+                        ↓
+              PostgreSQL via Supabase
+                        ↓
+          Next.js internal API routes
+                        ↓
+                  Frontend UI
+```
 
-Quantr uses PostgreSQL (hosted on Supabase) with Prisma ORM. The schema covers users, stocks master list, daily OHLCV prices, financial statements, pre-calculated ratios, shareholding patterns, portfolio holdings, watchlist, and screener presets. Live prices are fetched from external APIs every 3 minutes during market hours and cached in the database for performance.
+The database stores the full company master list, daily OHLCV price history, financial statements, pre-calculated ratios, shareholding patterns, user portfolios, watchlists, and screener presets. Live prices are never fetched directly on page load — they are always served from the database cache for performance and reliability.
 
 ---
 
-## Project Structure
-```
-vertex.app/
-├── app/                  Next.js App Router pages
-│   ├── (dashboard)/      Dashboard and market overview
-│   ├── stocks/[symbol]/  Company intelligence pages
-│   ├── portfolio/        Portfolio tracker
-│   ├── screener/         Stock screener
-│   └── api/              Internal API routes
-├── components/           Reusable UI components
-├── lib/                  Utility functions and DB client
-├── prisma/               Database schema and migrations
-├── store/                Zustand state management
-├── hooks/                Custom React hooks
-├── scripts/              Data ingestion and cron scripts
-└── public/               Static assets
-```
+## Performance Targets
+
+| Metric | Target |
+|---|---|
+| Largest Contentful Paint | Under 2.5 seconds |
+| Time to First Byte | Under 400ms |
+| Price data freshness | Maximum 3 minutes stale during market hours |
+| Screener query time | Under 500ms for full NSE/BSE universe |
+| Uptime | 99.5% (Vercel SLA) |
 
 ---
 
-## Getting Started
-```bash
-git clone https://github.com/Adityanawle1/vertex.app.git
-cd vertex.app
-npm install
-```
+## Roadmap
 
-Create a `.env.local` file in the root with the following variables:
-```env
-DATABASE_URL=
-NEXT_PUBLIC_SUPABASE_URL=
-NEXT_PUBLIC_SUPABASE_ANON_KEY=
-NEXTAUTH_SECRET=
-NEXTAUTH_URL=http://localhost:3000
-ANTHROPIC_API_KEY=
-YAHOO_FINANCE_API_KEY=
-POLYGON_API_KEY=
-SENTRY_DSN=
-```
+**Shipped**
+Stock screener, company intelligence pages, portfolio tracker with XIRR, watchlist, market dashboard, global search, Portfolio GPT
 
-Then run the database migrations and start the development server:
-```bash
-npx prisma migrate dev
-npm run dev
-```
+**In Progress**
+Earnings alert engine, Quantr Score (proprietary quality composite), news sentiment feed
 
-Open [http://localhost:3000](http://localhost:3000) to see the app.
+**Planned**
+Backtesting engine, technical indicators (RSI, MACD, Bollinger Bands), mutual fund overlap analyser, mobile app (React Native), public screener marketplace, international equities (NYSE/NASDAQ)
 
 ---
 
-## API Reference
-
-| Endpoint | Method | Description |
-|---|---|---|
-| `/api/screener` | POST | Run filter query, return paginated results |
-| `/api/company/[symbol]` | GET | Full company data bundle |
-| `/api/company/[symbol]/chart` | GET | OHLCV data for price chart |
-| `/api/portfolio` | GET POST DELETE | User holdings CRUD |
-| `/api/watchlist` | GET POST DELETE | User watchlist CRUD |
-| `/api/search` | GET | Autocomplete search results |
-| `/api/market` | GET | Indices, movers, heatmap data |
-| `/api/screener/presets` | GET POST | Save and load screener presets |
-| `/api/portfolio-gpt` | POST | AI portfolio analysis |
-
-
-*Quantr is private and confidential. All rights reserved © 2026 Quantr.*
-
+*India's precision-built financial research platform. © 2026 Quantr.*
