@@ -1,13 +1,13 @@
 # QUANTR
 ### Invest with Precision
 
-Quantr is India's precision-built financial research platform for serious equity investors. It combines a Bloomberg-grade stock screener, deep company fundamentals, AI-powered portfolio analysis, and a personal portfolio tracker — in a clean, fast, mobile-first interface built specifically for the Indian market (NSE/BSE).
+Quantr is India's precision-built financial research platform for serious equity investors. It combines a Bloomberg-grade stock screener, deep company fundamentals, AI-powered portfolio analysis, and a personal portfolio tracker in a clean, fast, mobile-first interface built specifically for the Indian market (NSE/BSE).
 
 ---
 
 ## Overview
 
-The Indian retail investor market is growing at an unprecedented pace. Yet the tools available remain either too simplistic or too cluttered. Quantr fills that gap. It is built for the investor who researches before buying, runs screeners, reads financial statements, and wants one platform that does it all — without the noise.
+The Indian retail investor market is growing at an unprecedented pace. Yet the tools available remain either too simplistic or too cluttered. Quantr fills that gap. It is built for the investor who researches before buying, runs screeners, reads financial statements, and wants one platform that does it all, without the noise.
 
 ---
 
