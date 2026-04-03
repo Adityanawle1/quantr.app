@@ -1,15 +1,30 @@
-﻿test-db.ts(6,5): error TS2353: Object literal may only specify known properties, and 'datasources' does not exist in type 'Subset<PrismaClientOptions, PrismaClientOptions>'.
-test-db.ts(22,5): error TS2353: Object literal may only specify known properties, and 'datasources' does not exist in type 'Subset<PrismaClientOptions, PrismaClientOptions>'.
-tests/check-db.ts(7,14): error TS2353: Object literal may only specify known properties, and 'sales_growth' does not exist in type 'FinancialsWhereInput'.
-tests/check-db.ts(13,15): error TS2551: Property 'stock' does not exist on type '{ id: string; change: number | null; stockId: string; updatedAt: Date; currentPrice: number; open: number | null; high: number | null; low: number | null; previousClose: number | null; ... 25 more ...; publicHolding: number | null; }'. Did you mean 'stockId'?
-tests/check-db.ts(14,21): error TS2339: Property 'sales_growth' does not exist on type '{ id: string; change: number | null; stockId: string; updatedAt: Date; currentPrice: number; open: number | null; high: number | null; low: number | null; previousClose: number | null; ... 25 more ...; publicHolding: number | null; }'.
-tests/check-db.ts(15,17): error TS2339: Property 'toNumber' does not exist on type 'number'.
-tests/check-db.ts(16,19): error TS2339: Property 'toNumber' does not exist on type 'number'.
-tests/check-db.ts(17,11): error TS2339: Property 'pe_ratio' does not exist on type '{ id: string; change: number | null; stockId: string; updatedAt: Date; currentPrice: number; open: number | null; high: number | null; low: number | null; previousClose: number | null; ... 25 more ...; publicHolding: number | null; }'.
-tmp-verify-yf.ts(4,27): error TS2339: Property 'default' does not exist on type 'YahooFinanceWithModules<{ readonly modules: { readonly quoteCombine: { (this: ModuleThis, query: string, queryOptionsOverrides?: QuoteOptions | undefined, moduleOptions?: ModuleOptionsWithValidateTrue | undefined): Promise<...>; (this: ModuleThis, query: string, queryOptionsOverrides?: QuoteOptions | undefined, modu...'.
-tmp-yf-test.ts(6,44): error TS2339: Property 'regularMarketPrice' does not exist on type 'never'.
-tmp-yf-test.ts(6,75): error TS2339: Property 'regularMarketChange' does not exist on type 'never'.
-tmp-yf-test.ts(6,107): error TS2339: Property 'regularMarketChangePercent' does not exist on type 'never'.
-tmp-yf-test.ts(9,51): error TS2339: Property 'quotes' does not exist on type 'never'.
-tmp-yf-test.ts(10,20): error TS2339: Property 'quotes' does not exist on type 'never'.
-tmp-yf-test.ts(11,46): error TS2339: Property 'quotes' does not exist on type 'never'.
+app/api/chat/route.ts(244,11): error TS2769: No overload matches this call.
+  The last overload gave the following error.
+    Type '({ symbol }: { symbol: any; }) => Promise<{ symbol: any; price: any; change: any; peRatio: any; marketCap: any; error?: undefined; } | { error: string; symbol?: undefined; price?: undefined; change?: undefined; peRatio?: undefined; marketCap?: undefined; }>' is not assignable to type 'undefined'.
+app/api/chat/route.ts(244,29): error TS7031: Binding element 'symbol' implicitly has an 'any' type.
+app/api/chat/route.ts(248,31): error TS2339: Property 'symbol' does not exist on type 'never'.
+app/api/chat/route.ts(249,30): error TS2339: Property 'regularMarketPrice' does not exist on type 'never'.
+app/api/chat/route.ts(250,31): error TS2339: Property 'regularMarketChangePercent' does not exist on type 'never'.
+app/api/chat/route.ts(251,32): error TS2339: Property 'trailingPE' does not exist on type 'never'.
+app/api/chat/route.ts(252,34): error TS2339: Property 'marketCap' does not exist on type 'never'.
+app/api/chat/route.ts(266,11): error TS2769: No overload matches this call.
+  The last overload gave the following error.
+    Type '({ beginningValue, endingValue, years }: { beginningValue: any; endingValue: any; years: any; }) => Promise<{ error: string; cagrPercentage?: undefined; } | { cagrPercentage: number; error?: undefined; }>' is not assignable to type 'undefined'.
+app/api/chat/route.ts(266,29): error TS7031: Binding element 'beginningValue' implicitly has an 'any' type.
+app/api/chat/route.ts(266,45): error TS7031: Binding element 'endingValue' implicitly has an 'any' type.
+app/api/chat/route.ts(266,58): error TS7031: Binding element 'years' implicitly has an 'any' type.
+app/api/chat/route.ts(280,11): error TS2769: No overload matches this call.
+  The last overload gave the following error.
+    Type '(args: any) => Promise<{ projectedValue: number; totalInvested: number; estimatedReturns: number; error: string; } | { projectedValue: number; totalInvested: number; estimatedReturns: number; error?: undefined; }>' is not assignable to type 'undefined'.
+app/api/portfolio/intelligence/route.ts(42,20): error TS7006: Parameter 'h' implicitly has an 'any' type.
+app/api/portfolio/route.ts(24,53): error TS7006: Parameter 'h' implicitly has an 'any' type.
+app/api/portfolio/route.ts(27,41): error TS2345: Argument of type 'unknown[]' is not assignable to parameter of type 'string | string[]'.
+  Type 'unknown[]' is not assignable to type 'string[]'.
+    Type 'unknown' is not assignable to type 'string'.
+components/market/MarketStatusBar.tsx(39,109): error TS7053: Element implicitly has an 'any' type because expression of type 'any' can't be used to index type '{ OPEN: string; CLOSED: string; PRE_OPEN: string; }'.
+components/market/MarketStatusBar.tsx(40,79): error TS7053: Element implicitly has an 'any' type because expression of type 'any' can't be used to index type '{ OPEN: string; CLOSED: string; PRE_OPEN: string; }'.
+lib/db.ts(1,10): error TS2305: Module '"@prisma/client"' has no exported member 'PrismaClient'.
+lib/prisma.ts(1,10): error TS2305: Module '"@prisma/client"' has no exported member 'PrismaClient'.
+prisma/seed.ts(3,10): error TS2305: Module '"@prisma/client"' has no exported member 'PrismaClient'.
+test-connections.ts(1,10): error TS2305: Module '"@prisma/client"' has no exported member 'PrismaClient'.
+test-connections.ts(10,37): error TS2339: Property 'symbol' does not exist on type 'never'.

@@ -6,6 +6,7 @@ import { Plus, Loader2 } from "lucide-react";
 import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogDescription, DialogFooter } from "@/components/ui/dialog";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
+import { StockSearchAutocomplete } from "./stock-search-autocomplete";
 
 interface AddHoldingButtonProps {
     defaultSymbol?: string;
@@ -93,13 +94,17 @@ export function AddHoldingButton({ defaultSymbol = "", defaultPrice, variant = "
                             </div>
                         )}
                         <div className="space-y-2">
-                            <Label htmlFor="symbol" className="text-xs uppercase tracking-widest text-t3">Stock Symbol</Label>
-                            <Input 
-                                id="symbol" 
-                                value={symbol} 
-                                onChange={(e) => setSymbol(e.target.value.toUpperCase())} 
-                                placeholder="e.g. RELIANCE"
-                                className="uppercase bg-navy-surf border-border-subtle focus-visible:ring-lime"
+                            <Label htmlFor="symbol" className="text-xs uppercase tracking-widest text-t3">Search Stock</Label>
+                            <StockSearchAutocomplete 
+                                onSelect={(stock) => {
+                                    setSymbol(stock.symbol);
+                                    if (stock.price > 0) {
+                                        setBuyPrice(stock.price.toString());
+                                    }
+                                }}
+                                defaultValue={symbol}
+                                placeholder="e.g. RELIANCE, TATA, RELAXO"
+                                className="z-50"
                             />
                         </div>
                         <div className="grid grid-cols-2 gap-4">
