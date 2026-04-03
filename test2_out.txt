@@ -1,0 +1,32 @@
+prisma:error 
+Invalid `prisma.portfolio.findMany()` invocation in
+C:\Users\Admin\OneDrive\Documents\vertex.app\app\api\chat\route.ts:198:41
+
+  195 // Fetch user portfolio context safely in case DB is uninitialized
+  196 let holdings: any[] = [];
+  197 try {
+→ 198   holdings = await prisma.portfolio.findMany(
+
+Could not fetch portfolio context from DB. Continuing with empty portfolio. PrismaClientKnownRequestError: 
+Invalid `prisma.portfolio.findMany()` invocation in
+C:\Users\Admin\OneDrive\Documents\vertex.app\app\api\chat\route.ts:198:41
+
+  195 // Fetch user portfolio context safely in case DB is uninitialized
+  196 let holdings: any[] = [];
+  197 try {
+→ 198   holdings = await prisma.portfolio.findMany(
+
+    at Gr.handleRequestError (C:\Users\Admin\OneDrive\Documents\vertex.app\node_modules\@prisma\client\src\runtime\RequestHandler.ts:237:13)
+    at Gr.handleAndLogRequestError (C:\Users\Admin\OneDrive\Documents\vertex.app\node_modules\@prisma\client\src\runtime\RequestHandler.ts:183:12)
+    at Gr.request (C:\Users\Admin\OneDrive\Documents\vertex.app\node_modules\@prisma\client\src\runtime\RequestHandler.ts:152:12)
+    at process.processTicksAndRejections (node:internal/process/task_queues:104:5)
+    at async a (C:\Users\Admin\OneDrive\Documents\vertex.app\node_modules\@prisma\client\src\runtime\getPrismaClient.ts:938:24)
+    at async POST (C:\Users\Admin\OneDrive\Documents\vertex.app\app\api\chat\route.ts:198:18) {
+  code: 'ECONNREFUSED',
+  meta: { modelName: 'Portfolio' },
+  clientVersion: '7.5.0'
+}
+Error in PortfolioGPT: TypeError: result.toDataStreamResponse is not a function
+    at POST (C:\Users\Admin\OneDrive\Documents\vertex.app\app\api\chat\route.ts:320:19)
+    at process.processTicksAndRejections (node:internal/process/task_queues:104:5)
+Response: {"error":"Failed to generate response.","details":"TypeError: result.toDataStreamResponse is not a function","stack":"TypeError: result.toDataStreamResponse is not a function\n    at POST (C:\\Users\\Admin\\OneDrive\\Documents\\vertex.app\\app\\api\\chat\\route.ts:320:19)\n    at process.processTicksAndRejections (node:internal/process/task_queues:104:5)"}

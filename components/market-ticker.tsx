@@ -1,104 +1,46 @@
-"use client";
+'use client'
 
-import { useEffect, useState } from "react";
-import { ArrowUpRight, ArrowDownRight } from "lucide-react";
+import { TrendingUp, TrendingDown } from 'lucide-react'
 
-interface TickerItem {
-  name: string;
-  value: string;
-  change: string;
-  percent: string;
-  isPositive: boolean;
-}
-
-const FALLBACK_DATA: TickerItem[] = [
-  { name: "SENSEX", value: "76,704.13", change: "+633.29", percent: "+0.83%", isPositive: true },
-  { name: "NIFTY", value: "23,777.80", change: "+196.65", percent: "+0.83%", isPositive: true },
-  { name: "BANKNIFTY", value: "55,326.05", change: "+450.05", percent: "+0.82%", isPositive: true },
-  { name: "NIFTYIT", value: "29,559.30", change: "-798.40", percent: "-2.63%", isPositive: false },
-];
-
-function TickerEntry({ item }: { item: TickerItem }) {
-  return (
-    <span className="inline-flex items-center gap-2 px-4 whitespace-nowrap">
-      <span className="text-[13px] font-semibold text-zinc-300 tracking-wide uppercase">
-        {item.name}
-      </span>
-      <span
-        className={`text-[13px] font-bold tabular-nums px-1.5 py-0.5 rounded ${
-          item.isPositive
-            ? "text-emerald-400 bg-emerald-500/10"
-            : "text-rose-400 bg-rose-500/10"
-        }`}
-      >
-        {item.value}
-      </span>
-      <span className="inline-flex items-center gap-0.5">
-        {item.isPositive ? (
-          <ArrowUpRight className="w-3 h-3 text-emerald-400" />
-        ) : (
-          <ArrowDownRight className="w-3 h-3 text-rose-400" />
-        )}
-        <span
-          className={`text-xs font-medium tabular-nums ${
-            item.isPositive ? "text-emerald-400" : "text-rose-400"
-          }`}
-        >
-          {item.change} ({item.percent})
-        </span>
-      </span>
-    </span>
-  );
-}
+const INDICES = [
+  { name: 'SENSEX', value: '73,651.35', change: '+200.45', pChange: '0.27%', isUp: true },
+  { name: 'NIFTY 50', value: '22,405.60', change: '+55.30', pChange: '0.25%', isUp: true },
+  { name: 'BANKNIFTY', value: '47,327.85', change: '-120.10', pChange: '-0.25%', isUp: false },
+  { name: 'NIFTY IT', value: '34,980.20', change: '+450.25', pChange: '1.30%', isUp: true },
+  { name: 'NIFTY AUTO', value: '20,145.75', change: '+12.40', pChange: '0.06%', isUp: true },
+  { name: 'BSE MIDCAP', value: '38,710.20', change: '-45.60', pChange: '-0.12%', isUp: false },
+  { name: 'NIFTY PHARMA', value: '18,655.40', change: '+85.20', pChange: '0.46%', isUp: true },
+  { name: 'NIFTY METAL', value: '8,321.15', change: '-21.30', pChange: '-0.25%', isUp: false }
+]
 
 export function MarketTicker() {
-  const [items, setItems] = useState<TickerItem[]>(FALLBACK_DATA);
-
-  useEffect(() => {
-    async function fetchTicker() {
-      try {
-        const res = await fetch("/api/market/indices");
-        if (!res.ok) return;
-        const json = await res.json();
-        if (json.indices && json.indices.length > 0) {
-          const mapped: TickerItem[] = json.indices.map((idx: any) => ({
-            name: idx.name.toUpperCase().replace(" ", ""),
-            value: idx.value,
-            change: idx.change,
-            percent: idx.percent,
-            isPositive: idx.isPositive,
-          }));
-          // Append BANKNIFTY and NIFTYIT from fallback since API only returns Nifty/Sensex
-          setItems([...mapped, ...FALLBACK_DATA.slice(2)]);
-        }
-      } catch {
-        // Keep fallback
-      }
-    }
-    fetchTicker();
-    const interval = setInterval(fetchTicker, 60_000);
-    return () => clearInterval(interval);
-  }, []);
-
-  // Duplicate items for seamless loop
-  const doubled = [...items, ...items, ...items];
-
   return (
-    <div className="w-full bg-zinc-950 border-b border-zinc-800/60 overflow-hidden relative z-40">
-      {/* Fade edges */}
-      <div className="absolute left-0 top-0 bottom-0 w-16 bg-gradient-to-r from-zinc-950 to-transparent z-10 pointer-events-none" />
-      <div className="absolute right-0 top-0 bottom-0 w-16 bg-gradient-to-l from-zinc-950 to-transparent z-10 pointer-events-none" />
-
-      <div className="py-2 ticker-scroll">
-        <div className="inline-flex items-center animate-marquee">
-          {doubled.map((item, i) => (
-            <span key={i} className="inline-flex items-center">
-              <TickerEntry item={item} />
-              <span className="text-zinc-700 mx-2">•</span>
+    <div className="w-full bg-zinc-950 border-b border-zinc-800 overflow-hidden relative flex text-xs font-medium h-10 items-center select-none text-zinc-300">
+      <style dangerouslySetInnerHTML={{ __html: `
+        @keyframes marquee {
+          0% { transform: translateX(0); }
+          100% { transform: translateX(-50%); }
+        }
+        .animate-marquee {
+          animation: marquee 30s linear infinite;
+        }
+        .animate-marquee:hover {
+          animation-play-state: paused;
+        }
+      `}} />
+      <div className="flex whitespace-nowrap animate-marquee absolute left-0 flex-nowrap w-[200%] max-w-none">
+        {/* We duplicate the items to make the infinite scroll seamless */}
+        {[...INDICES, ...INDICES].map((idx, i) => (
+          <div key={i} className="flex items-center gap-2 px-6 border-r border-zinc-800 shrink-0">
+            <span className="font-semibold text-zinc-100">{idx.name}</span>
+            <span>{idx.value}</span>
+            <span className={`flex items-center gap-1 ${idx.isUp ? 'text-emerald-500' : 'text-rose-500'}`}>
+              {idx.isUp ? <TrendingUp size={12} /> : <TrendingDown size={12} />}
+              {idx.change} ({idx.pChange})
             </span>
-          ))}
-        </div>
+          </div>
+        ))}
       </div>
     </div>
-  );
+  )
 }

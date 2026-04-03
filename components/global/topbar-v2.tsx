@@ -1,8 +1,12 @@
 "use client";
 
-import { Search, Bell, Menu, ChevronUp, ChevronDown, Moon, Sun } from "lucide-react";
+import { Search, Bell, Menu, ChevronUp, ChevronDown, Moon, Sun, User, LogOut } from "lucide-react";
 import { UniversalSearch } from "@/components/universal-search";
 import { useTheme } from "next-themes";
+import { createClient } from "@/lib/supabase/client";
+import { useEffect, useState } from "react";
+import { signout } from "@/app/actions/auth";
+import Link from "next/link";
 
 export function TopbarV2() {
   const TICKERS = [
@@ -15,6 +19,16 @@ export function TopbarV2() {
   ];
 
   const { theme, setTheme } = useTheme();
+  const [user, setUser] = useState<any>(null);
+  const supabase = createClient();
+
+  useEffect(() => {
+    const getUser = async () => {
+      const { data: { user } } = await supabase.auth.getUser();
+      setUser(user);
+    };
+    getUser();
+  }, [supabase]);
 
   // Double array for seamless marquee
   const items = [...TICKERS, ...TICKERS];
@@ -56,6 +70,32 @@ export function TopbarV2() {
         <button className="w-8 h-8 bg-navy-surf border border-border-subtle rounded-lg flex items-center justify-center text-t3 transition-colors hover:border-border-subtle hover:text-t1">
           <Bell className="w-3.5 h-3.5" />
         </button>
+
+        {user ? (
+          <div className="flex items-center gap-2 pl-2 border-l border-border-subtle">
+            <div className="w-8 h-8 bg-emerald-500/10 border border-emerald-500/20 rounded-lg flex items-center justify-center text-emerald-500">
+              <User className="w-4 h-4" />
+            </div>
+            <div className="hidden lg:flex flex-col">
+              <span className="text-[10px] font-black text-t1 uppercase leading-tight truncate max-w-[100px]">
+                {user.email?.split('@')[0]}
+              </span>
+              <button 
+                onClick={() => signout()}
+                className="text-[9px] font-bold text-t3 hover:text-loss transition-colors uppercase tracking-widest text-left"
+              >
+                Sign Out
+              </button>
+            </div>
+          </div>
+        ) : (
+          <Link 
+            href="/login"
+            className="px-4 py-1.5 bg-emerald-500 text-zinc-950 font-black text-[10px] uppercase tracking-widest rounded-lg hover:bg-emerald-400 transition-all ml-2"
+          >
+            Sign In
+          </Link>
+        )}
       </div>
     </header>
   );

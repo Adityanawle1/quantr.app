@@ -4,6 +4,7 @@ import Link from "next/link";
 import { useEffect, useRef, useState, useCallback } from "react";
 import { GlobePulse } from "@/components/ui/cobe-globe-pulse";
 import { DottedSurface } from "@/components/ui/dotted-surface";
+import { MarketTicker } from "@/components/market-ticker";
 
 /* ═══════════════════════════════════════════════════════
    Quantr — Landing Page (Integrated Next.js)
@@ -235,6 +236,10 @@ export default function QuantrLanding() {
     <div className="quantr-landing">
       <style>{landingCSS}</style>
 
+      <div className="fixed top-0 left-0 right-0 z-[110]">
+        <MarketTicker />
+      </div>
+
       {/* ─── NAV ─── */}
       <nav className={`ql-nav ${scrolled ? "ql-nav--scrolled" : ""}`}>
         <div className="ql-nav__inner">
@@ -249,6 +254,7 @@ export default function QuantrLanding() {
             <a href="#features" className="ql-nav__pill">Screener</a>
             <a href="#features" className="ql-nav__pill">Analytics</a>
             <a href="#market-pulse" className="ql-nav__pill">Market Pulse</a>
+            <Link href="/login" className="ql-nav__pill">Sign In</Link>
           </div>
           <Link href="/dashboard" className="ql-btn ql-btn--primary ql-nav__cta">Launch App →</Link>
         </div>
@@ -494,7 +500,7 @@ const landingCSS = `
 
 /* ─── Nav ─── */
 .ql-nav {
-  position: fixed; inset: 0 0 auto 0; height: var(--ql-navh); z-index: 100;
+  position: fixed; inset: 40px 0 auto 0; height: var(--ql-navh); z-index: 100;
   backdrop-filter: blur(var(--ql-blur)); -webkit-backdrop-filter: blur(var(--ql-blur));
   background: rgba(8,9,10,0.6); border-bottom: 1px solid var(--ql-border);
   transition: background var(--ql-tr);

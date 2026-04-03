@@ -1,8 +1,7 @@
 import { google } from '@ai-sdk/google';
 import { generateObject } from 'ai';
 import { z } from 'zod';
-import { prisma } from '@/lib/prisma';
-import { DEMO_USER_ID } from '@/lib/auth-mock';
+import { createClient } from '@/lib/supabase/server';
 
 // Allow responses up to 30 seconds
 export const maxDuration = 30;
@@ -28,25 +27,47 @@ You are the "Vertex Portfolio Intelligence Engine." Your goal is to process user
 
 export async function GET() {
   try {
-    // Fetch user portfolio context
-    const holdings = await prisma.portfolio.findMany({
-      where: { userId: DEMO_USER_ID },
-      include: {
-        stock: {
-          include: { financials: true }
-        }
-      }
-    });
+    const supabase = await createClient();
+    const { data: { user } } = await supabase.auth.getUser();
 
-    const portfolioContext = holdings.length > 0 ? 
-      holdings.map(h => ({
-        symbol: h.stock.symbol,
-        name: h.stock.name,
-        quantity: h.quantity,
-        buyPrice: h.buyPrice,
-        currentPrice: h.stock.financials?.currentPrice || 'N/A'
-      })) 
-      : "User has an empty portfolio.";
+    if (!user) {
+      return new Response(JSON.stringify({ error: "Unauthorized" }), { status: 401 });
+    }
+
+    // Step 1: Fetch portfolios
+    const { data: rawHoldings, error: holdingsErr } = await supabase
+      .from("portfolios")
+      .select("stock_id, quantity, buy_price")
+      .eq("user_id", user.id);
+
+    if (holdingsErr) throw holdingsErr;
+
+    if (!rawHoldings || rawHoldings.length === 0) {
+      return new Response(JSON.stringify({ error: "Empty portfolio" }), { status: 200 });
+    }
+
+    // Step 2: Fetch stocks
+    const stockIds = Array.from(new Set(rawHoldings.map(h => h.stock_id)));
+    const { data: stocks, error: stocksErr } = await supabase
+      .from("stocks")
+      .select("id, symbol, name, price")
+      .in("id", stockIds);
+
+    if (stocksErr) throw stocksErr;
+
+    const stockMap = new Map(stocks?.map(s => [s.id, s]) || []);
+
+    const portfolioContext = rawHoldings.map((h: any) => {
+        const s = stockMap.get(h.stock_id);
+        if (!s) return null;
+        return {
+          symbol: s.symbol,
+          name: s.name,
+          quantity: h.quantity,
+          buyPrice: h.buy_price,
+          currentPrice: s.price || 'N/A'
+        };
+      }).filter(Boolean);
 
     const dynamicSystemPrompt = `
 ${SYSTEM_PROMPT}
@@ -91,7 +112,7 @@ Analyze this data and produce the requested JSON output.
       status: 200,
       headers: { 'Content-Type': 'application/json' },
     });
-  } catch (error) {
+  } catch (error: any) {
     console.error('Error in quNTR Intelligence Engine:', error);
     return new Response(JSON.stringify({ error: 'Failed to generate analysis.' }), {
       status: 500,

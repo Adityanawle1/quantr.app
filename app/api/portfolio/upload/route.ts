@@ -1,12 +1,26 @@
 import { NextResponse } from "next/server";
-import { prisma } from "@/lib/prisma";
-import { DEMO_USER_ID } from "@/lib/auth-mock";
+import { createClient } from "@/lib/supabase/server";
 import Papa from "papaparse";
+import crypto from "crypto";
 
 export const dynamic = "force-dynamic";
 
 export async function POST(request: Request) {
   try {
+    const supabase = await createClient();
+    const { data: { user } } = await supabase.auth.getUser();
+
+    if (!user) {
+      return NextResponse.json({ error: "Unauthorized" }, { status: 401 });
+    }
+
+    // Sync user profile
+    await supabase.from("users").upsert({
+        id: user.id,
+        email: user.email!,
+        name: user.user_metadata?.full_name || user.email?.split('@')[0],
+      });
+
     const formData = await request.formData();
     const file = formData.get("file") as File;
 
@@ -24,20 +38,10 @@ export async function POST(request: Request) {
     const rows = result.data as any[];
     const processed = [];
     const errors = [];
-
-    // Ensure user exists
-    await prisma.user.upsert({
-        where: { id: DEMO_USER_ID },
-        update: {},
-        create: {
-            id: DEMO_USER_ID,
-            email: "demo@quantr.app",
-            name: "Demo Investor",
-        }
-    });
+    const now = new Date().toISOString();
 
     for (const row of rows) {
-      const symbol = row.Symbol || row.symbol || row.Ticker || row.ticker;
+      const symbol = (row.Symbol || row.symbol || row.Ticker || row.ticker)?.toString() || "";
       const quantity = parseFloat(row.Quantity || row.quantity || row.Qty || row.qty);
       const buyPrice = parseFloat(row.Price || row.price || row.AvgPrice || row.avg_price);
 
@@ -46,30 +50,40 @@ export async function POST(request: Request) {
         continue;
       }
 
-      const stock = await prisma.stock.findFirst({
-        where: {
-          OR: [
-            { symbol: symbol.toString().toUpperCase() },
-            { nsSymbol: symbol.toString().toUpperCase().endsWith(".NS") ? symbol.toString().toUpperCase() : `${symbol.toString().toUpperCase()}.NS` }
-          ]
-        }
-      });
+      // Find stock
+      const { data: stock, error: stockErr } = await supabase
+        .from("stocks")
+        .select("id")
+        .or(`symbol.eq.${symbol.toUpperCase()},nsSymbol.eq.${symbol.toUpperCase().endsWith(".NS") ? symbol.toUpperCase() : symbol.toUpperCase() + ".NS"}`)
+        .maybeSingle();
 
-      if (!stock) {
+      if (stockErr || !stock) {
         errors.push({ symbol, error: "Stock not found in database" });
         continue;
       }
 
-      const entry = await prisma.portfolio.create({
-        data: {
-          userId: DEMO_USER_ID,
-          stockId: stock.id,
+      // Consistent naming: user_id, stock_id, buy_price, buy_date, updatedAt, createdAt
+      const { data: entry, error: insertErr } = await supabase
+        .from("portfolios")
+        .insert({
+          id: crypto.randomUUID(),
+          user_id: user.id,
+          stock_id: stock.id,
           quantity,
-          buyPrice,
-          buyDate: row.Date ? new Date(row.Date) : null
-        }
-      });
-      processed.push(entry);
+          buy_price: buyPrice,
+          buy_date: row.Date ? new Date(row.Date).toISOString() : now,
+          createdAt: now,
+          updatedAt: now
+        })
+        .select()
+        .single();
+
+      if (insertErr) {
+        console.error(`[api/portfolio/upload] Failed for ${symbol}:`, insertErr.message);
+        errors.push({ symbol, error: insertErr.message });
+      } else {
+        processed.push(entry);
+      }
     }
 
     return NextResponse.json({
