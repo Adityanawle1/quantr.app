@@ -443,7 +443,7 @@ export default function QuantrLanding() {
               <span className="ql-footer__col-title">Resources</span>
               <Link href="/dashboard">Market News</Link>
               <Link href="/dashboard">Sectors</Link>
-              <Link href="/dashboard">About</Link>
+              <Link href="/about">About</Link>
             </div>
           </div>
         </div>

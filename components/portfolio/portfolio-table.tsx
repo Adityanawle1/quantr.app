@@ -31,10 +31,10 @@ export function PortfolioTable({ holdings }: PortfolioTableProps) {
             </TableRow>
           </TableHeader>
           <TableBody>
-            {holdings.map((h) => {
+            {holdings.map((h, index) => {
               const isProfit = h.totalGain >= 0;
               return (
-                <TableRow key={h.id} className="border-border-subtle hover:bg-white/[0.03] transition-all duration-300">
+                <TableRow key={h.id ?? `${h.symbol}-${index}`} className="border-border-subtle hover:bg-white/[0.03] transition-all duration-300">
                   <TableCell className="py-4">
                     <Link href={`/stocks/${h.symbol}`} className="flex flex-col">
                       <span className="font-bold font-jakarta text-[13px] text-t1">{h.symbol}</span>
