@@ -6,6 +6,7 @@ import { MarketChart } from "@/components/dashboard/v2/market-chart";
 import { PortfolioSummary } from "@/components/dashboard/v2/portfolio-summary";
 import { SectorHeatmap } from "@/components/dashboard/v2/sector-heatmap";
 import { TopMovers } from "@/components/dashboard/v2/top-movers";
+import { MarketInternals } from "@/components/dashboard/v2/market-internals";
 import SearchBar  from "@/components/search/SearchBar";
 import { X } from "lucide-react";
 import useSWR from "swr";
@@ -59,20 +60,26 @@ export default function DashboardPage() {
         <IndexCards />
       </div>
 
-      {/* Primary Grid Layout */}
-      <div className="grid grid-cols-1 lg:grid-cols-10 gap-3.5 mb-3.5 opacity-0 animate-[fu_0.5s_cubic-bezier(0.16,1,0.3,1)_forwards] [animation-delay:0.28s]">
-        <div className="lg:col-span-7">
-          <MarketChart />
-        </div>
-        <div className="lg:col-span-3">
+      {/* 3-Column Dense Layout */}
+      <div className="grid grid-cols-1 lg:grid-cols-12 gap-3.5 opacity-0 animate-[fu_0.5s_cubic-bezier(0.16,1,0.3,1)_forwards] [animation-delay:0.28s]">
+        
+        {/* LEFT COLUMN: Portfolio & Movers */}
+        <div className="lg:col-span-3 flex flex-col gap-3.5">
           <PortfolioSummary />
+          <TopMovers />
         </div>
-      </div>
 
-      {/* Secondary Grid Layout */}
-      <div className="grid grid-cols-1 lg:grid-cols-2 gap-3.5 opacity-0 animate-[fu_0.5s_cubic-bezier(0.16,1,0.3,1)_forwards] [animation-delay:0.36s]">
-        <SectorHeatmap />
-        <TopMovers />
+        {/* CENTER COLUMN: Chart & Heatmap */}
+        <div className="lg:col-span-6 flex flex-col gap-3.5">
+          <MarketChart />
+          <SectorHeatmap />
+        </div>
+
+        {/* RIGHT COLUMN: Market Internals (Screener Data) */}
+        <div className="lg:col-span-3 flex flex-col gap-3.5">
+          <MarketInternals />
+        </div>
+
       </div>
 
     </main>

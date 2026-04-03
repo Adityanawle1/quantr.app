@@ -27,21 +27,21 @@ function TickerEntry({ item }: { item: TickerItem }) {
       <span
         className={`text-[13px] font-bold tabular-nums px-1.5 py-0.5 rounded ${
           item.isPositive
-            ? "text-emerald-400 bg-emerald-500/10"
-            : "text-rose-400 bg-rose-500/10"
+            ? "text-gain bg-[rgba(34,197,94,0.1)]"
+            : "text-loss bg-[rgba(239,68,68,0.1)]"
         }`}
       >
         {item.value}
       </span>
       <span className="inline-flex items-center gap-0.5">
         {item.isPositive ? (
-          <ArrowUpRight className="w-3 h-3 text-emerald-400" />
+          <ArrowUpRight className="w-3 h-3 text-gain" />
         ) : (
-          <ArrowDownRight className="w-3 h-3 text-rose-400" />
+          <ArrowDownRight className="w-3 h-3 text-loss" />
         )}
         <span
           className={`text-xs font-medium tabular-nums ${
-            item.isPositive ? "text-emerald-400" : "text-rose-400"
+            item.isPositive ? "text-gain" : "text-loss"
           }`}
         >
           {item.change} ({item.percent})
@@ -84,17 +84,25 @@ export function MarketTicker() {
   const doubled = [...items, ...items, ...items];
 
   return (
-    <div className="w-full bg-zinc-950 border-b border-zinc-800/60 overflow-hidden relative z-40">
-      {/* Fade edges */}
-      <div className="absolute left-0 top-0 bottom-0 w-16 bg-gradient-to-r from-zinc-950 to-transparent z-10 pointer-events-none" />
-      <div className="absolute right-0 top-0 bottom-0 w-16 bg-gradient-to-l from-zinc-950 to-transparent z-10 pointer-events-none" />
-
-      <div className="py-2 ticker-scroll">
-        <div className="inline-flex items-center animate-marquee">
+    <div 
+      className="w-full bg-navy border-b relative z-40"
+      style={{
+        borderBottom: '1px solid rgba(255,255,255,0.04)',
+        boxShadow: '0 4px 24px rgba(0,0,0,0.4)'
+      }}
+    >
+      <div 
+        className="py-2 ticker-scroll"
+        style={{
+          WebkitMaskImage: 'linear-gradient(to right, transparent 0%, black 3%, black 97%, transparent 100%)',
+          maskImage: 'linear-gradient(to right, transparent 0%, black 3%, black 97%, transparent 100%)'
+        }}
+      >
+        <div className="inline-flex items-center animate-marquee hover:[animation-play-state:paused]">
           {doubled.map((item, i) => (
-            <span key={i} className="inline-flex items-center">
+            <span key={i} className="inline-flex items-center hover:scale-105 transition-transform duration-150 ease-out cursor-default">
               <TickerEntry item={item} />
-              <span className="text-zinc-700 mx-2">•</span>
+              <span className="text-t3 mx-2 opacity-50">•</span>
             </span>
           ))}
         </div>

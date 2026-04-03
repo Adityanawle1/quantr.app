@@ -2,6 +2,7 @@
 
 import { BriefcaseBusiness, ArrowRight, Info } from "lucide-react";
 import Link from "next/link";
+import CountUp from "react-countup";
 
 const HOLDINGS = [
   {s:'RELIANCE', qty:'120 shs',val:'₹3,52,140',ret:'+18.4%',g:1,clr:'#5B9CF6'},
@@ -17,7 +18,7 @@ export function PortfolioSummary() {
   const mx = Math.max(...wd.map(Math.abs));
 
   return (
-    <div className="bg-navy-card border border-border-subtle rounded-[8px] shadow-sm overflow-hidden flex flex-col h-full">
+    <div className="flex flex-col h-full overflow-hidden bg-navy-card border border-border-subtle rounded-md">
       
       {/* Header */}
       <div className="flex items-center justify-between p-4 md:px-5 md:py-4 border-b border-border-subtle">
@@ -34,20 +35,30 @@ export function PortfolioSummary() {
       </div>
 
       {/* Main Stats */}
-      <div className="p-5 border-b border-border-subtle">
-        <div className="text-[11px] font-medium text-t2 mb-1.5">Total Value</div>
-        <div className="text-[26px] font-semibold tracking-tight text-t1">₹14,82,340</div>
-        <div className="text-[12px] font-medium text-[#3DD68C] mt-1">▲ +₹32,610 today &nbsp;·&nbsp; +2.25%</div>
+      <div className="p-5 border-b border-border-subtle relative">
+        <div className="font-sans text-[11px] font-bold text-t2 mb-1.5 uppercase tracking-wide">Total Value</div>
+        <div className="font-sans font-bold text-3xl tracking-tight leading-none text-blue-500 mb-1">
+          ₹<CountUp end={1482340} duration={0.6} separator="," />
+        </div>
+        <div className="text-[12px] font-medium text-gain mt-1">
+          ▲ +₹<CountUp end={32610} duration={0.6} separator="," /> today &nbsp;·&nbsp; +2.25%
+        </div>
       </div>
 
       {/* Weekly spark bars */}
       <div className="p-4 md:px-5 md:py-4 border-b border-border-subtle">
         <div className="text-[11px] font-medium text-t2 mb-2">This week</div>
-        <div className="flex items-end gap-1 h-[44px]">
+        <div className="flex items-end gap-2 h-[44px]">
           {wd.map((v, i) => {
             const h = Math.max(4, Math.round((Math.abs(v) / mx) * 42));
-            const bg = v === 0 ? 'rgba(255,255,255,0.07)' : v > 0 ? '#3DD68C' : '#E8627A';
-            return <div key={i} className="flex-1 rounded-t-[3px] transition-opacity cursor-pointer hover:opacity-60" style={{ height: `${h}px`, background: bg, opacity: v === 0 ? 1 : 0.75 }} />;
+            const bg = v === 0 ? 'rgba(255,255,255,0.07)' : v > 0 ? '#22c55e' : '#ef4444';
+            return (
+              <div 
+                key={i}
+                className="flex-1 rounded-t-[3px] transition-opacity cursor-pointer hover:opacity-100" 
+                style={{ height: h, background: bg, opacity: v === 0 ? 1 : 0.75 }} 
+              />
+            );
           })}
         </div>
         <div className="flex justify-between mt-1.5">
@@ -79,22 +90,22 @@ export function PortfolioSummary() {
       </div>
 
       {/* Footer Stats Grid */}
-      <div className="grid grid-cols-2 gap-px bg-highlight border-t border-border-subtle mt-auto">
-        <div className="bg-navy-surf p-4">
-          <div className="text-[11px] text-t2 font-medium mb-1">Invested</div>
-          <div className="text-[14px] font-semibold text-t1">₹12,40,000</div>
+      <div className="grid grid-cols-2 gap-px bg-border-strong border-t border-border-subtle mt-auto">
+        <div className="bg-navy p-3 text-center">
+          <div className="text-[10px] text-t3 font-bold uppercase tracking-wider mb-0.5">Invested</div>
+          <div className="text-[13px] font-mono font-bold text-t1">₹12,40,000</div>
         </div>
-        <div className="bg-navy-surf p-4">
-          <div className="text-[11px] text-t2 font-medium mb-1">Unrealised P&L</div>
-          <div className="text-[14px] font-semibold text-[#3DD68C]">+₹2,42,340</div>
+        <div className="bg-navy p-3 text-center">
+          <div className="text-[10px] text-t3 font-bold uppercase tracking-wider mb-0.5">Unrealised P&L</div>
+          <div className="text-[13px] font-mono font-bold text-gain">+₹2,42,340</div>
         </div>
-        <div className="bg-navy-surf p-4">
-          <div className="text-[11px] text-t2 font-medium mb-1">XIRR</div>
-          <div className="text-[14px] font-semibold text-[#84CC16]">19.5%</div>
+        <div className="bg-navy p-3 text-center">
+          <div className="text-[10px] text-t3 font-bold uppercase tracking-wider mb-0.5">XIRR</div>
+          <div className="text-[13px] font-mono font-bold text-gain">19.5%</div>
         </div>
-        <div className="bg-navy-surf p-4">
-          <div className="text-[11px] text-t2 font-medium mb-1">Day P&L</div>
-          <div className="text-[14px] font-semibold text-[#3DD68C]">+₹32,610</div>
+        <div className="bg-navy p-3 text-center">
+          <div className="text-[10px] text-t3 font-bold uppercase tracking-wider mb-0.5">Day P&L</div>
+          <div className="text-[13px] font-mono font-bold text-gain">+₹32,610</div>
         </div>
       </div>
     </div>

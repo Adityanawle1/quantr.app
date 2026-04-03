@@ -21,25 +21,25 @@ export function TopMovers() {
   return (
     <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
       {/* Top Gainers */}
-      <div className="bg-navy-card border border-border-subtle rounded-[8px] overflow-hidden flex flex-col shadow-sm">
-        <div className="px-5 py-4 border-b border-border-subtle flex items-center justify-between bg-black/20">
+      <div className="flex flex-col">
+        <div className="px-1 py-4 border-b border-border-subtle flex items-center justify-between">
           <div className="flex items-center gap-2">
-            <div className="w-8 h-8 rounded shrink-0 bg-navy flex items-center justify-center border border-border-subtle">
-              <TrendingUp className="w-4 h-4 text-gain" />
+            <div className="w-8 h-8 rounded shrink-0 flex items-center justify-center">
+              <TrendingUp className="w-5 h-5 text-gain" />
             </div>
-            <h3 className="text-[14px] font-semibold tracking-tight text-t1 mb-0.5">Top Gainers</h3>
+            <h3 className="font-display text-[18px] font-semibold tracking-tight text-t1 mb-0.5">Top Gainers</h3>
           </div>
-          <span className="text-[11px] text-t2 font-medium">Nifty 50</span>
+          <span className="text-[11px] text-t2 font-medium bg-black/20 px-2 py-1 rounded">Nifty 50</span>
         </div>
         
-        <div className="divide-y divide-white/5 flex-1">
+        <div className="flex-1">
           {topGainers.map((s: any, i: number) => (
-            <Link href={`/stocks/${s.symbol}`} key={s.symbol} className="px-5 py-3 hover:bg-highlight-hov transition-colors flex items-center justify-between group">
-              <div className="flex items-center gap-3">
-                <span className="font-mono text-[10px] text-t3 w-3">{i + 1}</span>
+            <Link href={`/stocks/${s.symbol}`} key={s.symbol} className="py-4 border-b border-white/5 hover:bg-[rgba(255,255,255,0.02)] transition-colors flex items-center justify-between group -mx-2 px-2 rounded-lg">
+              <div className="flex items-center gap-4">
+                <span className="font-mono text-[11px] text-t3 w-4 opacity-50">{i + 1}</span>
                 <div>
-                  <div className="text-[13px] font-semibold text-t1 group-hover:text-[#3DD68C] transition-colors">{s.symbol}</div>
-                  <div className="text-[11px] text-t3 font-medium max-w-[120px] truncate">{s.name}</div>
+                  <div className="text-[14px] font-semibold text-t1 group-hover:text-gain transition-colors">{s.symbol}</div>
+                  <div className="text-[12px] text-t2 font-medium max-w-[140px] truncate">{s.name}</div>
                 </div>
               </div>
               
@@ -56,25 +56,25 @@ export function TopMovers() {
       </div>
 
       {/* Top Losers */}
-      <div className="bg-navy-card border border-border-subtle rounded-[8px] overflow-hidden flex flex-col shadow-sm">
-        <div className="px-5 py-4 border-b border-border-subtle flex items-center justify-between bg-black/20">
+      <div className="flex flex-col mt-6 md:mt-0">
+        <div className="px-1 py-4 border-b border-border-subtle flex items-center justify-between">
           <div className="flex items-center gap-2">
-            <div className="w-8 h-8 rounded shrink-0 bg-navy flex items-center justify-center border border-border-subtle">
-              <TrendingDown className="w-4 h-4 text-loss" />
+            <div className="w-8 h-8 rounded shrink-0 flex items-center justify-center">
+              <TrendingDown className="w-5 h-5 text-loss" />
             </div>
-            <h3 className="text-[14px] font-semibold tracking-tight text-t1 mb-0.5">Top Losers</h3>
+            <h3 className="font-display text-[18px] font-semibold tracking-tight text-t1 mb-0.5">Top Losers</h3>
           </div>
-          <span className="text-[11px] text-t2 font-medium">Nifty 50</span>
+          <span className="text-[11px] text-t2 font-medium bg-black/20 px-2 py-1 rounded">Nifty 50</span>
         </div>
         
-        <div className="divide-y divide-white/5 flex-1">
+        <div className="flex-1">
           {topLosers.map((s: any, i: number) => (
-            <Link href={`/stocks/${s.symbol}`} key={s.symbol} className="px-5 py-3 hover:bg-highlight-hov transition-colors flex items-center justify-between group">
-              <div className="flex items-center gap-3">
-                <span className="font-mono text-[10px] text-t3 w-3">{i + 1}</span>
+            <Link href={`/stocks/${s.symbol}`} key={s.symbol} className="py-4 border-b border-white/5 hover:bg-[rgba(255,255,255,0.02)] transition-colors flex items-center justify-between group -mx-2 px-2 rounded-lg">
+              <div className="flex items-center gap-4">
+                <span className="font-mono text-[11px] text-t3 w-4 opacity-50">{i + 1}</span>
                 <div>
-                  <div className="text-[13px] font-semibold text-t1 group-hover:text-[#E8627A] transition-colors">{s.symbol}</div>
-                  <div className="text-[11px] text-t3 font-medium max-w-[120px] truncate">{s.name}</div>
+                  <div className="text-[14px] font-semibold text-t1 group-hover:text-loss transition-colors">{s.symbol}</div>
+                  <div className="text-[12px] text-t2 font-medium max-w-[140px] truncate">{s.name}</div>
                 </div>
               </div>
               

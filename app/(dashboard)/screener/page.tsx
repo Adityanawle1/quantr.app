@@ -54,13 +54,13 @@ export default function ScreenerPage() {
                 <div
                   key={s.id}
                   onClick={() => setActiveScreen(s.id)}
-                  className={`p-4 rounded-xl border cursor-pointer transition-all duration-200 group flex flex-col items-start gap-4 ${isActive ? 'bg-blue-500/10 border-blue-500/30 shadow-[0_0_20px_rgba(59,130,246,0.05)]' : 'bg-navy-surf border-border-subtle hover:bg-highlight-hov hover:border-border-subtle'}`}
+                  className={`p-4 rounded-[12px] border cursor-pointer transition-all duration-300 group flex flex-col items-start gap-4 ${isActive ? 'bg-[rgba(212,175,95,0.06)] border-[rgba(212,175,95,0.3)] shadow-[0_0_20px_rgba(212,175,95,0.05),inset_0_2px_10px_rgba(0,0,0,0.5)] transform scale-[0.98]' : 'bg-navy-surf border-border-subtle hover:bg-highlight-hov hover:border-[rgba(212,175,95,0.15)]'}`}
                 >
-                  <div className={`text-[11px] font-bold px-2 py-1 rounded bg-black/30 border transition-colors ${isActive ? 'text-blue-400 border-blue-500/20' : 'text-t2 border-border-subtle group-hover:text-slate-300'}`}>
+                  <div className={`text-[11px] font-bold px-2 py-1 rounded-[6px] bg-black/40 border transition-colors ${isActive ? 'text-[#d4af5f] border-[rgba(212,175,95,0.2)]' : 'text-t2 border-border-subtle group-hover:text-[#d4af5f]'}`}>
                     {s.badge}
                   </div>
                   <div>
-                    <h3 className={`text-sm font-bold mb-1 transition-colors ${isActive ? 'text-blue-400' : 'text-t1'}`}>{s.label}</h3>
+                    <h3 className={`font-display text-[16px] font-bold mb-1 transition-colors ${isActive ? 'text-[#d4af5f]' : 'text-t1'}`}>{s.label}</h3>
                     <p className="text-xs text-t3 font-medium leading-relaxed">{s.desc}</p>
                   </div>
                 </div>
@@ -82,7 +82,7 @@ export default function ScreenerPage() {
            <select 
               value={filterSector} 
               onChange={(e) => setFilterSector(e.target.value)}
-              className="bg-navy-surf border border-border-subtle text-xs text-t1 rounded-lg px-3 py-1.5 outline-none focus:border-blue-500/50"
+              className="bg-navy-surf border border-border-subtle text-xs text-t1 rounded-lg px-3 py-1.5 outline-none focus:border-[rgba(212,175,95,0.4)] focus:ring-1 focus:ring-[rgba(212,175,95,0.2)] transition-shadow"
             >
              <option value="">All Sectors</option>
              <option value="IT">Information Technology</option>
@@ -122,10 +122,10 @@ export default function ScreenerPage() {
                       onClick={() => router.push(`/stocks/${s.symbol}`)}
                       className="hover:bg-highlight-hov cursor-pointer transition-colors group"
                     >
-                      <td className="px-6 py-4 font-bold font-mono text-t1 group-hover:text-blue-400 transition-colors">{s.symbol}</td>
+                      <td className="px-6 py-4 font-bold font-mono text-t1 group-hover:text-[#d4af5f] transition-colors">{s.symbol}</td>
                       <td className="px-6 py-4 text-[#8A9DB8] max-w-[200px] truncate">{s.name}</td>
                       <td className="px-6 py-4 font-mono text-right text-t1">₹{s.price?.toLocaleString('en-IN', { maximumFractionDigits: 2 })}</td>
-                      <td className={`px-6 py-4 font-mono text-right font-bold ${s.change >= 0 ? 'text-emerald-400' : 'text-rose-400'}`}>
+                      <td className={`px-6 py-4 font-mono text-right font-bold ${s.change >= 0 ? 'text-gain' : 'text-loss'}`}>
                         {s.change >= 0 ? '+' : ''}{s.change?.toFixed(2)}%
                       </td>
                       <td className="px-6 py-4 font-mono text-right text-[#8A9DB8]">{s.marketCapFormatted || '-'}</td>

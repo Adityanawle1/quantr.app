@@ -29,13 +29,13 @@ export default function PortfolioIntelligencePage() {
   return (
     <div className="flex flex-col h-[calc(100vh-64px)] md:h-screen bg-navy dark text-t1 font-sans">
       {/* Header */}
-      <div className="flex items-center gap-3 px-6 py-4 border-b border-border-subtle bg-navy/80 backdrop-blur-md sticky top-0 z-10 shrink-0">
-        <div className="w-10 h-10 rounded-lg bg-blue-500/10 flex items-center justify-center">
-          <BrainCircuit className="w-5 h-5 text-blue-400" />
+      <div className="flex items-center gap-3 px-6 py-4 border-b border-border-subtle bg-navy sticky top-0 z-10 shrink-0">
+        <div className="w-8 h-8 rounded-md bg-navy-surf border border-border-subtle flex items-center justify-center">
+          <BrainCircuit className="w-4 h-4 text-t2" />
         </div>
         <div>
-          <h1 className="text-lg font-semibold text-t1 tracking-tight">Portfolio GPT</h1>
-          <p className="text-xs text-t3 font-medium">Your AI Investment Research Analyst</p>
+          <h1 className="font-sans text-[18px] font-bold text-t1 tracking-tight">Portfolio GPT</h1>
+          <p className="text-[11px] text-t3 font-medium uppercase tracking-widest">AI Analyst</p>
         </div>
       </div>
 
@@ -43,10 +43,10 @@ export default function PortfolioIntelligencePage() {
       <div className="flex-1 overflow-y-auto w-full max-w-4xl mx-auto flex flex-col gap-6 p-6 scroll-smooth">
         {messages.length === 0 ? (
           <div className="flex flex-col items-center justify-center h-full text-center max-w-lg mx-auto gap-4 mt-20">
-            <div className="w-16 h-16 rounded-2xl bg-gradient-to-br from-blue-500/20 to-purple-500/20 flex items-center justify-center border border-white/5 shadow-2xl">
-              <BrainCircuit className="w-8 h-8 text-blue-400" />
+            <div className="w-16 h-16 rounded-md bg-navy-card flex items-center justify-center border border-border-subtle">
+              <BrainCircuit className="w-8 h-8 text-t2" />
             </div>
-            <h2 className="text-2xl font-bold tracking-tight">How can I help you analyze?</h2>
+            <h2 className="font-sans text-[24px] font-bold tracking-tight">How can I help you analyze?</h2>
             <p className="text-sm text-t3 leading-relaxed">
               I have full access to your Quantr portfolio, watchlists, and market data. Ask me to break down your performance, analyze an Indian stock, or explain a financial concept.
             </p>
@@ -71,15 +71,15 @@ export default function PortfolioIntelligencePage() {
           messages.map(m => (
             <div key={m.id} className={`flex gap-4 ${m.role === 'user' ? 'justify-end' : 'justify-start'}`}>
               {m.role !== 'user' && (
-                <div className="w-8 h-8 rounded-full bg-blue-500/20 py-1 shrink-0 flex items-center justify-center border border-blue-500/30 mt-1">
-                  <Bot className="w-4 h-4 text-blue-400" />
+                <div className="w-8 h-8 rounded-full bg-navy-surf flex items-center justify-center border border-border-subtle shrink-0">
+                  <Bot className="w-4 h-4 text-t2" />
                 </div>
               )}
               
-              <div className={`px-5 py-4 rounded-2xl max-w-[85%] text-sm leading-relaxed shadow-sm ${
+              <div className={`px-5 py-4 max-w-[85%] text-sm leading-relaxed rounded-md ${
                 m.role === 'user' 
-                  ? 'bg-blue-600/90 text-white rounded-tr-sm border border-blue-500/50' 
-                  : 'bg-navy-card border border-border-subtle text-t2 rounded-tl-sm shadow-black/20'
+                  ? 'bg-blue-600/90 text-white rounded-tr-none' 
+                  : 'bg-navy-card border border-border-subtle text-t2 rounded-tl-none'
               }`}>
                 <div className="whitespace-pre-wrap">
                   {m.parts && m.parts.length > 0 
@@ -89,8 +89,8 @@ export default function PortfolioIntelligencePage() {
               </div>
 
               {m.role === 'user' && (
-                <div className="w-8 h-8 rounded-full bg-gradient-to-br from-lime to-[#57FFD8] shrink-0 flex items-center justify-center mt-1">
-                   <User className="w-4 h-4 text-navy shadow-sm" />
+                <div className="w-8 h-8 rounded-full bg-blue-600 shrink-0 flex items-center justify-center border border-border-subtle">
+                   <User className="w-4 h-4 text-white" />
                 </div>
               )}
             </div>
@@ -113,19 +113,19 @@ export default function PortfolioIntelligencePage() {
       </div>
 
       {/* Input Area */}
-      <div className="p-4 bg-navy shrink-0 border-t border-border-subtle w-full flex justify-center sticky bottom-0">
+      <div className="p-4 bg-navy shrink-0 border-t border-border-subtle w-full flex justify-center sticky bottom-0 z-10">
         <form onSubmit={handleSubmit} className="flex gap-3 max-w-4xl w-full relative group items-center">
           <input
-            className="flex-1 bg-navy-card border border-border-subtle text-t1 text-sm rounded-xl pl-5 pr-14 py-4 focus:outline-none focus:ring-2 focus:ring-blue-500/50 focus:border-blue-500/50 transition-all placeholder:text-t3 shadow-inner"
+            className="flex-1 bg-navy-card border border-border-subtle text-t1 text-sm rounded-md pl-4 pr-12 py-3 focus:outline-none focus:ring-1 focus:ring-blue-500/50 focus:border-blue-500/50 transition-all placeholder:text-t3"
             value={input}
             onChange={handleInputChange}
-            placeholder="Ask Portfolio GPT about your investments or market terms..."
+            placeholder="Ask Portfolio GPT..."
             disabled={isLoading}
           />
           <button 
             type="submit" 
             disabled={isLoading || !input.trim()}
-            className="absolute right-2 top-1/2 -translate-y-1/2 p-2.5 rounded-lg bg-blue-600 hover:bg-blue-500 text-white disabled:opacity-50 disabled:cursor-not-allowed transition-all shadow-md group-focus-within:shadow-blue-500/20"
+            className="absolute right-1 top-1/2 -translate-y-1/2 p-2 rounded bg-blue-600 hover:bg-blue-500 text-white disabled:bg-border-subtle disabled:text-t3 disabled:cursor-not-allowed transition-colors"
           >
             <Send className="w-4 h-4" />
           </button>

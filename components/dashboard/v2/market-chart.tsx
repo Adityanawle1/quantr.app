@@ -116,9 +116,9 @@ export function MarketChart({ data, symbol, name }: MarketChartProps) {
       : (activeIndex?.changePercent || 0) >= 0;
 
     const series = chartRef.current.addSeries(AreaSeries, {
-      lineColor: isPositive ? "#3DD68C" : "#E8627A",
-      topColor: isPositive ? "rgba(61, 214, 140, 0.2)" : "rgba(232, 98, 122, 0.2)",
-      bottomColor: "rgba(61, 214, 140, 0)",
+      lineColor: isPositive ? "#0d9488" : "#E8627A", // Emulating gradient with Teal (#0d9488) line
+      topColor: isPositive ? "rgba(34, 197, 94, 0.15)" : "rgba(239, 68, 68, 0.15)", // Green/Red area fill 
+      bottomColor: "rgba(34, 197, 94, 0)",
       lineWidth: 2,
     });
 
@@ -139,7 +139,16 @@ export function MarketChart({ data, symbol, name }: MarketChartProps) {
   }, [chartData, activeIndex, activePeriod]);
 
   return (
-    <div className={`overflow-hidden flex flex-col h-full ${isGlobal ? 'bg-navy-card border border-border-subtle shadow-sm rounded-[8px] min-h-[480px]' : ''}`}>
+    <div style={{ perspective: '1200px' }} className="h-full">
+      <div 
+        className={`overflow-hidden flex flex-col h-full ${isGlobal ? 'bg-navy-card shadow-2xl rounded-[8px] min-h-[480px]' : ''}`}
+        style={isGlobal ? { 
+          transform: 'rotateX(1.5deg)', 
+          transformOrigin: 'bottom center', 
+          border: '1px solid rgba(212,175,95,0.12)', 
+          borderBottom: '1px solid rgba(212,175,95,0.25)' 
+        } : undefined}
+      >
       {isGlobal && activeIndex && (
         <div className="px-5 py-4 border-b border-border-subtle flex items-center justify-between">
           <div>
@@ -195,5 +204,6 @@ export function MarketChart({ data, symbol, name }: MarketChartProps) {
         <div ref={chartContainerRef} className="w-full h-full" />
       </div>
     </div>
+  </div>
   );
 }

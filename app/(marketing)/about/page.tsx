@@ -93,13 +93,13 @@ function OrbitLines() {
         opacity: 0.04, pointerEvents: "none", zIndex: 0,
       }}
     >
-      <ellipse cx="400" cy="400" rx="380" ry="200" fill="none" stroke="#c8a96e" strokeWidth="0.8"
+      <ellipse cx="400" cy="400" rx="380" ry="200" fill="none" stroke="var(--ab-gold)" strokeWidth="0.8"
         style={{ transformOrigin: "400px 400px", animation: "ab-orbit 22s linear infinite" }} />
-      <ellipse cx="400" cy="400" rx="300" ry="340" fill="none" stroke="#c8a96e" strokeWidth="0.5"
+      <ellipse cx="400" cy="400" rx="300" ry="340" fill="none" stroke="var(--ab-gold)" strokeWidth="0.5"
         style={{ transformOrigin: "400px 400px", animation: "ab-orbit 34s linear infinite reverse" }} />
       <ellipse cx="400" cy="400" rx="250" ry="150" fill="none" stroke="#ffffff" strokeWidth="0.4"
         style={{ transformOrigin: "400px 400px", animation: "ab-orbit 18s linear infinite" }} />
-      <circle cx="400" cy="400" r="2" fill="#c8a96e" />
+      <circle cx="400" cy="400" r="2" fill="var(--ab-gold)" />
     </svg>
   );
 }
@@ -169,8 +169,8 @@ export default function AboutPage() {
         <div className="ab-nav__inner">
           <Link href="/" className="ab-nav__brand">
             <svg width="22" height="22" viewBox="0 0 28 28" fill="none">
-              <polygon points="14,2 26,26 2,26" stroke="#c8a96e" strokeWidth="1.6" fill="none" />
-              <line x1="14" y1="8" x2="14" y2="20" stroke="#c8a96e" strokeWidth="1.2" />
+              <polygon points="14,2 26,26 2,26" stroke="var(--ab-gold)" strokeWidth="1.6" fill="none" />
+              <line x1="14" y1="8" x2="14" y2="20" stroke="var(--ab-gold)" strokeWidth="1.2" />
             </svg>
             <span>Quantr</span>
           </Link>
@@ -444,8 +444,8 @@ export default function AboutPage() {
         <div className="ab-footer__inner">
           <div className="ab-footer__brand">
             <svg width="18" height="18" viewBox="0 0 28 28" fill="none">
-              <polygon points="14,2 26,26 2,26" stroke="#c8a96e" strokeWidth="1.4" fill="none" />
-              <line x1="14" y1="8" x2="14" y2="20" stroke="#c8a96e" strokeWidth="1.1" />
+              <polygon points="14,2 26,26 2,26" stroke="var(--ab-gold)" strokeWidth="1.4" fill="none" />
+              <line x1="14" y1="8" x2="14" y2="20" stroke="var(--ab-gold)" strokeWidth="1.1" />
             </svg>
             <span>Quantr</span>
           </div>
@@ -465,23 +465,23 @@ export default function AboutPage() {
 //  CSS
 // ═══════════════════════════════════════════════════════
 const css = `
-@import url('https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;1,300;1,400&family=Inter:wght@300;400;500;600&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap');
 
 /* ── Tokens ── */
 .ab-root {
-  --ab-bg: #080808;
-  --ab-bg2: #0d0d0d;
-  --ab-surface: #111011;
-  --ab-gold: #c8a96e;
-  --ab-gold-dim: rgba(200,169,110,0.12);
-  --ab-gold-glow: rgba(200,169,110,0.08);
-  --ab-white: #f0ece6;
-  --ab-dim: #6b6560;
-  --ab-xdim: #3a3530;
-  --ab-border: rgba(200,169,110,0.08);
+  --ab-bg: #0a0a0c;
+  --ab-bg2: #111216;
+  --ab-surface: #1A1D24;
+  --ab-gold: #3b82f6; /* Swapped to UI Blue */
+  --ab-gold-dim: rgba(59, 130, 246, 0.12);
+  --ab-gold-glow: rgba(59, 130, 246, 0.08);
+  --ab-white: #f8fafc;
+  --ab-dim: #94a3b8;
+  --ab-xdim: #475569;
+  --ab-border: rgba(59, 130, 246, 0.08);
   --ab-border2: rgba(255,255,255,0.05);
   --ab-sans: 'Inter', system-ui, sans-serif;
-  --ab-serif: 'Cormorant Garamond', Georgia, serif;
+  --ab-serif: 'Inter', system-ui, sans-serif; /* Stripped serif */
   --ab-tr: 0.4s cubic-bezier(0.25, 0.46, 0.45, 0.94);
   --ab-tr-slow: 0.9s cubic-bezier(0.25, 0.46, 0.45, 0.94);
 

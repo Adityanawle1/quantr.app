@@ -9,12 +9,12 @@ interface SectorData {
   performance: number;
 }
 
-const colorTier = (perf: number) => {
-  if (perf >= 2) return 'bg-[rgba(61,214,140,0.17)] border-[rgba(61,214,140,0.27)] text-[#3DD68C]';
-  if (perf >= 0.5) return 'bg-[rgba(61,214,140,0.09)] border-[rgba(61,214,140,0.15)] text-[#7EDEB0]';
-  if (perf >= -0.5) return 'bg-[rgba(91,156,246,0.07)] border-[rgba(91,156,246,0.13)] text-[#93C5FD]';
-  if (perf >= -2) return 'bg-[rgba(232,98,122,0.09)] border-[rgba(232,98,122,0.15)] text-[#FFAABC]';
-  return 'bg-[rgba(232,98,122,0.17)] border-[rgba(232,98,122,0.27)] text-[#E8627A]';
+const getColors = (perf: number) => {
+  if (perf >= 2) return { bg: '#10b981', t: '#ffffff' };
+  if (perf >= 0.5) return { bg: 'rgba(16, 185, 129, 0.5)', t: '#e2e8f0' };
+  if (perf >= -0.5) return { bg: '#1e293b', t: '#94a3b8' };
+  if (perf >= -2) return { bg: 'rgba(239, 68, 68, 0.5)', t: '#e2e8f0' };
+  return { bg: '#ef4444', t: '#ffffff' };
 };
 
 export function SectorHeatmap() {
@@ -53,16 +53,21 @@ export function SectorHeatmap() {
           <span className="font-mono text-[10px] text-t3">No sector data available</span>
         </div>
       ) : (
-        <div className="grid grid-cols-2 lg:grid-cols-4 gap-1.5 p-4 md:px-5 md:py-4 flex-1">
+        <div className="grid grid-cols-2 lg:grid-cols-4 gap-0.5 p-0.5 flex-1 bg-border-subtle">
           {sectors.map((s, i) => {
             const isPositive = s.performance >= 0;
+            const c = getColors(s.performance);
             return (
               <div 
                 key={i} 
-                className={`p-2.5 rounded-[3px] cursor-pointer transition-colors border hover:brightness-125 hover:border-white/40 ${colorTier(s.performance)}`}
+                className="group p-2 cursor-pointer relative"
+                style={{
+                  background: c.bg,
+                  color: c.t
+                }}
               >
-                <div className="font-mono text-[8px] uppercase tracking-[1px] text-t1/40 mb-1">{s.name}</div>
-                <div className="font-mono text-[13px] font-semibold">
+                <div className="font-sans text-[10px] font-bold uppercase tracking-wider mb-0.5 pointer-events-none truncate">{s.name}</div>
+                <div className="font-mono text-sm font-bold pointer-events-none">
                   {isPositive ? '+' : ''}{s.performance.toFixed(1)}%
                 </div>
               </div>

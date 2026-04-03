@@ -68,12 +68,17 @@
   --color-highlight: var(--highlight);
   --color-highlight-hov: var(--highlight-hov);
 
-  --font-plus-jakarta: var(--font-plus-jakarta);
+  --color-gold: var(--accent-gold);
+  --color-gold-light: var(--accent-gold-light);
+  --color-gold-muted: var(--accent-gold-muted);
+
+  --font-plus-jakarta: var(--font-inter);
   --font-jetbrains-mono: var(--font-jetbrains-mono);
   --font-inter: var(--font-inter);
   
-  --font-sans: var(--font-inter), var(--font-plus-jakarta), ui-sans-serif, system-ui;
-  --font-mono: var(--font-jetbrains-mono), ui-monospace, SFMono-Regular;
+  --font-sans: 'Inter', var(--font-inter), system-ui;
+  --font-mono: 'Geist Mono', var(--font-jetbrains-mono), ui-monospace;
+  --font-display: 'Inter', var(--font-inter), system-ui;
   
   --font-jakarta: var(--font-inter);
   
@@ -82,95 +87,71 @@
   --radius-lg: var(--radius);
 }
 
-:root {
-  /* LIGHT MODE VARS */
-  --background: #F8F9FA; /* Cleaner light gray */
-  --foreground: #111827; /* Near black for high contrast */
-  --radius: 0.625rem;
+:root, .dark {
+  /* HARDCORE FUNCTIONAL THEME */
+  --background-primary: #0a0a0c;
+  --background-surface: #101216;
+  --background-elevated: #1a1d24;
+  --background-glass: transparent;
 
-  --navy: #FFFFFF;
-  --navy-card: #FFFFFF; /* Pure white cards */
-  --navy-surf: #F3F4F6;
-  --navy-hov: #E5E7EB;
+  --border-default: #262a33;
+  --border-accent: #373e4a;
+  --border-strong: #414a58;
 
-  --t1: #111827; /* almost black */
-  --t2: #374151; /* gray-700 */
-  --t3: #6B7280; /* gray-500 */
-  --t4: #9CA3AF; /* gray-400 */
+  --text-primary: #e2e8f0;
+  --text-secondary: #94a3b8;
+  --text-muted: #64748b;
 
-  --border-subtle: rgba(0,0,0,0.08);
-  --highlight: rgba(0,0,0,0.03);
-  --highlight-hov: rgba(0,0,0,0.06);
+  --accent-blue: #3b82f6;
+  --accent-blue-light: #60a5fa;
 
-  --card: #FFFFFF;
-  --card-foreground: #111827;
-  --popover: #FFFFFF;
-  --popover-foreground: #111827;
-  --primary: #111827; /* Near black primary button */
-  --primary-foreground: #FFFFFF;
-  --secondary: #F3F4F6;
-  --secondary-foreground: #111827;
-  --muted: #F3F4F6;
-  --muted-foreground: #6B7280;
-  --accent: #F3F4F6;
-  --accent-foreground: #111827;
-  --destructive: #EF4444; /* red-500 */
-  --border: rgba(0,0,0,0.1);
-  --input: rgba(0,0,0,0.1);
-  --ring: #111827;
+  --accent-green: #10b981;
+  --accent-red: #ef4444;
 
-  /* Gain / Loss explicit light mode values (richer for white backgrounds) */
-  --gain: #059669; /* Emerald 600 */
-  --gaindm: rgba(5, 150, 105, 0.1);
-  --gainbr: rgba(5, 150, 105, 0.22);
-  --loss: #DC2626; /* Red 600 */
-  --lossdm: rgba(220, 38, 38, 0.1);
-  --lossbr: rgba(220, 38, 38, 0.22);
-}
+  /* Backward compatibility map for legacy references */
+  --background: var(--background-primary);
+  --foreground: var(--text-primary);
+  --radius: 0.375rem;
 
-.dark {
-  /* DARK MODE VARS */
-  --background: #0A0D14;
-  --foreground: #E4ECF7;
+  --navy: var(--background-primary);
+  --navy-card: var(--background-surface);
+  --navy-surf: var(--background-elevated);
+  --navy-hov: var(--background-elevated);
+
+  --t1: var(--text-primary);
+  --t2: var(--text-secondary);
+  --t3: var(--text-muted);
+  --t4: #475569;
+
+  --border-subtle: var(--border-default);
+  --highlight: var(--background-surface);
+  --highlight-hov: var(--background-elevated);
+
+  --card: var(--background-surface);
+  --card-foreground: var(--text-primary);
+  --popover: var(--background-elevated);
+  --popover-foreground: var(--text-primary);
   
-  --navy: #0A0D14;
-  --navy-card: #131B28;
-  --navy-surf: #182033;
-  --navy-hov: #1E2B3E;
+  --primary: var(--accent-blue);
+  --primary-foreground: #ffffff;
+  --secondary: var(--background-elevated);
+  --secondary-foreground: var(--text-primary);
+  --muted: var(--background-elevated);
+  --muted-foreground: var(--text-muted);
+  --accent: var(--background-elevated);
+  --accent-foreground: var(--accent-blue);
+  --destructive: var(--accent-red);
+  --border: var(--border-default);
+  --input: var(--border-strong);
+  --ring: var(--accent-blue);
 
-  --t1: #E4ECF7;
-  --t2: #7A90A8;
-  --t3: #6A85A3;
-  --t4: #1C2E40;
-
-  --border-subtle: rgba(255,255,255,0.05);
-  --highlight: rgba(255,255,255,0.05);
-  --highlight-hov: rgba(255,255,255,0.10);
-
-  --card: #131B28;
-  --card-foreground: #E4ECF7;
-  --popover: #131B28;
-  --popover-foreground: #E4ECF7;
-  --primary: #C2FF60;
-  --primary-foreground: #0A0D14;
-  --secondary: #182033;
-  --secondary-foreground: #E4ECF7;
-  --muted: #1E2B3E;
-  --muted-foreground: #7A90A8;
-  --accent: #182033;
-  --accent-foreground: #C2FF60;
-  --destructive: #E8645A;
-  --border: rgba(255,255,255,0.06);
-  --input: rgba(255,255,255,0.12);
-  --ring: #C2FF60;
-
-  /* Gain / Loss explicit dark mode values */
-  --gain: #3FD68C;
-  --gaindm: rgba(63,214,140,0.10);
-  --gainbr: rgba(63,214,140,0.22);
-  --loss: #E8645A;
-  --lossdm: rgba(232,100,90,0.10);
-  --lossbr: rgba(232,100,90,0.22);
+  /* Gain / Loss explicitly using new defined accents */
+  --gain: var(--accent-green);
+  --gaindm: rgba(16, 185, 129, 0.10);
+  --gainbr: rgba(16, 185, 129, 0.25);
+  --loss: var(--accent-red);
+  --lossdm: rgba(239, 68, 68, 0.10);
+  --lossbr: rgba(239, 68, 68, 0.25);
 }
 
 @layer base {
@@ -187,11 +168,11 @@
 
 @layer utilities {
   .glass {
-    @apply bg-navy-card/50 backdrop-blur-xl border border-border-subtle shadow-xl;
+    @apply bg-navy-card border border-border-subtle;
   }
   
   .bento-card {
-    @apply bg-navy-card border border-border-subtle rounded-[14px] p-6 shadow-sm transition-all duration-300 hover:border-black/5 dark:hover:border-white/10 relative overflow-hidden;
+    @apply bg-navy-card border border-border-subtle rounded-md p-4;
   }
   
   .glow-grid {
@@ -225,11 +206,7 @@
 
 body::before {
   content: '';
-  position: fixed; inset: 0;
-  background-image: radial-gradient(rgba(255,255,255,0.03) 1px, transparent 1px);
-  background-size: 28px 28px;
-  pointer-events: none;
-  z-index: 0;
+  display: none;
 }
 
 @keyframes tickmove { 

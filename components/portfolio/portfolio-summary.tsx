@@ -45,53 +45,53 @@ export function PortfolioSummary({ summary }: PortfolioSummaryProps) {
         </div>
       )}
       
-      <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
+      <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
         {/* Current Value Card */}
-        <div className="bento-card p-6 relative overflow-hidden group">
-          <div className="absolute top-0 right-0 p-3 opacity-10 group-hover:opacity-20 transition-opacity">
+        <div className="bg-navy-card border border-border-subtle rounded-md p-5 relative overflow-hidden group">
+          <div className="absolute top-0 right-0 p-3 opacity-5 group-hover:opacity-10 transition-opacity">
               <DollarSign className="w-12 h-12 text-t1" />
           </div>
           <div className="space-y-1">
-            <p className="text-[10px] font-bold text-t3 uppercase tracking-widest flex items-center gap-1.5 border-b border-border-subtle pb-2 mb-3">
+            <p className="text-[10px] font-bold text-t3 uppercase tracking-widest flex items-center gap-1.5 mb-2">
                <Clock className="w-3 h-3" />
                Portfolio Value
             </p>
-            <h2 className="text-3xl font-black text-t1 font-jakarta">
+            <h2 className="text-2xl font-sans font-bold text-t1">
               ₹{summary.currentTotalValue.toLocaleString('en-IN', { maximumFractionDigits: 0 })}
             </h2>
             <div className="flex items-center gap-2 mt-1">
-              <span className="text-[10px] text-t3 font-medium uppercase font-mono">Inv: ₹{summary.totalInvestment.toLocaleString('en-IN')}</span>
+              <span className="text-xs text-t3 font-medium uppercase font-mono tracking-tight">Inv: ₹{summary.totalInvestment.toLocaleString('en-IN')}</span>
             </div>
           </div>
         </div>
 
         {/* Net P&L Card */}
-        <div className="bento-card p-6 relative overflow-hidden group">
-           <div className="absolute top-0 right-0 p-3 opacity-10 group-hover:opacity-20 transition-opacity">
+        <div className="bg-navy-card border border-border-subtle rounded-md p-5 relative overflow-hidden group">
+           <div className="absolute top-0 right-0 p-3 opacity-5 group-hover:opacity-10 transition-opacity">
               {isTotalGain ? <TrendingUp className="w-12 h-12 text-gain" /> : <TrendingDown className="w-12 h-12 text-loss" />}
           </div>
           <div className="space-y-1">
-            <p className="text-[10px] font-bold text-t3 uppercase tracking-widest border-b border-border-subtle pb-2 mb-3">Total Returns</p>
-            <h2 className={`text-3xl font-black font-jakarta ${isTotalGain ? 'text-gain' : 'text-loss'}`}>
+            <p className="text-[10px] font-bold text-t3 uppercase tracking-widest mb-2">Total Returns</p>
+            <h2 className={`text-2xl font-mono font-bold ${isTotalGain ? 'text-gain' : 'text-loss'}`}>
               {isTotalGain ? '+' : ''}₹{Math.abs(summary.totalGain).toLocaleString('en-IN', { maximumFractionDigits: 0 })}
             </h2>
-            <div className={`inline-flex items-center px-2 py-0.5 rounded-md text-[10px] font-black uppercase mt-1 ${isTotalGain ? 'bg-gain/10 text-gain' : 'bg-loss/10 text-loss'}`}>
+            <div className={`inline-flex items-center text-xs font-mono font-bold mt-1 ${isTotalGain ? 'text-gain' : 'text-loss'}`}>
               {isTotalGain ? '+' : ''}{summary.totalGainPercent.toFixed(2)}%
             </div>
           </div>
         </div>
 
         {/* Day's P&L Card */}
-        <div className="bento-card p-6 relative overflow-hidden group">
-           <div className="absolute top-0 right-0 p-3 opacity-10 group-hover:opacity-20 transition-opacity">
-              <PieChart className="w-12 h-12 text-lime" />
+        <div className="bg-navy-card border border-border-subtle rounded-md p-5 relative overflow-hidden group">
+           <div className="absolute top-0 right-0 p-3 opacity-5 group-hover:opacity-10 transition-opacity">
+              <PieChart className="w-12 h-12 text-blue-500" />
           </div>
           <div className="space-y-1">
-            <p className="text-[10px] font-bold text-t3 uppercase tracking-widest border-b border-border-subtle pb-2 mb-3">Day's Change</p>
-            <h2 className={`text-3xl font-black font-jakarta ${isDayGain ? 'text-gain' : 'text-loss'}`}>
+            <p className="text-[10px] font-bold text-t3 uppercase tracking-widest mb-2">Day's Change</p>
+            <h2 className={`text-2xl font-mono font-bold ${isDayGain ? 'text-gain' : 'text-loss'}`}>
               {isDayGain ? '+' : ''}₹{Math.abs(summary.dayGain).toLocaleString('en-IN', { maximumFractionDigits: 0 })}
             </h2>
-            <div className={`inline-flex items-center px-2 py-0.5 rounded-md text-[10px] font-black uppercase mt-1 ${isDayGain ? 'bg-gain/10 text-gain' : 'bg-loss/10 text-loss'}`}>
+            <div className={`inline-flex items-center text-xs font-mono font-bold mt-1 ${isDayGain ? 'text-gain' : 'text-loss'}`}>
               {isDayGain ? '+' : ''}{summary.dayGainPercent.toFixed(2)}%
             </div>
           </div>
