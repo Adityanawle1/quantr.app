@@ -108,14 +108,14 @@ export default function NewsPage() {
   const sentimentColor = isBullish ? "text-gain bg-gaindm border-gainbr" : "text-loss bg-lossdm border-lossbr";
 
   return (
-    <main className="p-6 md:p-8 md:pb-16 flex-1 w-full max-w-[1280px] mx-auto text-zinc-50 font-sans">
+    <main className="p-6 md:p-8 md:pb-16 flex-1 w-full max-w-[1400px] mx-auto font-sans transition-colors duration-300">
       {/* Header */}
-      <div className="flex flex-col md:flex-row md:items-end justify-between gap-4 mb-6 opacity-0 animate-[fu_0.5s_cubic-bezier(0.16,1,0.3,1)_forwards]">
+      <div className="flex flex-col md:flex-row md:items-end justify-between gap-4 mb-8 opacity-0 animate-[fu_0.5s_cubic-bezier(0.16,1,0.3,1)_forwards]">
         <div>
-          <h1 className="text-[17px] font-bold tracking-tight text-t1 leading-none">News Feed</h1>
-          <p className="font-mono text-[10px] text-t3 mt-[5px] flex items-center gap-1.5">
-            <Globe className="w-3 h-3 text-lime" />
-            Real-time Sentiment & Global News Aggregator
+          <h1 className="text-2xl font-bold tracking-tight text-t1 leading-none">News Feed</h1>
+          <p className="font-mono text-[11px] text-t3 mt-2 flex items-center gap-1.5 uppercase tracking-wider">
+            <Globe className="w-3.5 h-3.5 text-primary" />
+            Real-time Sentiment & Global Aggregator
           </p>
         </div>
 
@@ -123,72 +123,72 @@ export default function NewsPage() {
           {news?.isFallback && (
             <button
               onClick={() => refetch()}
-              className="flex items-center gap-1.5 font-mono text-[10px] text-blue bg-bluedm border border-[rgba(91,156,246,0.2)] px-3 py-1.5 rounded-full hover:bg-[rgba(91,156,246,0.15)] transition-colors"
+              className="flex items-center gap-1.5 font-mono text-[10px] text-primary bg-accent-blue-muted border border-accent-blue-border px-3.5 py-2 rounded-lg hover:bg-primary hover:text-white transition-all shadow-sm"
             >
               <RefreshCw className="w-3 h-3" />
-              Refresh
+              Refresh Feed
             </button>
           )}
-          <div className={`px-4 py-2 rounded-full border flex items-center gap-3 ${sentimentColor}`}>
+          <div className={`px-5 py-2.5 rounded-xl border-2 flex items-center gap-4 shadow-sm ${sentimentColor}`}>
             <div className="flex flex-col">
-              <span className="font-mono text-[8px] uppercase tracking-wider opacity-60">Sentiment</span>
-              <span className="text-[13px] font-bold">{sentimentLabel}</span>
+              <span className="font-mono text-[9px] uppercase tracking-[0.1em] opacity-70">Market Sentiment</span>
+              <span className="text-[14px] font-black">{sentimentLabel}</span>
             </div>
-            {isBullish ? <TrendingUp className="w-5 h-5 opacity-40" /> : <TrendingDown className="w-5 h-5 opacity-40" />}
+            {isBullish ? <TrendingUp className="w-5 h-5 opacity-60" /> : <TrendingDown className="w-5 h-5 opacity-60" />}
           </div>
         </div>
       </div>
 
       {/* News Grid */}
-      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-3.5 opacity-0 animate-[fu_0.5s_cubic-bezier(0.16,1,0.3,1)_forwards] [animation-delay:0.15s]">
+      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-5 opacity-0 animate-[fu_0.5s_cubic-bezier(0.16,1,0.3,1)_forwards] [animation-delay:0.15s]">
         {feedData.map((item: any, i: number) => (
-          <div key={i} className="bg-navy-card border border-border-subtle rounded-[14px] group flex flex-col overflow-hidden hover:border-border-subtle transition-all duration-300">
+          <div key={i} className="bg-background-primary border border-border-subtle rounded-2xl group flex flex-col overflow-hidden hover:border-primary/40 shadow-sm hover:shadow-xl transition-all duration-300">
             {item.banner_image && (
-              <div className="relative h-44 w-full overflow-hidden border-b border-border-subtle">
+              <div className="relative h-48 w-full overflow-hidden border-b border-border-subtle">
                 <img
                   src={item.banner_image}
                   alt={item.title}
-                  className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500 opacity-80 group-hover:opacity-100"
+                  className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-700 opacity-90 group-hover:opacity-100"
                 />
-                <div className="absolute top-3 left-3">
-                  <span className="bg-navy/80 backdrop-blur-md px-2 py-0.5 rounded text-[9px] font-bold text-t3 uppercase tracking-tight border border-border-subtle">
+                <div className="absolute top-4 left-4">
+                  <span className="bg-background-primary/95 backdrop-blur-md px-2.5 py-1 rounded-lg text-[10px] font-black text-t2 uppercase tracking-wider border border-border-default shadow-sm">
                     {item.source}
                   </span>
                 </div>
               </div>
             )}
 
-            <div className="p-5 flex-1 flex flex-col">
-              <div className="flex items-center gap-2 mb-3">
-                <span className={`font-mono text-[9px] font-bold uppercase px-2 py-0.5 rounded ${
-                  item.overall_sentiment_label?.includes('Bullish') ? 'text-gain bg-gaindm' :
-                  item.overall_sentiment_label?.includes('Bearish') ? 'text-loss bg-lossdm' : 'text-t3 bg-highlight'
+            <div className="p-6 flex-1 flex flex-col">
+              <div className="flex items-center gap-2.5 mb-4">
+                <span className={`font-mono text-[10px] font-black uppercase px-2.5 py-1 rounded-lg border ${
+                  item.overall_sentiment_label?.includes('Bullish') ? 'text-gain bg-gaindm border-gainbr' :
+                  item.overall_sentiment_label?.includes('Bearish') ? 'text-loss bg-lossdm border-lossbr' : 'text-t3 bg-background-elevated border-border-default'
                 }`}>
                   {(item.overall_sentiment_label || "Neutral").replace(/_/g, " ")}
                 </span>
                 {!item.banner_image && (
-                  <span className="font-mono text-[9px] font-bold text-t3 bg-navy-surf px-2 py-0.5 rounded uppercase">
+                  <span className="font-mono text-[10px] font-black text-t3 bg-background-surface px-2.5 py-1 rounded-lg border border-border-default uppercase tracking-tight">
                     {item.source}
                   </span>
                 )}
-                <span className="text-[10px] text-t3 font-mono ml-auto flex items-center gap-1">
-                  <Clock className="w-2.5 h-2.5" />
+                <span className="text-[11px] text-t4 font-medium ml-auto flex items-center gap-1.5">
+                  <Clock className="w-3 h-3" />
                   {formatTimestamp(item.time)}
                 </span>
               </div>
 
-              <h3 className="text-[13px] font-bold text-t1 leading-tight group-hover:text-lime transition-colors line-clamp-2 mb-3">
+              <h3 className="text-[15px] font-bold text-t1 leading-snug group-hover:text-primary transition-colors line-clamp-2 mb-3">
                 {item.title}
               </h3>
 
-              <p className="text-[11px] text-t3 line-clamp-3 mb-5 leading-relaxed">
+              <p className="text-[12px] text-t3 line-clamp-3 mb-6 leading-relaxed">
                 {item.summary}
               </p>
 
-              <div className="mt-auto pt-3 border-t border-border-subtle flex items-center justify-between">
-                <div className="flex gap-1.5 overflow-hidden">
+              <div className="mt-auto pt-4 border-t border-border-subtle flex items-center justify-between">
+                <div className="flex gap-2 overflow-hidden">
                   {item.topics?.slice(0, 2).map((t: any) => (
-                    <span key={t.topic} className="font-mono text-[8px] font-bold text-t3 uppercase tracking-tighter bg-navy-surf px-1.5 py-0.5 rounded truncate max-w-[90px]">
+                    <span key={t.topic} className="font-mono text-[9px] font-bold text-primary uppercase tracking-tight bg-accent-blue-muted px-2 py-1 rounded-md border border-accent-blue-border truncate max-w-[100px]">
                       {t.topic.replace(/_/g, ' ')}
                     </span>
                   ))}
@@ -198,9 +198,9 @@ export default function NewsPage() {
                     href={item.url}
                     target="_blank"
                     rel="noopener noreferrer"
-                    className="p-1.5 bg-highlight rounded-lg text-t3 hover:bg-lime hover:text-navy transition-all"
+                    className="p-2 bg-background-elevated rounded-xl text-t3 hover:bg-primary hover:text-white transition-all shadow-sm border border-border-default"
                   >
-                    <ExternalLink className="w-3.5 h-3.5" />
+                    <ExternalLink className="w-4 h-4" />
                   </a>
                 )}
               </div>
@@ -210,10 +210,10 @@ export default function NewsPage() {
       </div>
 
       {feedData.length === 0 && (
-        <div className="flex flex-col items-center justify-center py-20 bg-navy-card rounded-[14px] border border-border-subtle">
-          <Newspaper className="w-12 h-12 text-t3 mb-4 opacity-30" />
-          <p className="text-t3 font-mono text-[10px] uppercase tracking-widest">
-            No relevant news found at this moment
+        <div className="flex flex-col items-center justify-center py-24 bg-background-primary rounded-2xl border border-border-subtle shadow-inner">
+          <Newspaper className="w-16 h-16 text-t4 mb-6 opacity-20" />
+          <p className="text-t3 font-mono text-[11px] uppercase tracking-[0.2em] font-bold">
+            No primary signals detected
           </p>
         </div>
       )}

@@ -5,6 +5,7 @@ import { useEffect, useRef, useState, useCallback } from "react";
 import { GlobePulse } from "@/components/ui/cobe-globe-pulse";
 import { DottedSurface } from "@/components/ui/dotted-surface";
 import { MarketTicker } from "@/components/market-ticker";
+import { Logo } from "@/components/global/logo";
 
 /* ═══════════════════════════════════════════════════════
    Quantr — Landing Page (Integrated Next.js)
@@ -25,9 +26,9 @@ interface GainerData {
   name: string;
   change: number;
 }
-interface TickerStock {
+interface GainerData {
   symbol: string;
-  price: number;
+  name: string;
   change: number;
 }
 interface NewsArticle {
@@ -80,7 +81,6 @@ export default function QuantrLanding() {
   const [sensex, setSensex] = useState<IndexData | null>(null);
   const [topGainer, setTopGainer] = useState<GainerData | null>(null);
   const [stockCount, setStockCount] = useState<number | null>(null);
-  const [tickerStocks, setTickerStocks] = useState<TickerStock[]>([]);
   const [news, setNews] = useState<NewsArticle[]>([]);
 
   // Stats counters
@@ -154,13 +154,12 @@ export default function QuantrLanding() {
       })
       .catch(() => {});
 
-    // Screener (ticker + count)
-    fetch("/api/screener?limit=40&sort=market_cap&order=desc")
+    // Screener (count only)
+    fetch("/api/screener?limit=1&sort=market_cap&order=desc")
       .then((r) => r.json())
       .then((data) => {
-        if (data.data?.length > 0) {
-          setTickerStocks(data.data);
-          setStockCount(data.pagination?.total || data.data.length);
+        if (data.pagination) {
+          setStockCount(data.pagination.total);
         }
       })
       .catch(() => {});
@@ -226,9 +225,6 @@ export default function QuantrLanding() {
     return () => obs.disconnect();
   }, []);
 
-  // Ticker duplicated for seamless loop
-  const tickerItems = [...tickerStocks, ...tickerStocks];
-
   // ═══════════════════════════════════════════════════════
   //  RENDER
   // ═══════════════════════════════════════════════════════
@@ -236,25 +232,15 @@ export default function QuantrLanding() {
     <div className="quantr-landing">
       <style>{landingCSS}</style>
 
-      <div className="fixed top-0 left-0 right-0 z-[110]">
-        <MarketTicker />
-      </div>
-
       {/* ─── NAV ─── */}
       <nav className={`ql-nav ${scrolled ? "ql-nav--scrolled" : ""}`}>
         <div className="ql-nav__inner">
-          <Link href="/" className="ql-nav__brand">
-            <svg width="26" height="26" viewBox="0 0 28 28" fill="none">
-              <polygon points="14,2 26,26 2,26" stroke="#00e87b" strokeWidth="1.8" fill="none" />
-              <line x1="14" y1="8" x2="14" y2="20" stroke="#00e87b" strokeWidth="1.4" />
-            </svg>
-            <span className="ql-nav__wordmark">Quantr</span>
-          </Link>
+          <Logo size="md" />
           <div className="ql-nav__links">
             <a href="#features" className="ql-nav__pill">Screener</a>
             <a href="#features" className="ql-nav__pill">Analytics</a>
             <a href="#market-pulse" className="ql-nav__pill">Market Pulse</a>
-            <Link href="/login" className="ql-nav__pill">Sign In</Link>
+            <Link href="/login" className="ql-nav__signin">Sign In</Link>
           </div>
           <Link href="/dashboard" className="ql-btn ql-btn--primary ql-nav__cta">Launch App →</Link>
         </div>
@@ -303,9 +289,12 @@ export default function QuantrLanding() {
         <div className={`ql-hero__content ${heroVisible ? "visible" : ""}`}>
           <div className="ql-hero__pill">
             <span className="ql-hero__pill-dot"></span>
-            Intelligence over Instinct
+            INTELLIGENCE OVER INSTINCT
           </div>
-          <h1 className="ql-hero__headline">Precision screening.<br/>Quantitative edge.</h1>
+          <h1 className="ql-hero__headline">
+            <span className="faded">We built</span> <span className="highlight">the tool</span><br/>
+            <span className="faded">we always</span> <span className="accent">wanted.</span>
+          </h1>
           <p className="ql-hero__sub">Real-time screening and quantitative analysis. Built for the Indian market.</p>
 
           <div className="ql-search">
@@ -331,20 +320,8 @@ export default function QuantrLanding() {
         </div>
       </section>
 
-      {/* ─── TICKER TAPE ─── */}
-      <section id="market-pulse" className="ql-ticker">
-        <div className="ql-ticker__track">
-          {tickerItems.length > 0 ? tickerItems.map((s, i) => (
-            <span key={i} className="ql-ticker__item">
-              <span className="ql-ticker__symbol">{s.symbol}</span>
-              <span className="ql-ticker__price">₹{Number(s.price).toLocaleString("en-IN", { minimumFractionDigits: 2, maximumFractionDigits: 2 })}</span>
-              <span className={`ql-ticker__change ${(s.change || 0) >= 0 ? "up" : "down"}`}>
-                {(s.change || 0) >= 0 ? "+" : ""}{(s.change || 0).toFixed(2)}%
-              </span>
-            </span>
-          )) : <span className="ql-ticker__placeholder">Loading live market data…</span>}
-        </div>
-      </section>
+      {/* ─── STOCK TICKER TAPE ─── */}
+      <MarketTicker />
 
       {/* ─── STATS ─── */}
       <section className="ql-stats" ref={statsRef}>
@@ -425,8 +402,10 @@ export default function QuantrLanding() {
       <section className="ql-cta">
         <DottedSurface />
         <div className="ql-cta__inner">
-          <h2 className="ql-cta__heading">Ready to invest with precision?</h2>
-          <p className="ql-cta__sub">Join thousands of investors using Quantr to make data-driven decisions.</p>
+          <h2 className="ql-cta__heading">
+            <span className="highlight">Start seeing the</span> <span className="faded">whole picture.</span>
+          </h2>
+          <p className="ql-cta__sub">Institutional-grade market intelligence for every investor.</p>
           <Link href="/dashboard" className="ql-btn ql-btn--primary ql-btn--lg">Launch Quantr — It&apos;s Free →</Link>
         </div>
       </section>
@@ -476,19 +455,19 @@ const landingCSS = `
   --ql-text: #e8e8ea;
   --ql-dim: #8a8f98;
   --ql-xdim: #555960;
-  --ql-accent: #00e87b;
-  --ql-accent-dim: rgba(0,232,123,0.10);
-  --ql-accent-glow: rgba(0,232,123,0.15);
+  --ql-accent: #2563eb;
+  --ql-accent-dim: rgba(37,99,235,0.10);
+  --ql-accent-glow: rgba(37,99,235,0.15);
   --ql-white: #f4f4f5;
-  --ql-danger: #ff4d4d;
+  --ql-danger: #ef4444;
   --ql-radius: 12px;
   --ql-radius-sm: 8px;
   --ql-pill: 100px;
   --ql-sans: 'Inter',system-ui,-apple-system,sans-serif;
-  --ql-serif: var(--font-dm-serif, 'DM Serif Display'),Georgia,serif;
+  --ql-serif: var(--font-playfair,'Playfair Display'),Georgia,serif;
   --ql-blur: 20px;
   --ql-tr: 0.35s cubic-bezier(0.25,0.46,0.45,0.94);
-  --ql-navh: 64px;
+  --ql-navh: 68px;
 
   font-family: var(--ql-sans);
   background: var(--ql-bg);
@@ -498,81 +477,109 @@ const landingCSS = `
   min-height: 100vh;
 }
 
+/* ─── Light Mode Overrides ─── */
+:root:not(.dark) .quantr-landing, .light .quantr-landing {
+  --ql-bg: #fafafa;
+  --ql-card: #ffffff;
+  --ql-glass: rgba(255,255,255,0.8);
+  --ql-surface: #f4f4f5;
+  --ql-border: rgba(0,0,0,0.06);
+  --ql-border2: rgba(0,0,0,0.1);
+  --ql-text: #0f172a;
+  --ql-dim: #64748b;
+  --ql-xdim: #94a3b8;
+  --ql-accent: #2563eb;
+  --ql-accent-dim: rgba(37,99,235,0.06);
+  --ql-white: #0f172a;
+}
+
+
 /* ─── Nav ─── */
 .ql-nav {
-  position: fixed; inset: 40px 0 auto 0; height: var(--ql-navh); z-index: 100;
-  backdrop-filter: blur(var(--ql-blur)); -webkit-backdrop-filter: blur(var(--ql-blur));
-  background: rgba(8,9,10,0.6); border-bottom: 1px solid var(--ql-border);
+  position: sticky; top: 0; height: var(--ql-navh); z-index: 100;
+  backdrop-filter: blur(12px); -webkit-backdrop-filter: blur(12px);
+  background: rgba(0,0,0,0.85); border-bottom: 1px solid var(--ql-border);
   transition: background var(--ql-tr);
 }
-.ql-nav--scrolled { background: rgba(8,9,10,0.88); }
+.ql-nav--scrolled { background: rgba(0,0,0,0.95); }
+
+:root:not(.dark) .ql-nav {
+  background: rgba(250,250,250,0.9);
+  border-bottom: 1px solid rgba(0,0,0,0.06);
+}
+
 .ql-nav__inner { max-width:1280px; margin:0 auto; height:100%; display:flex; align-items:center; justify-content:space-between; padding:0 32px; }
-.ql-nav__brand { display:flex; align-items:center; gap:10px; text-decoration:none; }
-.ql-nav__wordmark { font-size:1.2rem; font-weight:800; letter-spacing:-0.03em; color:var(--ql-white); }
-.ql-nav__links { display:flex; gap:4px; }
-.ql-nav__pill { padding:6px 18px; font-size:0.8rem; font-weight:500; border-radius:var(--ql-pill); color:var(--ql-dim); transition:color var(--ql-tr),background var(--ql-tr); text-decoration:none; }
+.ql-nav__links { display:flex; align-items:center; gap:4px; }
+.ql-nav__pill { padding:6px 18px; font-size:14px; font-weight:500; border-radius:var(--ql-pill); color:#9ca3af; transition:color var(--ql-tr),background var(--ql-tr); text-decoration:none; }
 .ql-nav__pill:hover { color:var(--ql-white); background:rgba(255,255,255,0.05); }
 
+:root:not(.dark) .ql-nav__pill { color: #64748b; }
+:root:not(.dark) .ql-nav__pill:hover { color: #0f172a; background: rgba(0,0,0,0.04); }
+
+.ql-nav__signin { padding:6px 18px; font-size:14px; font-weight:500; color:#9ca3af; transition:color var(--ql-tr); text-decoration:none; }
+.ql-nav__signin:hover { color:var(--ql-white); }
+:root:not(.dark) .ql-nav__signin { color: #64748b; }
+:root:not(.dark) .ql-nav__signin:hover { color: #0f172a; }
+
 /* ─── Buttons ─── */
-.ql-btn { display:inline-flex; align-items:center; justify-content:center; gap:8px; border:none; border-radius:var(--ql-pill); font-size:0.82rem; font-weight:600; padding:10px 24px; transition:all var(--ql-tr); letter-spacing:-0.01em; cursor:pointer; text-decoration:none; }
-.ql-btn--primary { background:var(--ql-accent); color:#050505; }
-.ql-btn--primary:hover { background:#33ff99; box-shadow:0 0 28px rgba(0,232,123,0.28); transform:translateY(-1px); }
-.ql-btn--outline { background:transparent; color:var(--ql-text); border:1px solid var(--ql-border2); }
+.ql-btn { display:inline-flex; align-items:center; justify-content:center; gap:8px; border:none; border-radius:8px; font-size:14px; font-weight:500; padding:8px 20px; transition:all var(--ql-tr); cursor:pointer; text-decoration:none; }
+.ql-btn--primary { background:#2563eb; color:#ffffff; }
+.ql-btn--primary:hover { background:#1d4ed8; box-shadow:0 4px 20px rgba(37,99,235,0.3); transform:translateY(-1px); }
+.ql-btn--outline { background:transparent; color:var(--ql-text); border:1px solid var(--ql-border2); border-radius:var(--ql-pill); padding:10px 24px; }
 .ql-btn--outline:hover { border-color:var(--ql-accent); color:var(--ql-accent); }
 .ql-btn--lg { padding:14px 36px; font-size:0.95rem; }
 
+:root:not(.dark) .ql-nav__cta {
+  color: #2563eb;
+  background: transparent;
+}
+:root:not(.dark) .ql-nav__cta:hover {
+  background: rgba(37,99,235,0.06);
+}
+
 /* ─── Hero ─── */
-.ql-hero { position:relative; width:100%; height:100vh; min-height:680px; display:flex; align-items:center; justify-content:flex-start; padding-left:12%; overflow:hidden; }
-.ql-hero__content { position:relative; z-index:2; text-align:left; max-width:560px; padding:0; opacity:0; transform:translateY(24px); transition:opacity 0.8s ease,transform 0.8s ease; }
+.ql-hero { position:relative; width:100%; height:calc(100vh - var(--ql-navh)); min-height:620px; display:flex; align-items:center; justify-content:flex-start; padding-left:12%; padding-top:40px; overflow:hidden; }
+.ql-hero__content { position:relative; z-index:2; text-align:left; max-width:560px; opacity:0; transform:translateY(24px); transition:opacity 0.8s ease,transform 0.8s ease; }
 .ql-hero__content.visible { opacity:1; transform:translateY(0); }
-.ql-hero__pill { display:inline-flex; align-items:center; gap:8px; padding:6px 14px; border-radius:var(--ql-pill); background:var(--ql-accent-dim); border:1px solid rgba(0,232,123,0.2); font-size:0.75rem; font-weight:600; color:var(--ql-accent); letter-spacing:0.04em; text-transform:uppercase; margin-bottom:24px; }
-.ql-hero__pill-dot { width:6px; height:6px; border-radius:50%; background:var(--ql-accent); box-shadow:0 0 8px var(--ql-accent); animation:ql-pulse 2s ease-in-out infinite; }
+.ql-hero__pill { display:inline-flex; align-items:center; gap:8px; padding:6px 14px; border-radius:var(--ql-pill); background:rgba(37,99,235,0.1); border:1px solid rgba(37,99,235,0.3); font-size:11px; font-weight:600; color:#3b82f6; letter-spacing:0.08em; text-transform:uppercase; margin-bottom:24px; }
+.ql-hero__pill-dot { width:6px; height:6px; border-radius:50%; background:#22c55e; box-shadow:0 0 8px #22c55e; animation:ql-pulse 2s ease-in-out infinite; }
 .ql-hero__headline { font-family:var(--ql-sans); font-size:clamp(2.4rem,4.5vw,3.6rem); font-weight:300; line-height:1.15; color:var(--ql-white); margin-bottom:18px; letter-spacing:-0.02em; }
 .ql-hero__sub { font-size:1.05rem; color:var(--ql-dim); margin-bottom:40px; font-weight:300; line-height:1.6; }
 .ql-hero__scroll { position:absolute; bottom:28px; left:50%; transform:translateX(-50%); z-index:2; display:flex; flex-direction:column; align-items:center; gap:4px; font-size:0.68rem; color:var(--ql-xdim); letter-spacing:0.08em; text-transform:uppercase; opacity:0; transition:opacity 0.8s ease 1.2s; animation:ql-float 2.5s ease-in-out infinite; }
 .ql-hero__scroll.visible { opacity:1; }
+
+:root:not(.dark) .ql-hero__headline span.faded { color: rgba(15,23,42,0.3); }
+:root:not(.dark) .ql-hero__headline span.highlight { color: #0f172a; }
+:root:not(.dark) .ql-hero__headline span.accent { color: #2563eb; }
+
 @keyframes ql-float { 0%,100%{transform:translateX(-50%) translateY(0)} 50%{transform:translateX(-50%) translateY(-6px)} }
 
 /* ─── Signal Chips ─── */
 .ql-chip { position:absolute; z-index:3; display:flex; align-items:center; gap:8px; padding:8px 14px; border-radius:var(--ql-radius-sm); backdrop-filter:blur(var(--ql-blur)); -webkit-backdrop-filter:blur(var(--ql-blur)); background:var(--ql-glass); border:1px solid var(--ql-border); font-size:0.7rem; font-weight:500; letter-spacing:0.03em; white-space:nowrap; box-shadow:0 4px 20px rgba(0,0,0,0.4); opacity:0; transition:opacity 0.6s ease,transform 0.6s ease,box-shadow var(--ql-tr); }
-.ql-chip--tl { top:calc(var(--ql-navh) + 20px); left:20px; transform:translate(-16px,-8px); }
-.ql-chip--tr { top:calc(var(--ql-navh) + 20px); right:20px; transform:translate(16px,-8px); }
+.ql-chip--tl { top:20px; left:20px; transform:translate(-16px,-8px); }
+.ql-chip--tr { top:20px; right:20px; transform:translate(16px,-8px); }
 .ql-chip--bl { bottom:72px; left:20px; transform:translate(-16px,8px); }
 .ql-chip--br { bottom:72px; right:20px; transform:translate(16px,8px); }
 .ql-chip.visible { opacity:1; transform:translate(0,0); }
 .ql-chip:hover { transform:scale(1.04); box-shadow:0 6px 28px rgba(0,0,0,0.5); }
-.ql-chip__dot { width:6px; height:6px; border-radius:50%; background:var(--ql-accent); box-shadow:0 0 8px var(--ql-accent); animation:ql-pulse 2s ease-in-out infinite; }
+.ql-chip__dot { width:6px; height:6px; border-radius:50%; background:#22c55e; box-shadow:0 0 8px #22c55e; animation:ql-pulse 2s ease-in-out infinite; }
 @keyframes ql-pulse { 0%,100%{opacity:1} 50%{opacity:0.35} }
 .ql-chip__label { color:var(--ql-dim); text-transform:uppercase; }
 .ql-chip__value { color:var(--ql-white); font-weight:600; font-variant-numeric:tabular-nums; }
 .ql-chip__delta { font-weight:600; font-variant-numeric:tabular-nums; }
-.ql-chip__delta.positive { color:var(--ql-accent); }
+.ql-chip__delta.positive { color:#22c55e; }
 .ql-chip__delta.negative { color:var(--ql-danger); }
 
 /* ─── Search ─── */
-.ql-search { position:relative; display:flex; align-items:center; gap:12px; max-width:540px; margin:0; padding:5px 5px 5px 18px; border-radius:var(--ql-pill); background:var(--ql-glass); backdrop-filter:blur(32px); border:1px solid var(--ql-border); box-shadow:0 8px 40px rgba(0,0,0,0.45); transition:border-color var(--ql-tr),box-shadow var(--ql-tr); }
-.ql-search:focus-within { border-color:rgba(0,232,123,0.3); box-shadow:0 8px 40px rgba(0,232,123,0.06),0 0 0 1px rgba(0,232,123,0.15); }
+.ql-search { position:relative; display:flex; align-items:center; gap:12px; max-width:540px; margin:0; padding:4px 4px 4px 16px; border-radius:12px; background:rgba(255,255,255,0.04); backdrop-filter:blur(32px); border:1px solid rgba(255,255,255,0.1); box-shadow:0 8px 40px rgba(0,0,0,0.45); transition:border-color var(--ql-tr),box-shadow var(--ql-tr); }
+.ql-search:focus-within { border-color:rgba(37,99,235,0.4); box-shadow:0 8px 40px rgba(37,99,235,0.08),0 0 0 2px rgba(37,99,235,0.12); }
 .ql-search__icon { color:var(--ql-dim); flex-shrink:0; display:flex; }
-.ql-search__input { flex:1; background:none; border:none; outline:none; color:var(--ql-white); font-size:0.88rem; caret-color:var(--ql-accent); min-width:0; font-family:var(--ql-sans); }
-.ql-search__input::placeholder { color:var(--ql-dim); }
-.ql-search__go { width:38px; height:38px; border-radius:50%; background:var(--ql-accent); border:none; display:flex; align-items:center; justify-content:center; color:#050505; flex-shrink:0; transition:all var(--ql-tr); text-decoration:none; }
-.ql-search__go:hover { background:#33ff99; transform:scale(1.08); }
+.ql-search__input { flex:1; background:none; border:none; outline:none; color:var(--ql-white); font-size:0.88rem; caret-color:var(--ql-accent); min-width:0; font-family:var(--ql-sans); padding:10px 0; }
+.ql-search__input::placeholder { color:#5c5a56; }
+.ql-search__go { width:38px; height:38px; border-radius:8px; background:#2563eb; border:none; display:flex; align-items:center; justify-content:center; color:#ffffff; flex-shrink:0; transition:all var(--ql-tr); text-decoration:none; }
+.ql-search__go:hover { background:#1d4ed8; transform:scale(1.05); }
 
-/* ─── Ticker ─── */
-.ql-ticker { background:var(--ql-surface); border-top:1px solid var(--ql-border); border-bottom:1px solid var(--ql-border); padding:12px 0; overflow:hidden; position:relative; }
-.ql-ticker::before,.ql-ticker::after { content:''; position:absolute; top:0; bottom:0; width:80px; z-index:2; pointer-events:none; }
-.ql-ticker::before { left:0; background:linear-gradient(to right,var(--ql-surface),transparent); }
-.ql-ticker::after { right:0; background:linear-gradient(to left,var(--ql-surface),transparent); }
-.ql-ticker__track { display:flex; align-items:center; gap:40px; white-space:nowrap; animation:ql-scroll 40s linear infinite; width:max-content; }
-.ql-ticker__track:hover { animation-play-state:paused; }
-@keyframes ql-scroll { 0%{transform:translateX(0)} 100%{transform:translateX(-50%)} }
-.ql-ticker__item { display:flex; align-items:center; gap:8px; font-size:0.76rem; font-weight:500; font-variant-numeric:tabular-nums; }
-.ql-ticker__symbol { color:var(--ql-white); font-weight:700; }
-.ql-ticker__price { color:var(--ql-dim); }
-.ql-ticker__change { font-weight:600; }
-.ql-ticker__change.up { color:var(--ql-accent); }
-.ql-ticker__change.down { color:var(--ql-danger); }
-.ql-ticker__placeholder { color:var(--ql-dim); font-size:0.78rem; padding:0 32px; }
+/* ─── Ticker Removed ─── */
 
 /* ─── Stats ─── */
 .ql-stats { padding:48px 32px; border-bottom:1px solid var(--ql-border); }
@@ -589,7 +596,7 @@ const landingCSS = `
 .ql-features__sub { color:var(--ql-dim); font-size:0.92rem; }
 .ql-features__grid { display:grid; grid-template-columns:repeat(auto-fit,minmax(300px,1fr)); gap:16px; }
 .ql-fcard { background:var(--ql-card); backdrop-filter:blur(32px); border:1px solid var(--ql-border); border-radius:var(--ql-radius); padding:28px 24px; display:flex; flex-direction:column; transition:border-color var(--ql-tr),transform var(--ql-tr),box-shadow var(--ql-tr); }
-.ql-fcard:hover { border-color:rgba(0,232,123,0.2); transform:translateY(-3px); box-shadow:0 12px 40px rgba(0,0,0,0.35); }
+.ql-fcard:hover { border-color:rgba(37,99,235,0.2); transform:translateY(-3px); box-shadow:0 12px 40px rgba(0,0,0,0.35); }
 .ql-fcard__icon { width:48px; height:48px; display:flex; align-items:center; justify-content:center; background:var(--ql-accent-dim); border-radius:var(--ql-radius-sm); margin-bottom:18px; }
 .ql-fcard__title { font-size:0.98rem; font-weight:600; margin-bottom:8px; color:var(--ql-white); }
 .ql-fcard__desc { font-size:0.82rem; color:var(--ql-dim); line-height:1.65; flex:1; }
@@ -603,25 +610,35 @@ const landingCSS = `
 .ql-news__sub { font-size:0.88rem; color:var(--ql-dim); }
 .ql-news__grid { display:grid; grid-template-columns:repeat(auto-fill,minmax(320px,1fr)); gap:16px; }
 .ql-newscard { background:var(--ql-card); border:1px solid var(--ql-border); border-radius:var(--ql-radius); padding:24px; transition:border-color var(--ql-tr),transform var(--ql-tr); display:flex; flex-direction:column; text-decoration:none; color:inherit; }
-.ql-newscard:hover { border-color:rgba(0,232,123,0.15); transform:translateY(-2px); }
+.ql-newscard:hover { border-color:var(--ql-accent); transform:translateY(-2px); box-shadow:0 12px 32px rgba(0,0,0,0.08); }
 .ql-newscard__source { font-size:0.68rem; font-weight:600; text-transform:uppercase; letter-spacing:0.06em; color:var(--ql-accent); margin-bottom:10px; }
 .ql-newscard__title { font-size:0.92rem; font-weight:600; color:var(--ql-white); line-height:1.4; margin-bottom:10px; flex:1; }
 .ql-newscard__summary { font-size:0.78rem; color:var(--ql-dim); line-height:1.6; margin-bottom:12px; display:-webkit-box; -webkit-line-clamp:2; -webkit-box-orient:vertical; overflow:hidden; }
 .ql-newscard__time { font-size:0.68rem; color:var(--ql-xdim); }
+
+:root:not(.dark) .ql-newscard {
+  box-shadow: 0 4px 12px rgba(0,0,0,0.04);
+}
+:root:not(.dark) .ql-newscard:hover {
+  box-shadow: 0 8px 24px rgba(0,0,0,0.08);
+}
+
 .ql-news__placeholder { text-align:center; color:var(--ql-dim); font-size:0.85rem; padding:40px; grid-column:1/-1; }
 .ql-news__more { text-align:center; margin-top:32px; }
 
 /* ─── CTA ─── */
-.ql-cta { padding:100px 32px; text-align:center; position:relative; overflow:hidden; }
+.ql-cta { padding:100px 32px; text-align:center; position:relative; overflow:hidden; background: var(--ql-bg); }
 .ql-cta__inner { position:relative; z-index:1; }
 .ql-cta__heading { font-family:var(--ql-serif); font-size:clamp(1.6rem,4vw,2.8rem); font-weight:400; color:var(--ql-white); margin-bottom:12px; }
 .ql-cta__sub { color:var(--ql-dim); font-size:0.95rem; margin-bottom:32px; }
 
+:root:not(.dark) .ql-cta__heading span.faded { color: rgba(15,23,42,0.35); font-style: italic; }
+
 /* ─── Footer ─── */
-.ql-footer { border-top:1px solid var(--ql-border); padding:40px 32px 0; }
+.ql-footer { border-top:1px solid var(--ql-border); padding:40px 32px 0; background: var(--ql-bg); }
 .ql-footer__inner { max-width:1200px; margin:0 auto; display:flex; justify-content:space-between; flex-wrap:wrap; gap:32px; padding-bottom:32px; }
 .ql-footer__left { max-width:260px; }
-.ql-footer__brand { font-weight:800; font-size:1.1rem; color:var(--ql-white); letter-spacing:-0.03em; }
+.ql-footer__brand { font-weight:800; font-size:1.1rem; color:var(--ql-white); letter-spacing:0.1em; }
 .ql-footer__tagline { font-size:0.78rem; color:var(--ql-dim); margin-top:6px; }
 .ql-footer__cols { display:flex; gap:48px; }
 .ql-footer__col { display:flex; flex-direction:column; gap:8px; }
@@ -635,6 +652,7 @@ const landingCSS = `
 @media(max-width:768px) {
   .ql-nav__links { display:none; }
   .ql-nav__inner { padding:0 16px; }
+  .ql-hero { padding-left:6%; padding-top:20px; }
   .ql-hero__headline { font-size:clamp(2rem,8vw,2.4rem); }
   .ql-chip { font-size:0.62rem; padding:6px 10px; }
   .ql-chip--tl,.ql-chip--bl { left:10px; }

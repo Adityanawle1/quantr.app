@@ -34,18 +34,15 @@ export function TopMovers() {
         
         <div className="flex-1">
           {topGainers.map((s: any, i: number) => (
-            <Link href={`/stocks/${s.symbol}`} key={s.symbol} className="py-4 border-b border-white/5 hover:bg-[rgba(255,255,255,0.02)] transition-colors flex items-center justify-between group -mx-2 px-2 rounded-lg">
-              <div className="flex items-center gap-4">
-                <span className="font-mono text-[11px] text-t3 w-4 opacity-50">{i + 1}</span>
-                <div>
-                  <div className="text-[14px] font-semibold text-t1 group-hover:text-gain transition-colors">{s.symbol}</div>
-                  <div className="text-[12px] text-t2 font-medium max-w-[140px] truncate">{s.name}</div>
-                </div>
+            <Link href={`/stocks/${s.symbol}`} key={s.symbol} className="py-3.5 border-b border-white/5 hover:bg-[rgba(255,255,255,0.02)] transition-colors flex items-center gap-3 px-2 -mx-2 rounded-lg group">
+              <span className="font-mono text-[10px] text-t3 w-4 opacity-50 shrink-0">{i + 1}</span>
+              <div className="flex-1 min-w-0">
+                <div className="text-[13px] font-bold text-t1 group-hover:text-gain transition-colors truncate">{s.symbol}</div>
+                <div className="text-[11px] text-t3 font-medium truncate opacity-70">{s.name}</div>
               </div>
-              
-              <div className="text-right">
-                <div className="font-mono text-[12px] font-semibold text-t1">₹{s.price.toLocaleString('en-IN', { maximumFractionDigits: 1 })}</div>
-                <div className="flex items-center justify-end gap-1.5 mt-0.5">
+              <div className="text-right shrink-0">
+                <div className="font-mono text-[12px] font-bold text-t1">₹{s.price.toLocaleString('en-IN', { maximumFractionDigits: 1 })}</div>
+                <div className="flex items-center justify-end gap-1 mt-0.5">
                   <ArrowUpRight className="w-2.5 h-2.5 text-gain" />
                   <span className="font-mono text-[10px] text-gain font-bold">+{s.changePercent.toFixed(2)}%</span>
                 </div>
@@ -69,18 +66,15 @@ export function TopMovers() {
         
         <div className="flex-1">
           {topLosers.map((s: any, i: number) => (
-            <Link href={`/stocks/${s.symbol}`} key={s.symbol} className="py-4 border-b border-white/5 hover:bg-[rgba(255,255,255,0.02)] transition-colors flex items-center justify-between group -mx-2 px-2 rounded-lg">
-              <div className="flex items-center gap-4">
-                <span className="font-mono text-[11px] text-t3 w-4 opacity-50">{i + 1}</span>
-                <div>
-                  <div className="text-[14px] font-semibold text-t1 group-hover:text-loss transition-colors">{s.symbol}</div>
-                  <div className="text-[12px] text-t2 font-medium max-w-[140px] truncate">{s.name}</div>
-                </div>
+            <Link href={`/stocks/${s.symbol}`} key={s.symbol} className="py-3.5 border-b border-white/5 hover:bg-[rgba(255,255,255,0.02)] transition-colors flex items-center gap-3 px-2 -mx-2 rounded-lg group">
+              <span className="font-mono text-[10px] text-t3 w-4 opacity-50 shrink-0">{i + 1}</span>
+              <div className="flex-1 min-w-0">
+                <div className="text-[13px] font-bold text-t1 group-hover:text-loss transition-colors truncate">{s.symbol}</div>
+                <div className="text-[11px] text-t3 font-medium truncate opacity-70">{s.name}</div>
               </div>
-              
-              <div className="text-right">
-                <div className="font-mono text-[12px] font-semibold text-t1">₹{s.price.toLocaleString('en-IN', { maximumFractionDigits: 1 })}</div>
-                <div className="flex items-center justify-end gap-1.5 mt-0.5">
+              <div className="text-right shrink-0">
+                <div className="font-mono text-[12px] font-bold text-t1">₹{s.price.toLocaleString('en-IN', { maximumFractionDigits: 1 })}</div>
+                <div className="flex items-center justify-end gap-1 mt-0.5">
                   <ArrowDownRight className="w-2.5 h-2.5 text-loss" />
                   <span className="font-mono text-[10px] text-loss font-bold">{s.changePercent.toFixed(2)}%</span>
                 </div>

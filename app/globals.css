@@ -46,39 +46,38 @@
   --color-t3: var(--t3);
   --color-t4: var(--t4);
 
-  --color-lime: #C2FF60;
-  --color-limedm: rgba(194,255,96,0.09);
-  --color-limebr: rgba(194,255,96,0.22);
+  /* Blue accent system — replaces old gold */
+  --color-gold: var(--accent-gold);
+  --color-gold-light: var(--accent-gold-light);
+  --color-gold-muted: var(--accent-gold-muted);
 
-  --color-gain: var(--gain, #3FD68C);
-  --color-gaindm: var(--gaindm, rgba(63,214,140,0.10));
-  --color-gainbr: var(--gainbr, rgba(63,214,140,0.22));
+  /* Gain/Loss — PRESERVED for data encoding */
+  --color-gain: var(--gain, #22c55e);
+  --color-gaindm: var(--gaindm, rgba(34,197,94,0.10));
+  --color-gainbr: var(--gainbr, rgba(34,197,94,0.22));
 
-  --color-loss: var(--loss, #E8645A);
-  --color-lossdm: var(--lossdm, rgba(232,100,90,0.10));
-  --color-lossbr: var(--lossbr, rgba(232,100,90,0.22));
+  --color-loss: var(--loss, #ef4444);
+  --color-lossdm: var(--lossdm, rgba(239,68,68,0.10));
+  --color-lossbr: var(--lossbr, rgba(239,68,68,0.22));
 
   --color-amber: #F5A623;
   --color-ambrdk: rgba(245,158,11,0.09);
-  --color-blue: #5B9CF6;
-  --color-bluedm: rgba(91,156,246,0.10);
+  --color-blue: #2563eb;
+  --color-bluedm: rgba(37,99,235,0.12);
 
   /* Semantic Variables Mapped to Utility Classes */
   --color-border-subtle: var(--border-subtle);
   --color-highlight: var(--highlight);
   --color-highlight-hov: var(--highlight-hov);
 
-  --color-gold: var(--accent-gold);
-  --color-gold-light: var(--accent-gold-light);
-  --color-gold-muted: var(--accent-gold-muted);
-
   --font-plus-jakarta: var(--font-inter);
   --font-jetbrains-mono: var(--font-jetbrains-mono);
   --font-inter: var(--font-inter);
+  --font-playfair: var(--font-playfair);
   
   --font-sans: 'Inter', var(--font-inter), system-ui;
   --font-mono: 'Geist Mono', var(--font-jetbrains-mono), ui-monospace;
-  --font-display: 'Inter', var(--font-inter), system-ui;
+  --font-display: 'Playfair Display', var(--font-playfair), Georgia, serif;
   
   --font-jakarta: var(--font-inter);
   
@@ -87,8 +86,10 @@
   --radius-lg: var(--radius);
 }
 
+/* ─── DARK MODE ─── */
 :root, .dark {
-  /* HARDCORE FUNCTIONAL THEME */
+  color-scheme: dark;
+
   --background-primary: #0a0a0c;
   --background-surface: #101216;
   --background-elevated: #1a1d24;
@@ -102,13 +103,19 @@
   --text-secondary: #94a3b8;
   --text-muted: #64748b;
 
+  /* BLUE ACCENT SYSTEM */
+  --accent-gold: #2563eb;
+  --accent-gold-light: #3b82f6;
+  --accent-gold-muted: rgba(37, 99, 235, 0.12);
+
   --accent-blue: #3b82f6;
   --accent-blue-light: #60a5fa;
 
-  --accent-green: #10b981;
+  /* GAIN/LOSS — DATA ENCODING, PRESERVED GREEN/RED */
+  --accent-green: #22c55e;
   --accent-red: #ef4444;
 
-  /* Backward compatibility map for legacy references */
+  /* Backward compatibility */
   --background: var(--background-primary);
   --foreground: var(--text-primary);
   --radius: 0.375rem;
@@ -132,31 +139,116 @@
   --popover: var(--background-elevated);
   --popover-foreground: var(--text-primary);
   
-  --primary: var(--accent-blue);
+  --primary: #2563eb;
   --primary-foreground: #ffffff;
   --secondary: var(--background-elevated);
   --secondary-foreground: var(--text-primary);
   --muted: var(--background-elevated);
   --muted-foreground: var(--text-muted);
   --accent: var(--background-elevated);
-  --accent-foreground: var(--accent-blue);
+  --accent-foreground: #3b82f6;
   --destructive: var(--accent-red);
   --border: var(--border-default);
   --input: var(--border-strong);
-  --ring: var(--accent-blue);
+  --ring: #2563eb;
 
-  /* Gain / Loss explicitly using new defined accents */
-  --gain: var(--accent-green);
-  --gaindm: rgba(16, 185, 129, 0.10);
-  --gainbr: rgba(16, 185, 129, 0.25);
-  --loss: var(--accent-red);
+  --gain: #22c55e;
+  --gaindm: rgba(34, 197, 94, 0.10);
+  --gainbr: rgba(34, 197, 94, 0.25);
+  --loss: #ef4444;
   --lossdm: rgba(239, 68, 68, 0.10);
   --lossbr: rgba(239, 68, 68, 0.25);
 }
 
+/* ─── LIGHT MODE ─── */
+:root:not(.dark), .light {
+  color-scheme: light;
+
+  /* Backgrounds */
+  --background-primary: #ffffff;
+  --background-surface: #f8fafc;
+  --background-elevated: #f1f5f9;
+  --background-glass: rgba(248,250,252,0.9);
+
+  /* Borders */
+  --border-default: rgba(0,0,0,0.08);
+  --border-accent: rgba(37,99,235,0.2);
+  --border-strong: rgba(0,0,0,0.15);
+
+  /* Text */
+  --text-primary: #0f172a;
+  --text-secondary: #334155;
+  --text-muted: #64748b;
+  --text-faint: #94a3b8;
+
+  /* Accents — keep blue as primary */
+  --accent-blue: #2563eb;
+  --accent-blue-light: #3b82f6;
+  --accent-blue-muted: rgba(37,99,235,0.08);
+  --accent-blue-border: rgba(37,99,235,0.2);
+
+  /* Data colors */
+  --color-positive: #16a34a;
+  --color-negative: #dc2626;
+  --color-positive-bg: rgba(22,163,74,0.08);
+  --color-negative-bg: rgba(220,38,38,0.08);
+
+  /* GAIN/LOSS — DATA ENCODING, PRESERVED */
+  --accent-green: var(--color-positive);
+  --accent-red: var(--color-negative);
+
+  /* Backward compatibility mappings */
+  --background: var(--background-primary);
+  --foreground: var(--text-primary);
+  --radius: 0.375rem;
+
+  --navy: var(--background-primary);
+  --navy-card: var(--background-surface);
+  --navy-surf: var(--background-elevated);
+  --navy-hov: var(--accent-blue-muted);
+
+  --t1: var(--text-primary);
+  --t2: var(--text-secondary);
+  --t3: var(--text-muted);
+  --t4: var(--text-faint);
+
+  --border-subtle: var(--border-default);
+  --highlight: var(--background-surface);
+  --highlight-hov: var(--background-elevated);
+
+  --card: var(--background-surface);
+  --card-foreground: var(--text-primary);
+  --popover: var(--background-surface);
+  --popover-foreground: var(--text-primary);
+
+  --primary: var(--accent-blue);
+  --primary-foreground: #ffffff;
+  --secondary: var(--background-elevated);
+  --secondary-foreground: var(--text-primary);
+  --muted: var(--background-elevated);
+  --muted-foreground: var(--text-muted);
+  --accent: var(--accent-blue-muted);
+  --accent-foreground: var(--accent-blue);
+  --destructive: var(--color-negative);
+  --border: var(--border-default);
+  --input: var(--border-default);
+  --ring: var(--accent-blue);
+
+  --gain: var(--color-positive);
+  --gaindm: var(--color-positive-bg);
+  --gainbr: rgba(22, 163, 74, 0.25);
+  --loss: var(--color-negative);
+  --lossdm: var(--color-negative-bg);
+  --lossbr: rgba(220, 38, 38, 0.25);
+}
+
 @layer base {
   * {
-    @apply border-border outline-ring/50;
+    @apply border-border;
+  }
+  *:focus-visible {
+    outline: 2px solid rgba(37, 99, 235, 0.4);
+    outline-offset: 2px;
   }
   body {
     @apply bg-background text-foreground;
@@ -188,6 +280,12 @@
   .mask-marquee {
     mask-image: linear-gradient(to right, transparent, black 15%, black 85%, transparent);
   }
+
+  /* Light mode glow grid */
+  :root:not(.dark) .glow-grid, .light .glow-grid {
+    background-image: linear-gradient(to right, rgba(0,0,0,0.03) 1px, transparent 1px),
+      linear-gradient(to bottom, rgba(0,0,0,0.03) 1px, transparent 1px);
+  }
 }
 
 /* Marquee / Ticker */
@@ -204,11 +302,6 @@
   animation-play-state: paused;
 }
 
-body::before {
-  content: '';
-  display: none;
-}
-
 @keyframes tickmove { 
   0% { transform: translateX(0) } 
   100% { transform: translateX(-50%) } 
@@ -217,11 +310,11 @@ body::before {
 @keyframes plsanim { 
   0%, 100% {
     opacity: 1;
-    box-shadow: 0 0 0 0 rgba(63,214,140,0.4);
+    box-shadow: 0 0 0 0 rgba(34,197,94,0.4);
   } 
   50% {
     opacity: 0.5;
-    box-shadow: 0 0 0 6px rgba(63,214,140,0);
+    box-shadow: 0 0 0 6px rgba(34,197,94,0);
   } 
 }
 

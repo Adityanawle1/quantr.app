@@ -14,6 +14,7 @@ import {
   ChevronRight,
   BrainCircuit
 } from "lucide-react";
+import { Logo } from "./logo";
 
 export function SidebarV2({ isCollapsed = false, setIsCollapsed }: { isCollapsed?: boolean; setIsCollapsed?: (v: boolean) => void }) {
   const pathname = usePathname();
@@ -39,25 +40,21 @@ export function SidebarV2({ isCollapsed = false, setIsCollapsed }: { isCollapsed
 
   return (
     <aside 
-      className={`fixed left-0 top-0 bottom-0 bg-navy-card flex flex-col z-[100] hidden md:flex transition-all duration-300 border-r border-border-subtle ${isCollapsed ? 'w-[72px]' : 'w-[210px]'}`}
+      className={`fixed left-0 top-0 bottom-0 bg-background-primary flex flex-col z-[100] hidden md:flex transition-all duration-300 border-r border-border-subtle shadow-[2px_0_8px_rgba(0,0,0,0.04)] ${isCollapsed ? 'w-[72px]' : 'w-[210px]'}`}
     >
       {/* Brand & Toggle */}
       <div className={`px-5 pt-6 pb-5 border-b border-border-subtle flex ${isCollapsed ? 'flex-col items-center' : 'items-center justify-between'}`}>
         {!isCollapsed ? (
           <div className="flex flex-col gap-1.5 overflow-hidden">
-            <Link href="/dashboard" className="text-[20px] font-sans font-black tracking-widest flex items-center select-none text-t1">
-              QUANTR
-            </Link>
-            <div className="font-mono text-[9px] tracking-[0.2em] opacity-80 select-none whitespace-nowrap text-t3">NSE · BSE · v2.4</div>
+            <Logo size="md" />
+            <div className="font-mono text-[9px] tracking-[0.2em] select-none whitespace-nowrap text-t4">NSE · BSE · v2.4</div>
           </div>
         ) : (
-          <Link href="/dashboard" className="text-[24px] font-sans font-black flex items-center justify-center select-none text-t1 w-full mb-3">
-            Q
-          </Link>
+          <Logo size="sm" showText={false} className="mb-3" />
         )}
         <button 
           onClick={() => setIsCollapsed && setIsCollapsed(!isCollapsed)}
-          className="w-7 h-7 flex items-center justify-center rounded-md hover:bg-highlight-hov text-t2 hover:text-t1 transition-colors shrink-0"
+          className="w-7 h-7 flex items-center justify-center rounded-md hover:bg-accent-blue-muted text-t2 hover:text-primary transition-colors shrink-0"
         >
           {isCollapsed ? <ChevronRight className="w-4 h-4" /> : <ChevronLeft className="w-4 h-4" />}
         </button>
@@ -68,7 +65,7 @@ export function SidebarV2({ isCollapsed = false, setIsCollapsed }: { isCollapsed
         {navItems.map((item, i) => {
           if (item.sec) {
             return !isCollapsed ? (
-              <div key={i} className="px-2 pt-3 pb-1 font-mono text-[8px] tracking-[2px] uppercase text-t3">
+              <div key={i} className="px-2 pt-3 pb-1 font-mono text-[11px] tracking-[0.08em] uppercase text-t3">
                 {item.sec}
               </div>
             ) : <div key={i} className="h-4" />;
@@ -84,8 +81,8 @@ export function SidebarV2({ isCollapsed = false, setIsCollapsed }: { isCollapsed
               title={isCollapsed ? item.label : undefined}
               className={`flex items-center ${isCollapsed ? 'justify-center w-[44px] h-[40px] px-0 mx-auto' : 'gap-3 px-3 py-2.5 w-full'} rounded-md text-[13px] font-medium transition-all duration-150 select-none ${
                 isActive 
-                  ? "text-blue-500 bg-blue-500/10 border-l-[3px] border-l-blue-500 rounded-l-none" 
-                  : "text-t3 hover:text-t1 hover:bg-highlight-hov border-l-[3px] border-l-transparent rounded-l-none"
+                  ? "text-primary bg-accent-blue-muted border-l-2 border-l-primary rounded-l-none font-semibold" 
+                  : "text-t2 hover:text-primary hover:bg-accent-blue-muted border-l-2 border-l-transparent rounded-l-none"
               }`}
             >
               <Icon className={`w-4 h-4 shrink-0 transition-opacity ${isActive ? "opacity-100" : "opacity-70"}`} />
@@ -97,13 +94,13 @@ export function SidebarV2({ isCollapsed = false, setIsCollapsed }: { isCollapsed
 
       {/* Footer / User */}
       <div className={`border-t border-border-subtle p-4 flex ${isCollapsed ? 'justify-center' : 'items-center gap-3'}`}>
-        <div className="w-8 h-8 rounded-full bg-blue-600 flex items-center justify-center text-xs font-bold text-white shrink-0">
+        <div className="w-8 h-8 rounded-full bg-primary flex items-center justify-center text-xs font-bold text-white shrink-0">
           AN
         </div>
         {!isCollapsed && (
           <div className="overflow-hidden">
             <div className="text-[13px] font-semibold text-t1 truncate">Aditya N.</div>
-            <div className="font-mono text-[9px] text-blue-400 mt-0.5 truncate uppercase tracking-widest">Pro Plan</div>
+            <div className="font-mono text-[9px] text-primary mt-0.5 truncate uppercase tracking-widest bg-accent-blue-muted px-1.5 py-0.5 rounded-sm">Pro Plan</div>
           </div>
         )}
       </div>
