@@ -10,11 +10,33 @@ interface SectorData {
 }
 
 const getColors = (perf: number) => {
-  if (perf >= 2) return { bg: '#10b981', t: '#ffffff' };
-  if (perf >= 0.5) return { bg: 'rgba(16, 185, 129, 0.5)', t: '#e2e8f0' };
-  if (perf >= -0.5) return { bg: '#1e293b', t: '#94a3b8' };
-  if (perf >= -2) return { bg: 'rgba(239, 68, 68, 0.5)', t: '#e2e8f0' };
-  return { bg: '#ef4444', t: '#ffffff' };
+  if (perf >= 2) return { bg: 'var(--gain)', t: '#ffffff' };
+  if (perf >= 0.5) return { bg: 'var(--gaindm)', t: 'var(--gain)' };
+  if (perf >= -0.5) return { bg: 'var(--background-elevated)', t: 'var(--text-muted)' };
+  if (perf >= -2) return { bg: 'var(--lossdm)', t: 'var(--loss)' };
+  return { bg: 'var(--loss)', t: '#ffffff' };
+};
+
+const SECTOR_DISPLAY_NAMES: Record<string, string> = {
+  "UNKNOWN": "Mixed",
+  "FINANCIAL_SERVICES": "Financials",
+  "INFORMATION_TECHNOLOGY": "IT",
+  "CONSUMER_DISCRETIONARY": "Consumer",
+  "FAST_MOVING_CONSUMER_GOODS": "FMCG",
+  "HEALTHCARE": "Healthcare",
+  "ENERGY": "Energy",
+  "INDUSTRIALS": "Industrials",
+  "MATERIALS": "Materials",
+  "COMMUNICATION_SERVICES": "Comm",
+  "UTILITIES": "Utilities",
+  "REAL_ESTATE": "Real Estate"
+};
+
+const formatSectorName = (name: string) => {
+  if (SECTOR_DISPLAY_NAMES[name]) return SECTOR_DISPLAY_NAMES[name];
+  return name.split('_').map(word => 
+    word.charAt(0).toUpperCase() + word.slice(1).toLowerCase()
+  ).join(' ');
 };
 
 export function SectorHeatmap() {
@@ -31,44 +53,44 @@ export function SectorHeatmap() {
   const sectors = (data?.sectors || []).slice(0, 8);
 
   return (
-    <div className="bg-navy-card border border-border-subtle rounded-[8px] shadow-sm overflow-hidden flex flex-col h-full flex-1 min-h-[300px]">
-      <div className="flex items-center justify-between p-4 md:px-5 md:py-4 border-b border-border-subtle bg-black/20">
-        <div className="flex items-center gap-[9px] text-[12px] font-semibold text-t1">
-          <div className="w-6 h-6 rounded shrink-0 bg-navy border border-border-subtle flex items-center justify-center">
-            <LayoutGrid className="w-3 h-3" />
+    <div className="bg-background-primary border border-border-subtle rounded-xl shadow-sm overflow-hidden flex flex-col h-full flex-1 min-h-[300px]">
+      <div className="flex items-center justify-between p-4 md:px-5 md:py-4 border-b border-border-subtle bg-background-surface">
+        <div className="flex items-center gap-[9px] text-[13px] font-bold text-t1 uppercase tracking-tight">
+          <div className="w-6 h-6 rounded-lg shrink-0 bg-accent-blue-muted border border-accent-blue-border flex items-center justify-center">
+            <LayoutGrid className="w-3.5 h-3.5 text-primary" />
           </div>
-          Sector Heatmap
+          Sector Overview
         </div>
-        <Link href="/sectors" className="font-mono text-[10px] text-t3 cursor-pointer px-[7px] py-[3px] rounded transition-colors hover:text-t1 flex items-center gap-1">
-          Full view <ArrowRight className="w-2.5 h-2.5" />
+        <Link href="/sectors" className="font-mono text-[10px] text-t3 cursor-pointer px-2 py-1 rounded-md bg-background-elevated transition-all hover:text-primary hover:bg-accent-blue-muted flex items-center gap-1 uppercase font-bold border border-border-subtle">
+           Analytics <ArrowRight className="w-2.5 h-2.5" />
         </Link>
       </div>
       
       {isLoading ? (
         <div className="flex items-center justify-center flex-1 p-8">
-          <Loader2 className="w-5 h-5 animate-spin text-t3" />
+          <Loader2 className="w-5 h-5 animate-spin text-primary" />
         </div>
       ) : sectors.length === 0 ? (
         <div className="flex items-center justify-center flex-1 p-8">
-          <span className="font-mono text-[10px] text-t3">No sector data available</span>
+          <span className="font-mono text-[10px] text-t3 uppercase tracking-widest">No sector data</span>
         </div>
       ) : (
-        <div className="grid grid-cols-2 lg:grid-cols-4 gap-0.5 p-0.5 flex-1 bg-border-subtle">
+        <div className="grid grid-cols-2 lg:grid-cols-4 gap-px flex-1 bg-border-subtle">
           {sectors.map((s, i) => {
             const isPositive = s.performance >= 0;
             const c = getColors(s.performance);
             return (
               <div 
                 key={i} 
-                className="group p-2 cursor-pointer relative"
+                className="group p-4 cursor-pointer relative flex flex-col justify-center transition-all duration-200 hover:brightness-105"
                 style={{
                   background: c.bg,
                   color: c.t
                 }}
               >
-                <div className="font-sans text-[10px] font-bold uppercase tracking-wider mb-0.5 pointer-events-none truncate">{s.name}</div>
-                <div className="font-mono text-sm font-bold pointer-events-none">
-                  {isPositive ? '+' : ''}{s.performance.toFixed(1)}%
+                <div className="font-sans text-[10px] font-black uppercase tracking-[0.05em] mb-1 pointer-events-none truncate opacity-80">{formatSectorName(s.name)}</div>
+                <div className="font-mono text-base font-black pointer-events-none tracking-tight">
+                  {isPositive ? '+' : ''}{s.performance.toFixed(2)}%
                 </div>
               </div>
             );

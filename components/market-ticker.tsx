@@ -25,24 +25,24 @@ const FALLBACK_DATA: TickerItem[] = [
 function TickerEntry({ item }: { item: TickerItem }) {
   return (
     <span className="inline-flex items-center gap-2 px-4 whitespace-nowrap">
-      <span className="text-[13px] font-semibold text-zinc-300 tracking-wide uppercase">
+      <span className="text-[13px] font-semibold text-t1 tracking-wide uppercase">
         {item.name}
       </span>
       <span
         className={`text-[13px] font-bold tabular-nums px-1.5 py-0.5 rounded ${item.isPositive
-            ? "text-emerald-400 bg-emerald-500/10"
-            : "text-rose-400 bg-rose-500/10"
+            ? "text-gain bg-gaindm"
+            : "text-loss bg-lossdm"
           }`}
       >
         {item.value}
       </span>
       <span className="inline-flex items-center gap-0.5">
         {item.isPositive ? (
-          <TrendingUp className="w-3 h-3 text-emerald-400" />
+          <TrendingUp className="w-3 h-3 text-gain" />
         ) : (
-          <TrendingDown className="w-3 h-3 text-rose-400" />
+          <TrendingDown className="w-3 h-3 text-loss" />
         )}
-        <span className={`text-xs font-medium tabular-nums ${item.isPositive ? "text-emerald-400" : "text-rose-400"
+        <span className={`text-xs font-medium tabular-nums ${item.isPositive ? "text-gain" : "text-loss"
           }`}>
           {item.change} ({item.percent})
         </span>
@@ -77,18 +77,10 @@ export function MarketTicker() {
 
   return (
     <div
-      className="w-full bg-zinc-950 border-b relative z-40"
-      style={{
-        borderBottom: '1px solid rgba(255,255,255,0.04)',
-        boxShadow: '0 4px 24px rgba(0,0,0,0.4)'
-      }}
+      className="w-full bg-background-primary border-b border-border-subtle relative z-40 shadow-[0_1px_4px_rgba(0,0,0,0.06)]"
     >
       <div
-        className="py-2 overflow-hidden"
-        style={{
-          WebkitMaskImage: 'linear-gradient(to right, transparent 0%, black 3%, black 97%, transparent 100%)',
-          maskImage: 'linear-gradient(to right, transparent 0%, black 3%, black 97%, transparent 100%)'
-        }}
+        className="py-2 overflow-hidden mask-marquee"
       >
         <div className="inline-flex items-center animate-marquee hover:[animation-play-state:paused]">
           {doubled.map((item, i) => (
@@ -97,7 +89,7 @@ export function MarketTicker() {
               className="inline-flex items-center hover:scale-105 transition-transform duration-150 ease-out cursor-default"
             >
               <TickerEntry item={item} />
-              <span className="text-zinc-600 mx-2 opacity-50">•</span>
+              <span className="text-t4 mx-2 opacity-30">•</span>
             </span>
           ))}
         </div>

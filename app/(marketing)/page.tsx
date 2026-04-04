@@ -8,10 +8,10 @@ import { MarketTicker } from "@/components/market-ticker";
 import { Activity } from "lucide-react";
 
 /* ═══════════════════════════════════════════════════════
-   Quantr — Landing Page (Integrated Next.js)
-   Canvas background · Typewriter · Backend-connected data
-   Live ticker tape · News feed · Staggered animations
-   ═══════════════════════════════════════════════════════ */
+  Quantr — Landing Page (Integrated Next.js)
+  Canvas background · Typewriter · Backend-connected data
+  Live ticker tape · News feed · Staggered animations
+  ═══════════════════════════════════════════════════════ */
 
 // ── Types ──
 interface IndexData {
@@ -145,7 +145,7 @@ export default function QuantrLanding() {
           setSensex(s);
         }
       })
-      .catch(() => {});
+      .catch(() => { });
 
     // Dashboard (gainers)
     fetch("/api/dashboard")
@@ -153,7 +153,7 @@ export default function QuantrLanding() {
       .then((data) => {
         if (data.gainers?.[0]) setTopGainer(data.gainers[0]);
       })
-      .catch(() => {});
+      .catch(() => { });
 
     // Screener (ticker + count)
     fetch("/api/screener?limit=40&sort=market_cap&order=desc")
@@ -164,7 +164,7 @@ export default function QuantrLanding() {
           setStockCount(data.pagination?.total || data.data.length);
         }
       })
-      .catch(() => {});
+      .catch(() => { });
 
     // News
     fetch("/api/market/news")
@@ -172,7 +172,7 @@ export default function QuantrLanding() {
       .then((data) => {
         if (data.articles?.length) setNews(data.articles.slice(0, 6));
       })
-      .catch(() => {});
+      .catch(() => { });
 
     // Refresh indices every 60s
     const interval = setInterval(() => {
@@ -186,7 +186,7 @@ export default function QuantrLanding() {
             setSensex(s);
           }
         })
-        .catch(() => {});
+        .catch(() => { });
     }, 60000);
 
     return () => clearInterval(interval);
@@ -303,7 +303,7 @@ export default function QuantrLanding() {
             <span className="ql-hero__pill-dot"></span>
             Intelligence over Instinct
           </div>
-          <h1 className="ql-hero__headline">Precision screening.<br/>Quantitative edge.</h1>
+          <h1 className="ql-hero__headline">Precision screening.<br />Quantitative edge.</h1>
           <p className="ql-hero__sub">Real-time screening and quantitative analysis. Built for the Indian market.</p>
 
           <div className="ql-search">
@@ -572,13 +572,13 @@ const landingCSS = `
 .ql-ticker__change.down { color:var(--ql-danger); }
 .ql-ticker__placeholder { color:var(--ql-dim); font-size:0.78rem; padding:0 32px; }
 
-/* ─── Stats ─── */
-.ql-stats { padding:48px 32px; border-bottom:1px solid var(--ql-border); }
-.ql-stats__inner { max-width:900px; margin:0 auto; display:flex; align-items:center; justify-content:space-between; flex-wrap:wrap; gap:24px; }
-.ql-stat { text-align:center; flex:1; min-width:120px; }
-.ql-stat__num { display:block; font-size:2.2rem; font-weight:800; color:var(--ql-accent); letter-spacing:-0.03em; font-variant-numeric:tabular-nums; }
-.ql-stat__label { display:block; font-size:0.74rem; color:var(--ql-dim); text-transform:uppercase; letter-spacing:0.08em; margin-top:4px; }
-.ql-stat__divider { width:1px; height:40px; background:var(--ql-border); }
+  /* ─── Stats ─── */
+  .ql-stats { padding:48px 32px; border-bottom:1px solid var(--ql-border); }
+  .ql-stats__inner { max-width:900px; margin:0 auto; display:flex; align-items:center; justify-content:space-between; flex-wrap:wrap; gap:24px; }
+  .ql-stat { text-align:center; flex:1; min-width:120px; }
+  .ql-stat__num { display:block; font-size:2.2rem; font-weight:800; color:var(--ql-accent); letter-spacing:-0.03em; font-variant-numeric:tabular-nums; }
+  .ql-stat__label { display:block; font-size:0.74rem; color:var(--ql-dim); text-transform:uppercase; letter-spacing:0.08em; margin-top:4px; }
+  .ql-stat__divider { width:1px; height:40px; background:var(--ql-border); }
 
 /* ─── Features ─── */
 .ql-features { padding:100px 32px 80px; max-width:1200px; margin:0 auto; }
