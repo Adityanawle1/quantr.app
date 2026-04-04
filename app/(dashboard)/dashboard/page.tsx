@@ -38,9 +38,18 @@ export default function DashboardPage() {
       
       {/* Overview Head with Search */}
       <div className="flex flex-col md:flex-row items-start md:items-center justify-between mb-6 gap-4 opacity-0 animate-[fu_0.5s_cubic-bezier(0.16,1,0.3,1)_forwards] [animation-delay:0.05s] relative z-50">
-        <div className="shrink-0">
-          <h1 className="text-2xl font-bold tracking-tight text-t1 mb-1">Market Dashboard</h1>
-          <div className="font-mono text-xs text-t2">{dateStr || "Loading..."}</div>
+        <div className="shrink-0 mb-4 md:mb-0">
+          <div className="flex items-center gap-2 mb-2">
+            <div className="w-2 h-2 rounded-full bg-blue-500 animate-pulse" />
+            <span className="text-[10px] uppercase font-mono tracking-widest text-[#8A9DB8]">Real-Time Diagnostics</span>
+          </div>
+          <h1 className="text-3xl md:text-4xl font-extrabold font-jakarta tracking-tighter text-t1 mb-1">
+            Market Dashboard
+          </h1>
+          <div className="font-mono text-xs text-t3 flex items-center gap-2 mt-2">
+             <div className="h-px w-4 bg-border-strong hidden md:block" /> 
+             {dateStr || "Loading..."}
+          </div>
         </div>
         
         <div className="flex-1 w-full max-w-xl">

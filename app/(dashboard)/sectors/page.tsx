@@ -46,10 +46,17 @@ export default function SectorsPage() {
       
       <div className="border-b border-border-subtle pb-6 mb-8 flex flex-col md:flex-row md:items-end justify-between gap-6">
         <div>
-          <h1 className="text-3xl font-black font-jakarta tracking-tight text-t1 mb-2">Market Indices & Sectors</h1>
-          <p className="text-[#8A9DB8] font-medium max-w-2xl">
-            Live auto-updating constituent tracking for major Indian indices, featuring a comparative macroeconomic sector strength heatmap.
-          </p>
+          <div className="flex items-center gap-2 mb-2">
+             <div className="w-1.5 h-1.5 rounded-full bg-amber-500 animate-pulse" />
+             <span className="text-[10px] uppercase font-mono tracking-widest text-[#8A9DB8]">Real-Time Heatmap</span>
+          </div>
+          <h1 className="text-3xl md:text-4xl font-extrabold font-jakarta tracking-tighter text-t1 mb-1">
+            Market Indices & Sectors
+          </h1>
+          <div className="font-mono text-xs text-t3 flex items-center gap-2 mt-2">
+             <div className="h-px w-4 bg-border-strong hidden md:block" /> 
+             Live tracking for major indices & macroeconomic sector strength.
+          </div>
         </div>
         <div className="flex items-center gap-2 bg-navy-card border border-border-subtle p-1 rounded-xl shrink-0">
            <button 

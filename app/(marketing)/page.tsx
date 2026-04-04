@@ -5,6 +5,7 @@ import { useEffect, useRef, useState, useCallback } from "react";
 import { GlobePulse } from "@/components/ui/cobe-globe-pulse";
 import { DottedSurface } from "@/components/ui/dotted-surface";
 import { MarketTicker } from "@/components/market-ticker";
+import { Activity } from "lucide-react";
 
 /* ═══════════════════════════════════════════════════════
    Quantr — Landing Page (Integrated Next.js)
@@ -236,18 +237,15 @@ export default function QuantrLanding() {
     <div className="quantr-landing">
       <style>{landingCSS}</style>
 
-      <div className="fixed top-0 left-0 right-0 z-[110]">
-        <MarketTicker />
-      </div>
+
 
       {/* ─── NAV ─── */}
       <nav className={`ql-nav ${scrolled ? "ql-nav--scrolled" : ""}`}>
         <div className="ql-nav__inner">
-          <Link href="/" className="ql-nav__brand">
-            <svg width="26" height="26" viewBox="0 0 28 28" fill="none">
-              <polygon points="14,2 26,26 2,26" stroke="#00e87b" strokeWidth="1.8" fill="none" />
-              <line x1="14" y1="8" x2="14" y2="20" stroke="#00e87b" strokeWidth="1.4" />
-            </svg>
+          <Link href="/" className="ql-nav__brand group">
+            <div className="bg-zinc-100 p-1.5 rounded-lg group-hover:bg-zinc-200 transition-colors">
+              <Activity className="h-4 w-4 text-zinc-950" />
+            </div>
             <span className="ql-nav__wordmark">Quantr</span>
           </Link>
           <div className="ql-nav__links">
@@ -485,7 +483,7 @@ const landingCSS = `
   --ql-radius-sm: 8px;
   --ql-pill: 100px;
   --ql-sans: 'Inter',system-ui,-apple-system,sans-serif;
-  --ql-serif: var(--font-dm-serif, 'DM Serif Display'),Georgia,serif;
+  --ql-display: var(--font-plus-jakarta, 'Plus Jakarta Sans', system-ui, sans-serif);
   --ql-blur: 20px;
   --ql-tr: 0.35s cubic-bezier(0.25,0.46,0.45,0.94);
   --ql-navh: 64px;
@@ -500,7 +498,7 @@ const landingCSS = `
 
 /* ─── Nav ─── */
 .ql-nav {
-  position: fixed; inset: 40px 0 auto 0; height: var(--ql-navh); z-index: 100;
+  position: fixed; inset: 0 0 auto 0; height: var(--ql-navh); z-index: 100;
   backdrop-filter: blur(var(--ql-blur)); -webkit-backdrop-filter: blur(var(--ql-blur));
   background: rgba(8,9,10,0.6); border-bottom: 1px solid var(--ql-border);
   transition: background var(--ql-tr);
@@ -585,7 +583,7 @@ const landingCSS = `
 /* ─── Features ─── */
 .ql-features { padding:100px 32px 80px; max-width:1200px; margin:0 auto; }
 .ql-features__header { text-align:center; margin-bottom:56px; }
-.ql-features__heading { font-family:var(--ql-serif); font-size:clamp(1.6rem,3.5vw,2.6rem); font-weight:400; color:var(--ql-white); margin-bottom:10px; }
+.ql-features__heading { font-family:var(--ql-display); font-size:clamp(1.6rem,4vw,3.2rem); font-weight:800; letter-spacing:-0.04em; color:var(--ql-white); margin-bottom:12px; }
 .ql-features__sub { color:var(--ql-dim); font-size:0.92rem; }
 .ql-features__grid { display:grid; grid-template-columns:repeat(auto-fit,minmax(300px,1fr)); gap:16px; }
 .ql-fcard { background:var(--ql-card); backdrop-filter:blur(32px); border:1px solid var(--ql-border); border-radius:var(--ql-radius); padding:28px 24px; display:flex; flex-direction:column; transition:border-color var(--ql-tr),transform var(--ql-tr),box-shadow var(--ql-tr); }
@@ -599,7 +597,7 @@ const landingCSS = `
 /* ─── News ─── */
 .ql-news { padding:80px 32px; max-width:1200px; margin:0 auto; }
 .ql-news__header { text-align:center; margin-bottom:40px; }
-.ql-news__heading { font-family:var(--ql-serif); font-size:clamp(1.5rem,3vw,2.2rem); font-weight:400; color:var(--ql-white); margin-bottom:8px; }
+.ql-news__heading { font-family:var(--ql-display); font-size:clamp(1.5rem,3.5vw,2.8rem); font-weight:800; letter-spacing:-0.03em; color:var(--ql-white); margin-bottom:12px; }
 .ql-news__sub { font-size:0.88rem; color:var(--ql-dim); }
 .ql-news__grid { display:grid; grid-template-columns:repeat(auto-fill,minmax(320px,1fr)); gap:16px; }
 .ql-newscard { background:var(--ql-card); border:1px solid var(--ql-border); border-radius:var(--ql-radius); padding:24px; transition:border-color var(--ql-tr),transform var(--ql-tr); display:flex; flex-direction:column; text-decoration:none; color:inherit; }
@@ -614,7 +612,7 @@ const landingCSS = `
 /* ─── CTA ─── */
 .ql-cta { padding:100px 32px; text-align:center; position:relative; overflow:hidden; }
 .ql-cta__inner { position:relative; z-index:1; }
-.ql-cta__heading { font-family:var(--ql-serif); font-size:clamp(1.6rem,4vw,2.8rem); font-weight:400; color:var(--ql-white); margin-bottom:12px; }
+.ql-cta__heading { font-family:var(--ql-display); font-size:clamp(2rem,5vw,3.5rem); font-weight:800; letter-spacing:-0.04em; color:var(--ql-white); margin-bottom:16px; }
 .ql-cta__sub { color:var(--ql-dim); font-size:0.95rem; margin-bottom:32px; }
 
 /* ─── Footer ─── */

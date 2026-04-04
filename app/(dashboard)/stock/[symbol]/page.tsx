@@ -11,6 +11,7 @@ import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { TechnicalOverview } from "@/components/stock/technical-overview";
 import { PeerTable } from "@/components/stock/peer-table";
 import { CompanyReports } from "@/components/stock/company-reports";
+import { FinancialStatements } from "@/components/stock/financial-statements";
 import { ShareholdingPattern } from "@/components/stock/shareholding-pattern";
 import { RatioCard } from "@/components/stock/ratio-card";
 import { AddHoldingButton } from "@/components/portfolio/add-holding-button";
@@ -218,16 +219,29 @@ export default function StockDetailPage({ params }: { params: Promise<{ symbol: 
              )}
           </TabsContent>
 
-          <TabsContent value="financials" className="outline-none space-y-6">
+          <TabsContent value="financials" className="outline-none space-y-8">
             <div className="flex items-center justify-between">
               <div>
-                <h3 className="text-2xl font-bold text-t1 font-jakarta">Financial Reports</h3>
+                <h3 className="text-2xl font-bold text-t1 font-jakarta">Financial Statements</h3>
                 <p className="text-t3 text-xs font-medium uppercase tracking-wider mt-1">
-                  ANNUAL RESULTS & QUARTERLY FILINGS
+                  QUARTERLY RESULTS · P&amp;L · BALANCE SHEET
                 </p>
               </div>
             </div>
-            <CompanyReports symbol={stock.symbol} name={stock.name} />
+
+            {/* Deep Fundamentals Tables */}
+            <FinancialStatements symbol={upperSymbol} />
+
+            {/* Divider */}
+            <div className="border-t border-border-subtle pt-6">
+              <div className="mb-4">
+                <h4 className="text-base font-bold text-t1 font-jakarta">Official Filings</h4>
+                <p className="text-t3 text-xs font-medium uppercase tracking-wider mt-1">
+                  ANNUAL REPORTS &amp; REGULATORY DOCUMENTS
+                </p>
+              </div>
+              <CompanyReports symbol={stock.symbol} name={stock.name} />
+            </div>
           </TabsContent>
 
           <TabsContent value="shareholding" className="outline-none space-y-6">

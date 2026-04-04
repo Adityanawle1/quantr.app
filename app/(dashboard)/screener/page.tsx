@@ -36,8 +36,17 @@ export default function ScreenerPage() {
       {/* Header & Search */}
       <div className="flex flex-col md:flex-row md:items-center justify-between gap-6 border-b border-border-subtle pb-6">
         <div>
-          <h1 className="text-3xl font-black font-jakarta text-t1 tracking-tight">Stock Screener</h1>
-          <p className="text-[#8A9DB8] mt-1.5 font-medium">Deploy pre-built quantitative strategies or browse the market.</p>
+          <div className="flex items-center gap-2 mb-2">
+             <div className="w-1.5 h-1.5 rounded-full bg-emerald-500 animate-pulse" />
+             <span className="text-[10px] uppercase font-mono tracking-widest text-[#8A9DB8]">Quantitative Analysis</span>
+          </div>
+          <h1 className="text-3xl md:text-4xl font-extrabold font-jakarta tracking-tighter text-t1 mb-1">
+            Stock Screener
+          </h1>
+          <div className="font-mono text-xs text-t3 flex items-center gap-2 mt-2">
+             <div className="h-px w-4 bg-border-strong hidden md:block" /> 
+             Deploy pre-built quantitative strategies or browse the market.
+          </div>
         </div>
         <div className="w-full md:w-[400px]">
           <SearchBar className="m-0" />
