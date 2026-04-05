@@ -139,64 +139,51 @@ export function MarketChart({ data, symbol, name }: MarketChartProps) {
   }, [chartData, activeIndex, activePeriod]);
 
   return (
-    <div style={{ perspective: '1200px' }} className="h-full">
-      <div 
-        className={`overflow-hidden flex flex-col h-full ${isGlobal ? 'bg-navy-card shadow-2xl rounded-[8px] min-h-[480px]' : ''}`}
-        style={isGlobal ? { 
-          transform: 'rotateX(1.5deg)', 
-          transformOrigin: 'bottom center', 
-          border: '1px solid rgba(212,175,95,0.12)', 
-          borderBottom: '1px solid rgba(212,175,95,0.25)' 
-        } : undefined}
-      >
+    <div className={`overflow-hidden flex flex-col h-full ${isGlobal ? 'bg-navy-card border border-border-subtle rounded-lg min-h-[460px]' : ''}`}>
       {isGlobal && activeIndex && (
-        <div className="px-5 py-4 border-b border-border-subtle flex items-center justify-between">
-          <div>
-            <h3 className="text-[13px] font-bold tracking-tight text-t1">{activeIndex.name || "Market Index"}</h3>
-            <div className="flex items-center gap-2 mt-0.5">
-              <span className="font-mono text-[18px] font-bold text-t1">{activeIndex.price.toLocaleString('en-IN')}</span>
-              <span className={`font-mono text-[10px] font-bold ${activeIndex.changePercent >= 0 ? 'text-gain' : 'text-loss'}`}>
-                {activeIndex.changePercent >= 0 ? '+' : ''}{activeIndex.changePercent.toFixed(2)}%
-              </span>
+        <div className="px-4 py-3 border-b border-border-subtle flex items-center justify-between">
+          <div className="flex items-center gap-3">
+            <div>
+              <div className="text-[12px] font-medium text-t2">{activeIndex.name?.replace('Index','').trim() || 'Market Index'}</div>
+              <div className="flex items-center gap-2 mt-0.5">
+                <span className="font-mono text-[20px] font-bold text-t1 leading-none">{activeIndex.price.toLocaleString('en-IN', { maximumFractionDigits: 1 })}</span>
+                <span className={`font-mono text-[12px] font-semibold ${activeIndex.changePercent >= 0 ? 'text-gain' : 'text-loss'}`}>
+                  {activeIndex.changePercent >= 0 ? '+' : ''}{activeIndex.changePercent.toFixed(2)}%
+                </span>
+              </div>
             </div>
           </div>
-          
-          <div className="flex gap-1.5 bg-navy border border-border-subtle p-1 rounded-lg">
+
+          <div className="flex items-center gap-1">
             {['1d', '1w', '1m', '1y'].map(p => (
               <button
                 key={p}
                 onClick={() => setActivePeriod(p)}
-                className={`px-2.5 py-1 text-[10px] font-bold rounded-md transition-colors uppercase ${
-                  activePeriod === p ? 'bg-highlight text-t1' : 'text-t3 hover:text-t3'
+                className={`px-2.5 py-1 text-[10px] font-mono rounded transition-colors ${
+                  activePeriod === p
+                    ? 'bg-navy-surf text-t1 border border-border-strong'
+                    : 'text-t3 hover:text-t2'
                 }`}
               >
-                {p}
+                {p.toUpperCase()}
               </button>
             ))}
           </div>
         </div>
       )}
-      
+
       <div className="flex-1 w-full relative">
-        {(isGlobal && isChartLoading && chartData.length === 0) && (
-          <div className="absolute inset-0 flex items-center justify-center z-10 bg-navy/50 backdrop-blur-sm">
-            <div className="flex flex-col items-center gap-2">
-              <Loader2 className="w-6 h-6 animate-spin text-lime" />
-              <span className="font-mono text-[9px] text-t3 uppercase tracking-widest">Loading chart...</span>
-            </div>
+        {isGlobal && isChartLoading && chartData.length === 0 && (
+          <div className="absolute inset-0 flex items-center justify-center z-10">
+            <Loader2 className="w-4 h-4 animate-spin text-t3" />
           </div>
         )}
-        {(isGlobal && !isChartLoading && chartData.length === 0) && (
-          <div className="absolute inset-0 flex items-center justify-center z-10 bg-navy/50 backdrop-blur-sm">
-             <div className="flex flex-col items-center gap-2">
-              <span className="font-mono text-[10px] text-t3 uppercase tracking-widest text-center px-4">
-                Market data currently unavailable for this period
-              </span>
-              <button 
-                onClick={() => setActivePeriod('1w')}
-                className="mt-2 text-[10px] text-lime font-bold uppercase hover:underline"
-              >
-                Try 1 Week View
+        {isGlobal && !isChartLoading && chartData.length === 0 && (
+          <div className="absolute inset-0 flex items-center justify-center z-10">
+            <div className="text-center">
+              <div className="text-[11px] text-t3 mb-2">No data for this period</div>
+              <button onClick={() => setActivePeriod('1w')} className="text-[10px] text-blue-400 hover:underline">
+                Try 1W
               </button>
             </div>
           </div>
@@ -204,6 +191,5 @@ export function MarketChart({ data, symbol, name }: MarketChartProps) {
         <div ref={chartContainerRef} className="w-full h-full" />
       </div>
     </div>
-  </div>
   );
 }

@@ -1,7 +1,6 @@
 "use client";
 
 import { useMovers } from "@/hooks/use-market-data";
-import { TrendingUp, TrendingDown, ArrowUpRight, ArrowDownRight } from "lucide-react";
 import Link from "next/link";
 
 export function TopMovers() {
@@ -9,9 +8,19 @@ export function TopMovers() {
 
   if (isLoading) {
     return (
-      <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-        <div className="bg-navy-card border border-border-subtle rounded-[4px] h-[320px] animate-pulse" />
-        <div className="bg-navy-card border border-border-subtle rounded-[4px] h-[320px] animate-pulse" />
+      <div className="bg-navy-card border border-border-subtle rounded-lg overflow-hidden">
+        <div className="p-3 border-b border-border-subtle">
+          <div className="h-4 w-24 bg-navy-surf rounded animate-pulse" />
+        </div>
+        {[1,2,3,4,5].map(i => (
+          <div key={i} className="flex items-center justify-between px-4 py-2.5 border-b border-border-subtle last:border-0">
+            <div className="space-y-1.5">
+              <div className="h-3 w-16 bg-navy-surf rounded animate-pulse" />
+              <div className="h-2 w-24 bg-navy-surf rounded animate-pulse" />
+            </div>
+            <div className="h-3 w-12 bg-navy-surf rounded animate-pulse" />
+          </div>
+        ))}
       </div>
     );
   }
@@ -19,83 +28,45 @@ export function TopMovers() {
   const { topGainers = [], topLosers = [] } = data || {};
 
   return (
-    <div className="grid grid-cols-1 md:grid-cols-2 gap-4 min-w-0">
-      {/* Top Gainers */}
-      <div className="flex flex-col min-w-0 overflow-hidden">
-        <div className="px-1 py-4 border-b border-border-subtle flex items-center justify-between">
-          <div className="flex items-center gap-2">
-            <div className="w-8 h-8 rounded shrink-0 flex items-center justify-center">
-              <TrendingUp className="w-5 h-5 text-gain" />
-            </div>
-            <h3 className="font-display text-[18px] font-semibold tracking-tight text-t1 mb-0.5">Top Gainers</h3>
-          </div>
-          <span className="text-[11px] text-t2 font-medium bg-black/20 px-2 py-1 rounded shrink-0">Nifty 50</span>
-        </div>
+    <div className="flex flex-col gap-3">
+      <MoverList title="Gainers" items={topGainers} isGain />
+      <MoverList title="Losers" items={topLosers} isGain={false} />
+    </div>
+  );
+}
 
-        <div className="flex-1 min-w-0">
-          {topGainers.map((s: any, i: number) => (
-            <Link
-              href={`/stocks/${s.symbol}`}
-              key={s.symbol}
-              className="py-4 border-b border-white/5 hover:bg-[rgba(255,255,255,0.02)] transition-colors flex items-center justify-between gap-3 group rounded-lg"
-            >
-              <div className="flex items-center gap-3 min-w-0 overflow-hidden">
-                <span className="font-mono text-[11px] text-t3 w-4 shrink-0 opacity-50">{i + 1}</span>
-                <div className="min-w-0 overflow-hidden">
-                  <div className="text-[14px] font-semibold text-t1 group-hover:text-gain transition-colors truncate">{s.symbol}</div>
-                  <div className="text-[12px] text-t2 font-medium truncate">{s.name}</div>
-                </div>
-              </div>
-
-              <div className="text-right shrink-0">
-                <div className="font-mono text-[12px] font-semibold text-t1">₹{s.price.toLocaleString('en-IN', { maximumFractionDigits: 1 })}</div>
-                <div className="flex items-center justify-end gap-1.5 mt-0.5">
-                  <ArrowUpRight className="w-2.5 h-2.5 text-gain" />
-                  <span className="font-mono text-[10px] text-gain font-bold">+{s.changePercent.toFixed(2)}%</span>
-                </div>
-              </div>
-            </Link>
-          ))}
-        </div>
+function MoverList({ title, items, isGain }: { title: string, items: any[], isGain: boolean }) {
+  return (
+    <div className="bg-navy-card border border-border-subtle rounded-lg overflow-hidden">
+      {/* Header */}
+      <div className="flex items-center justify-between px-4 py-2.5 border-b border-border-subtle">
+        <span className="text-[12px] font-semibold text-t1">{title}</span>
+        <span className="text-[10px] text-t3 font-mono">Nifty 50</span>
       </div>
 
-      {/* Top Losers */}
-      <div className="flex flex-col mt-6 md:mt-0 min-w-0 overflow-hidden">
-        <div className="px-1 py-4 border-b border-border-subtle flex items-center justify-between">
-          <div className="flex items-center gap-2">
-            <div className="w-8 h-8 rounded shrink-0 flex items-center justify-center">
-              <TrendingDown className="w-5 h-5 text-loss" />
+      {/* Rows */}
+      <div>
+        {items.slice(0, 5).map((s: any, i: number) => (
+          <Link
+            href={`/stocks/${s.symbol}`}
+            key={s.symbol}
+            className="flex items-center justify-between px-4 py-2.5 border-b border-border-subtle last:border-0 hover:bg-navy-surf transition-colors group"
+          >
+            <div className="flex items-center gap-2.5 min-w-0">
+              <span className="text-[10px] text-t3/50 font-mono w-3 shrink-0">{i + 1}</span>
+              <div className="min-w-0">
+                <div className="text-[12px] font-semibold text-t1 group-hover:text-blue-400 transition-colors truncate">{s.symbol}</div>
+                <div className="text-[10px] text-t3 truncate max-w-[110px]">{s.name}</div>
+              </div>
             </div>
-            <h3 className="font-display text-[18px] font-semibold tracking-tight text-t1 mb-0.5">Top Losers</h3>
-          </div>
-          <span className="text-[11px] text-t2 font-medium bg-black/20 px-2 py-1 rounded shrink-0">Nifty 50</span>
-        </div>
-
-        <div className="flex-1 min-w-0">
-          {topLosers.map((s: any, i: number) => (
-            <Link
-              href={`/stocks/${s.symbol}`}
-              key={s.symbol}
-              className="py-4 border-b border-white/5 hover:bg-[rgba(255,255,255,0.02)] transition-colors flex items-center justify-between gap-3 group rounded-lg"
-            >
-              <div className="flex items-center gap-3 min-w-0 overflow-hidden">
-                <span className="font-mono text-[11px] text-t3 w-4 shrink-0 opacity-50">{i + 1}</span>
-                <div className="min-w-0 overflow-hidden">
-                  <div className="text-[14px] font-semibold text-t1 group-hover:text-loss transition-colors truncate">{s.symbol}</div>
-                  <div className="text-[12px] text-t2 font-medium truncate">{s.name}</div>
-                </div>
+            <div className="text-right shrink-0">
+              <div className="font-mono text-[11px] text-t2">₹{s.price.toLocaleString('en-IN', { maximumFractionDigits: 1 })}</div>
+              <div className={`font-mono text-[11px] font-semibold ${isGain ? 'text-gain' : 'text-loss'}`}>
+                {isGain ? '+' : ''}{s.changePercent.toFixed(2)}%
               </div>
-
-              <div className="text-right shrink-0">
-                <div className="font-mono text-[12px] font-semibold text-t1">₹{s.price.toLocaleString('en-IN', { maximumFractionDigits: 1 })}</div>
-                <div className="flex items-center justify-end gap-1.5 mt-0.5">
-                  <ArrowDownRight className="w-2.5 h-2.5 text-loss" />
-                  <span className="font-mono text-[10px] text-loss font-bold">{s.changePercent.toFixed(2)}%</span>
-                </div>
-              </div>
-            </Link>
-          ))}
-        </div>
+            </div>
+          </Link>
+        ))}
       </div>
     </div>
   );

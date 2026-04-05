@@ -252,7 +252,7 @@ Use this data to answer their questions accurately and provide insights.
           }),
           execute: async ({ symbol }: { symbol: string }): Promise<any> => {
             try {
-              const quote = await yahooFinance.quote(symbol);
+              const quote = await yahooFinance.quote(symbol) as any;
               return {
                 symbol: quote.symbol,
                 price: quote.regularMarketPrice,

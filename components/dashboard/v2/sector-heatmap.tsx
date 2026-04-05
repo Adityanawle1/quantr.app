@@ -1,7 +1,6 @@
 "use client";
 
 import { useQuery } from "@tanstack/react-query";
-import { LayoutGrid, ArrowRight, Loader2 } from "lucide-react";
 import Link from "next/link";
 
 interface SectorData {
@@ -9,15 +8,7 @@ interface SectorData {
   performance: number;
 }
 
-const getColors = (perf: number) => {
-  if (perf >= 2) return { bg: 'var(--gain)', t: '#ffffff' };
-  if (perf >= 0.5) return { bg: 'var(--gaindm)', t: 'var(--gain)' };
-  if (perf >= -0.5) return { bg: 'var(--background-elevated)', t: 'var(--text-muted)' };
-  if (perf >= -2) return { bg: 'var(--lossdm)', t: 'var(--loss)' };
-  return { bg: 'var(--loss)', t: '#ffffff' };
-};
-
-const SECTOR_DISPLAY_NAMES: Record<string, string> = {
+const SECTOR_NAMES: Record<string, string> = {
   "UNKNOWN": "Mixed",
   "FINANCIAL_SERVICES": "Financials",
   "INFORMATION_TECHNOLOGY": "IT",
@@ -27,17 +18,22 @@ const SECTOR_DISPLAY_NAMES: Record<string, string> = {
   "ENERGY": "Energy",
   "INDUSTRIALS": "Industrials",
   "MATERIALS": "Materials",
-  "COMMUNICATION_SERVICES": "Comm",
+  "COMMUNICATION_SERVICES": "Telecom",
   "UTILITIES": "Utilities",
   "REAL_ESTATE": "Real Estate"
 };
 
-const formatSectorName = (name: string) => {
-  if (SECTOR_DISPLAY_NAMES[name]) return SECTOR_DISPLAY_NAMES[name];
-  return name.split('_').map(word => 
-    word.charAt(0).toUpperCase() + word.slice(1).toLowerCase()
-  ).join(' ');
-};
+function sectorName(s: string) {
+  return SECTOR_NAMES[s] || s.split('_').map(w => w[0] + w.slice(1).toLowerCase()).join(' ');
+}
+
+function perfColor(p: number): { bg: string; text: string } {
+  if (p >= 1.5) return { bg: 'rgba(34,197,94,0.18)', text: '#4ade80' };
+  if (p >= 0.3) return { bg: 'rgba(34,197,94,0.08)', text: '#22c55e' };
+  if (p >= -0.3) return { bg: 'transparent', text: 'var(--text-muted)' };
+  if (p >= -1.5) return { bg: 'rgba(239,68,68,0.08)', text: '#ef4444' };
+  return { bg: 'rgba(239,68,68,0.18)', text: '#f87171' };
+}
 
 export function SectorHeatmap() {
   const { data, isLoading } = useQuery<{ sectors: SectorData[] }>({
@@ -53,44 +49,39 @@ export function SectorHeatmap() {
   const sectors = (data?.sectors || []).slice(0, 8);
 
   return (
-    <div className="bg-background-primary border border-border-subtle rounded-xl shadow-sm overflow-hidden flex flex-col h-full flex-1 min-h-[300px]">
-      <div className="flex items-center justify-between p-4 md:px-5 md:py-4 border-b border-border-subtle bg-background-surface">
-        <div className="flex items-center gap-[9px] text-[13px] font-bold text-t1 uppercase tracking-tight">
-          <div className="w-6 h-6 rounded-lg shrink-0 bg-accent-blue-muted border border-accent-blue-border flex items-center justify-center">
-            <LayoutGrid className="w-3.5 h-3.5 text-primary" />
-          </div>
-          Sector Overview
-        </div>
-        <Link href="/sectors" className="font-mono text-[10px] text-t3 cursor-pointer px-2 py-1 rounded-md bg-background-elevated transition-all hover:text-primary hover:bg-accent-blue-muted flex items-center gap-1 uppercase font-bold border border-border-subtle">
-           Analytics <ArrowRight className="w-2.5 h-2.5" />
+    <div className="bg-navy-card border border-border-subtle rounded-lg overflow-hidden">
+      <div className="flex items-center justify-between px-4 py-2.5 border-b border-border-subtle">
+        <span className="text-[12px] font-semibold text-t1">Sectors</span>
+        <Link href="/sectors" className="text-[10px] text-t3 hover:text-t2 transition-colors font-mono">
+          All →
         </Link>
       </div>
-      
+
       {isLoading ? (
-        <div className="flex items-center justify-center flex-1 p-8">
-          <Loader2 className="w-5 h-5 animate-spin text-primary" />
+        <div className="grid grid-cols-4 gap-px bg-border-subtle">
+          {[...Array(8)].map((_, i) => (
+            <div key={i} className="bg-navy-card p-3 animate-pulse">
+              <div className="h-2.5 w-14 bg-navy-surf rounded mb-2" />
+              <div className="h-4 w-10 bg-navy-surf rounded" />
+            </div>
+          ))}
         </div>
       ) : sectors.length === 0 ? (
-        <div className="flex items-center justify-center flex-1 p-8">
-          <span className="font-mono text-[10px] text-t3 uppercase tracking-widest">No sector data</span>
-        </div>
+        <div className="p-6 text-center text-[11px] text-t3">No data</div>
       ) : (
-        <div className="grid grid-cols-2 lg:grid-cols-4 gap-px flex-1 bg-border-subtle">
+        <div className="grid grid-cols-4 gap-px bg-border-subtle">
           {sectors.map((s, i) => {
-            const isPositive = s.performance >= 0;
-            const c = getColors(s.performance);
+            const c = perfColor(s.performance);
+            const isPos = s.performance >= 0;
             return (
-              <div 
-                key={i} 
-                className="group p-4 cursor-pointer relative flex flex-col justify-center transition-all duration-200 hover:brightness-105"
-                style={{
-                  background: c.bg,
-                  color: c.t
-                }}
+              <div
+                key={i}
+                className="flex flex-col gap-1 p-3 transition-all duration-150 hover:brightness-110 cursor-default"
+                style={{ background: c.bg || 'var(--background-surface)' }}
               >
-                <div className="font-sans text-[10px] font-black uppercase tracking-[0.05em] mb-1 pointer-events-none truncate opacity-80">{formatSectorName(s.name)}</div>
-                <div className="font-mono text-base font-black pointer-events-none tracking-tight">
-                  {isPositive ? '+' : ''}{s.performance.toFixed(2)}%
+                <div className="text-[9px] font-medium text-t3 truncate uppercase tracking-wide">{sectorName(s.name)}</div>
+                <div className="font-mono text-[13px] font-bold" style={{ color: c.text }}>
+                  {isPos ? '+' : ''}{s.performance.toFixed(2)}%
                 </div>
               </div>
             );
