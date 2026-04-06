@@ -9,7 +9,7 @@ const STATUS_STYLES = {
   PRE_OPEN: 'bg-yellow-100 text-yellow-700 border-yellow-400 dark:bg-yellow-900/30 dark:text-yellow-400',
 }
 
-const PULSE = {
+const PULSE: Record<string, string> = {
   OPEN:     'bg-[var(--gain)]',
   CLOSED:   'bg-[var(--loss)]',
   PRE_OPEN: 'bg-yellow-400',
