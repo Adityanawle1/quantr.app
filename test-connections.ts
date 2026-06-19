@@ -12,10 +12,10 @@ async function testAll() {
     result.yahoo = e.message || e.toString();
   }
 
-  try {
     const supabase = createClient(
-      process.env.SUPABASE_URL!,
-      process.env.SUPABASE_ANON_KEY!
+      process.env.SUPABASE_URL || process.env.NEXT_PUBLIC_SUPABASE_URL!,
+      process.env.SUPABASE_ANON_KEY || process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY!
+    );
     );
     const { data, error } = await supabase.from('stocks').select('symbol').limit(1);
     if (error) throw error;

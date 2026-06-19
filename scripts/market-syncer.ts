@@ -15,7 +15,7 @@ import * as dotenv from "dotenv";
 dotenv.config();
 
 // ── Config ──────────────────────────────────────────────
-const SUPABASE_URL = process.env.SUPABASE_URL!;
+const SUPABASE_URL = process.env.SUPABASE_URL || process.env.NEXT_PUBLIC_SUPABASE_URL!;
 const SUPABASE_KEY = process.env.SUPABASE_SERVICE_KEY!;   // service-role key for inserts
 const AV_KEY       = process.env.ALPHA_VANTAGE_API_KEY!;
 const RATE_DELAY   = 12_000;   // 12 seconds between AV calls (free tier = 5/min)
