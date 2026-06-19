@@ -35,7 +35,7 @@ export default function DashboardPage() {
     <main className="p-4 md:p-5 md:pb-16 flex-1 w-full max-w-[1400px] mx-auto bg-navy text-zinc-50 font-sans">
 
       {/* Header */}
-      <div className="flex flex-col md:flex-row items-start md:items-center justify-between mb-5 gap-4 opacity-0 animate-[fu_0.4s_ease_forwards] [animation-delay:0.05s] relative z-50">
+      <div className="flex flex-col md:flex-row items-start md:items-center justify-between mb-5 gap-4 relative z-50">
         <div className="shrink-0">
           <div className="flex items-center gap-2.5 mb-0.5">
             <h1 className="text-[22px] font-bold text-t1 tracking-tight">Dashboard</h1>
@@ -54,12 +54,12 @@ export default function DashboardPage() {
       </div>
 
       {/* Index cards */}
-      <div className="opacity-0 animate-[fu_0.4s_ease_forwards] [animation-delay:0.12s]">
+      <div>
         <IndexCards />
       </div>
 
       {/* Main grid */}
-      <div className="grid grid-cols-1 lg:grid-cols-12 gap-3 opacity-0 animate-[fu_0.4s_ease_forwards] [animation-delay:0.22s]">
+      <div className="grid grid-cols-1 lg:grid-cols-12 gap-3">
 
         {/* Left: Portfolio + Movers */}
         <div className="lg:col-span-3 flex flex-col gap-3">

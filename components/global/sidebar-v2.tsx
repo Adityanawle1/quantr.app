@@ -92,18 +92,7 @@ export function SidebarV2({ isCollapsed = false, setIsCollapsed }: { isCollapsed
         })}
       </nav>
 
-      {/* Footer / User */}
-      <div className={`border-t border-border-subtle p-4 flex ${isCollapsed ? 'justify-center' : 'items-center gap-3'}`}>
-        <div className="w-8 h-8 rounded-full bg-primary flex items-center justify-center text-xs font-bold text-white shrink-0">
-          AN
-        </div>
-        {!isCollapsed && (
-          <div className="overflow-hidden">
-            <div className="text-[13px] font-semibold text-t1 truncate">Aditya N.</div>
-            <div className="font-mono text-[9px] text-primary mt-0.5 truncate uppercase tracking-widest bg-accent-blue-muted px-1.5 py-0.5 rounded-sm">Pro Plan</div>
-          </div>
-        )}
-      </div>
+
     </aside>
   );
 }
