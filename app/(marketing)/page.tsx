@@ -463,8 +463,8 @@ const landingCSS = `
   --ql-radius: 12px;
   --ql-radius-sm: 8px;
   --ql-pill: 100px;
-  --ql-sans: 'Inter',system-ui,-apple-system,sans-serif;
-  --ql-serif: var(--font-playfair,'Playfair Display'),Georgia,serif;
+  --ql-sans: var(--font-plus-jakarta, 'Plus Jakarta Sans'), system-ui, -apple-system, sans-serif;
+  --ql-serif: var(--font-playfair, 'Playfair Display'), Georgia, serif;
   --ql-blur: 20px;
   --ql-tr: 0.35s cubic-bezier(0.25,0.46,0.45,0.94);
   --ql-navh: 68px;
@@ -543,7 +543,7 @@ const landingCSS = `
 .ql-hero__content.visible { opacity:1; transform:translateY(0); }
 .ql-hero__pill { display:inline-flex; align-items:center; gap:8px; padding:6px 14px; border-radius:var(--ql-pill); background:rgba(37,99,235,0.1); border:1px solid rgba(37,99,235,0.3); font-size:11px; font-weight:600; color:#3b82f6; letter-spacing:0.08em; text-transform:uppercase; margin-bottom:24px; }
 .ql-hero__pill-dot { width:6px; height:6px; border-radius:50%; background:#22c55e; box-shadow:0 0 8px #22c55e; animation:ql-pulse 2s ease-in-out infinite; }
-.ql-hero__headline { font-family:var(--ql-sans); font-size:clamp(2.4rem,4.5vw,3.6rem); font-weight:300; line-height:1.15; color:var(--ql-white); margin-bottom:18px; letter-spacing:-0.02em; }
+.ql-hero__headline { font-family:var(--ql-serif); font-size:clamp(2.6rem,5vw,4.2rem); font-weight:400; line-height:1.15; color:var(--ql-white); margin-bottom:18px; letter-spacing:-0.01em; }
 .ql-hero__sub { font-size:1.05rem; color:var(--ql-dim); margin-bottom:40px; font-weight:300; line-height:1.6; }
 .ql-hero__scroll { position:absolute; bottom:28px; left:50%; transform:translateX(-50%); z-index:2; display:flex; flex-direction:column; align-items:center; gap:4px; font-size:0.68rem; color:var(--ql-xdim); letter-spacing:0.08em; text-transform:uppercase; opacity:0; transition:opacity 0.8s ease 1.2s; animation:ql-float 2.5s ease-in-out infinite; }
 .ql-hero__scroll.visible { opacity:1; }
@@ -632,7 +632,7 @@ const landingCSS = `
 .ql-cta__heading { font-family:var(--ql-serif); font-size:clamp(1.6rem,4vw,2.8rem); font-weight:400; color:var(--ql-white); margin-bottom:12px; }
 .ql-cta__sub { color:var(--ql-dim); font-size:0.95rem; margin-bottom:32px; }
 
-:root:not(.dark) .ql-cta__heading span.faded { color: rgba(15,23,42,0.35); font-style: italic; }
+:root:not(.dark) .ql-cta__heading span.faded { color: rgba(15,23,42,0.35); font-style: italic; font-family: var(--ql-serif); }
 
 /* ─── Footer ─── */
 .ql-footer { border-top:1px solid var(--ql-border); padding:40px 32px 0; background: var(--ql-bg); }
