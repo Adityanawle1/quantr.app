@@ -75,18 +75,14 @@
   --color-gold-muted: var(--accent-gold-muted);
 
   --font-plus-jakarta: var(--font-plus-jakarta);
-  --font-plus-jakarta: var(--font-inter);
   --font-jetbrains-mono: var(--font-jetbrains-mono);
   --font-inter: var(--font-inter);
   --font-playfair: var(--font-playfair);
+  --font-dm-serif: var(--font-dm-serif);
 
-  --font-sans: var(--font-inter), system-ui, sans-serif;
+  --font-sans: var(--font-plus-jakarta), 'Inter', system-ui, sans-serif;
   --font-mono: var(--font-jetbrains-mono), ui-monospace, monospace;
   --font-display: var(--font-plus-jakarta), system-ui, sans-serif;
-  --font-sans: 'Inter', var(--font-inter), system-ui;
-  --font-mono: 'Geist Mono', var(--font-jetbrains-mono), ui-monospace;
-  --font-display: 'Playfair Display', var(--font-playfair), Georgia, serif;
-
   --font-jakarta: var(--font-plus-jakarta), system-ui, sans-serif;
   --font-serif: var(--font-playfair), Georgia, serif;
   --font-cursive: var(--font-caveat), cursive;
